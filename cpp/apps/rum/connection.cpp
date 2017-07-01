@@ -21,6 +21,7 @@
  */
 #ifndef Q_OS_WIN
 #include <signal.h>
+#include <unistd.h>
 #endif 
 
 #include <QTcpSocket>

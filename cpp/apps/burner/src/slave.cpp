@@ -39,6 +39,7 @@
 
 #ifndef Q_OS_WIN
 #include <sys/socket.h>
+#include <unistd.h>
 #endif
 
 #include "common.h"

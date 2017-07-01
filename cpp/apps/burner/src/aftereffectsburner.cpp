@@ -34,6 +34,10 @@
 #include <qfileinfo.h>
 #include <qdir.h>
 
+#ifndef Q_OS_WIN
+#include <unistd.h>
+#endif
+
 #include "slave.h"
 #include "jobtype.h"
 #include "aftereffectsburner.h"

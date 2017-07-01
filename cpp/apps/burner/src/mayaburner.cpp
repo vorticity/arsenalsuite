@@ -33,6 +33,10 @@
 #include <qfile.h>
 #include <qfileinfo.h>
 
+#ifndef Q_OS_WIN
+#include <unistd.h>
+#endif
+
 #include "path.h"
 #include "process.h"
 

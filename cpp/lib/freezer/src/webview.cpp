@@ -6,6 +6,7 @@
 #include <qmenu.h>
 #include <qnetworkaccessmanager.h>
 #include <QtWebKit>
+#include <QAuthenticator>
 #include <qtoolbar.h>
 #include <qurl.h>
 

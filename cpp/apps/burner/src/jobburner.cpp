@@ -31,6 +31,10 @@
 #include <qregexp.h>
 #include <qdir.h>
 
+#ifndef Q_OS_WIN
+#include <unistd.h>
+#endif
+
 #include "config.h"
 #include "database.h"
 #include "path.h"
