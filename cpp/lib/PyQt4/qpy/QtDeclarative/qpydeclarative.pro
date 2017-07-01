@@ -1,7 +1,7 @@
 # This is the qmake project file for the QPy support code for the QtDeclarative
-# module.
+# module.  Note that it is not required by configure-ng.py.
 #
-# Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+# Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 # 
 # This file is part of PyQt.
 # 
@@ -25,14 +25,9 @@
 
 
 QT          += declarative
-CONFIG      += static
+CONFIG      += static warn_on
 TARGET      = qpydeclarative
 TEMPLATE    = lib
-
-CONFIG(debug, debug|release) {
-    mac: TARGET = $$join(TARGET,,,_debug)
-    win32: TARGET = $$join(TARGET,,d)
-}
 
 SOURCES   = \
             qpydeclarative_chimera_helpers.cpp \

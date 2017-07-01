@@ -1,7 +1,7 @@
-Using PyQt from the Python Shell
-================================
+Using PyQt4 from the Python Shell
+=================================
 
-PyQt installs an input hook (using ``PyOS_InputHook``) that processes events
+PyQt4 installs an input hook (using ``PyOS_InputHook``) that processes events
 when an interactive interpreter is waiting for user input.  This means that
 you can, for example, create widgets from the Python shell prompt, interact
 with them, and still being able to enter other Python commands.

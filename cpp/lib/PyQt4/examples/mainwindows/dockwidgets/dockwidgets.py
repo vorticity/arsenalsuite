@@ -48,7 +48,10 @@ sip.setapi('QString', 2)
 
 from PyQt4 import QtCore, QtGui
 
-import dockwidgets_rc
+try:
+    import dockwidgets_rc3
+except ImportError:
+    import dockwidgets_rc2
 
 
 class MainWindow(QtGui.QMainWindow):

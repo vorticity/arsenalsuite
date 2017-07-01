@@ -50,7 +50,10 @@ import random
 
 from PyQt4 import QtCore, QtGui
 
-import puzzle_rc
+try:
+    import puzzle_rc3
+except ImportError:
+    import puzzle_rc2
 
 
 class PuzzleWidget(QtGui.QWidget):

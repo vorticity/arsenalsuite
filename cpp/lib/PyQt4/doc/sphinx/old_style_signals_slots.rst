@@ -21,11 +21,11 @@ It also has a number of disadvantages.
 - It is not Pythonic.
 
 This older style of connecting signals and slots will continue to be supported
-throughout the life of PyQt v4.
+throughout the life of PyQt4.
 
 
-PyQt Signals and Qt Signals
----------------------------
+PyQt4 Signals and Qt Signals
+----------------------------
 
 Qt signals are statically defined as part of a C++ class.  They are referenced
 using the ``QtCore.SIGNAL()`` function.  This method takes a single string
@@ -36,8 +36,8 @@ argument that is the name of the signal and its C++ signature.  For example::
 The returned value is normally passed to the ``QtCore.QObject.connect()``
 method.
 
-PyQt allows new signals to be defined dynamically.  The act of emitting a
-PyQt signal implicitly defines it.  PyQt v4 signals are also referenced using
+PyQt4 allows new signals to be defined dynamically.  The act of emitting a
+PyQt4 signal implicitly defines it.  PyQt4 signals are also referenced using
 the ``QtCore.SIGNAL()`` function.
 
 
@@ -62,9 +62,9 @@ after the call to ``QtCore.QObject.emit()``, even if a connection is queued.
 Short-circuit Signals
 ---------------------
 
-There is also a special form of a PyQt v4 signal known as a short-circuit
-signal.  Short-circut signals implicitly declare each argument as being of
-type ``PyQt_PyObject``.
+There is also a special form of a PyQt4 signal known as a short-circuit signal.
+Short-circut signals implicitly declare each argument as being of type
+``PyQt_PyObject``.
 
 Short-circuit signals do not have a list of arguments or the surrounding
 parentheses.
@@ -74,8 +74,8 @@ in Python.  They cannot be connected to Qt slots or the Python callables that
 wrap Qt slots.
 
 
-PyQt Slots and Qt Slots
------------------------
+PyQt4 Slots and Qt Slots
+------------------------
 
 Qt slots are statically defined as part of a C++ class.  They are referenced
 using the ``QtCore.SLOT()`` function.  This method takes a single string
@@ -86,14 +86,14 @@ argument that is the name of the slot and its C++ signature.  For example::
 The returned value is normally passed to the ``QtCore.QObject.connect()``
 method.
 
-PyQt allows any Python callable to be used as a slot, not just Qt slots.  This
+PyQt4 allows any Python callable to be used as a slot, not just Qt slots.  This
 is done by simply referencing the callable.  Because Qt slots are implemented
 as class methods they are also available as Python callables.  Therefore it is
 not usually necessary to use ``QtCore.SLOT()`` for Qt slots.  However, doing so
 is more efficient as it avoids a conversion to Python and back to C++.
 
 Qt allows a signal to be connected to a slot that requires fewer arguments than
-the signal passes.  The extra arguments are quietly discarded.  PyQt slots can
+the signal passes.  The extra arguments are quietly discarded.  PyQt4 slots can
 be used in the same way.
 
 Note that when a slot is a Python callable its reference count is not
@@ -118,7 +118,7 @@ Connections between signals and slots (and other signals) are made using the
 
 Disconnecting signals works in exactly the same way using the
 ``QtCore.QObject.disconnect()`` method.  However, not all the variations of
-that method are supported by PyQt.  Signals must be disconnected one at a
+that method are supported by PyQt4.  Signals must be disconnected one at a
 time.
 
 

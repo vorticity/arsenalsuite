@@ -1,6 +1,6 @@
 // This is the SIP interface definition for QAxBase.
 //
-// Copyright (c) 2009 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -16,13 +16,8 @@
 // GPL Exception version 1.1, which can be found in the file
 // GPL_EXCEPTION.txt in this package.
 // 
-// Please review the following information to ensure GNU General
-// Public Licensing requirements will be met:
-// http://trolltech.com/products/qt/licenses/licensing/opensource/. If
-// you are unsure which license is appropriate for your use, please
-// review the following information:
-// http://trolltech.com/products/qt/licenses/licensing/licensingoverview
-// or contact the sales department at sales@riverbankcomputing.com.
+// If you are unsure which license is appropriate for your use, please
+// contact the sales department at sales@riverbankcomputing.com.
 // 
 // This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
 // WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
@@ -30,7 +25,7 @@
 
 %If (WS_WIN)
 
-class QAxBase /Abstract, PyQt4NoQMetaObject/
+class QAxBase /Abstract, PyQtNoQMetaObject/
 {
 %TypeHeaderCode
 #include <qaxbase.h>
@@ -44,19 +39,83 @@ public:
 
     //long queryInterface(const QUuid &, void **) const;
 
-    QVariant dynamicCall(const char *name,
-            const QVariant &v1 = QVariant(), const QVariant &v2 = QVariant(),
-            const QVariant &v3 = QVariant(), const QVariant &v4 = QVariant(),
-            const QVariant &v5 = QVariant(), const QVariant &v6 = QVariant(),
-            const QVariant &v7 = QVariant(), const QVariant &v8 = QVariant());
-    QVariant dynamicCall(const char *name, QList<QVariant> &vars);
+    // Note that the order of these overloads is significant.
+    QVariant dynamicCall(const char *, QList<QVariant> & /GetWrapper/);
+%MethodCode
+        Py_BEGIN_ALLOW_THREADS
+        sipRes = new QVariant(sipCpp->dynamicCall(a0, *a1));
+        Py_END_ALLOW_THREADS
 
-    QAxObject *querySubObject(const char *name,
-            const QVariant &v1 = QVariant(), const QVariant &v2 = QVariant(),
-            const QVariant &v3 = QVariant(), const QVariant &v4 = QVariant(),
-            const QVariant &v5 = QVariant(), const QVariant &v6 = QVariant(),
-            const QVariant &v7 = QVariant(), const QVariant &v8 = QVariant());
-    QAxObject *querySubObject(const char *name, QList<QVariant> &vars);
+        // Update the input list with the (possibly) new values.
+        for (SIP_SSIZE_T i = 0; i < PyList_GET_SIZE(a1Wrapper); ++i)
+        {
+            QVariant *v = new QVariant(a1->at(i));
+            PyObject *v_obj = sipConvertFromNewType(v, sipType_QVariant, NULL);
+
+            if (!v_obj)
+            {
+                delete v;
+                sipIsErr = 1;
+                break;
+            }
+
+            if (PyList_SetItem(a1Wrapper, i, v_obj) < 0)
+            {
+                Py_DECREF(v_obj);
+                sipIsErr = 1;
+                break;
+            }
+        }
+%End
+
+    QVariant dynamicCall(const char *,
+            const QVariant &value1 /DocValue="Py_v3:None"/ = QVariant(),
+            const QVariant &value2 /DocValue="Py_v3:None"/ = QVariant(),
+            const QVariant &value3 /DocValue="Py_v3:None"/ = QVariant(),
+            const QVariant &value4 /DocValue="Py_v3:None"/ = QVariant(),
+            const QVariant &value5 /DocValue="Py_v3:None"/ = QVariant(),
+            const QVariant &value6 /DocValue="Py_v3:None"/ = QVariant(),
+            const QVariant &value7 /DocValue="Py_v3:None"/ = QVariant(),
+            const QVariant &value8 /DocValue="Py_v3:None"/ = QVariant());
+
+    // Note that the order of these overloads is significant.
+    QAxObject *querySubObject(const char *, QList<QVariant> & /GetWrapper/);
+%MethodCode
+        Py_BEGIN_ALLOW_THREADS
+        sipRes = sipCpp->querySubObject(a0, *a1);
+        Py_END_ALLOW_THREADS
+
+        // Update the input list with the (possibly) new values.
+        for (SIP_SSIZE_T i = 0; i < PyList_GET_SIZE(a1Wrapper); ++i)
+        {
+            QVariant *v = new QVariant(a1->at(i));
+            PyObject *v_obj = sipConvertFromNewType(v, sipType_QVariant, NULL);
+
+            if (!v_obj)
+            {
+                delete v;
+                sipIsErr = 1;
+                break;
+            }
+
+            if (PyList_SetItem(a1Wrapper, i, v_obj) < 0)
+            {
+                Py_DECREF(v_obj);
+                sipIsErr = 1;
+                break;
+            }
+        }
+%End
+
+    QAxObject *querySubObject(const char *,
+            const QVariant &value1 /DocValue="Py_v3:None"/ = QVariant(),
+            const QVariant &value2 /DocValue="Py_v3:None"/ = QVariant(),
+            const QVariant &value3 /DocValue="Py_v3:None"/ = QVariant(),
+            const QVariant &value4 /DocValue="Py_v3:None"/ = QVariant(),
+            const QVariant &value5 /DocValue="Py_v3:None"/ = QVariant(),
+            const QVariant &value6 /DocValue="Py_v3:None"/ = QVariant(),
+            const QVariant &value7 /DocValue="Py_v3:None"/ = QVariant(),
+            const QVariant &value8 /DocValue="Py_v3:None"/ = QVariant());
 
     // SIP has a bug triggered by a template definition being the subject of
     // multiple typedefs.  It only really matters when building everything as

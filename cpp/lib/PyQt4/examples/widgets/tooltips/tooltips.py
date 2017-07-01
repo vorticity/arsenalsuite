@@ -46,7 +46,10 @@ import random
 
 from PyQt4 import QtCore, QtGui
 
-import tooltips_rc
+try:
+    import tooltips_rc3
+except ImportError:
+    import tooltips_rc2
 
 
 class ShapeItem(object):

@@ -21,9 +21,9 @@ Otherwise, <a href="qurl.html#setUrl">setUrl</a>() and <a href="qurl.html#setEnc
 unencoded representation is suitable for showing to users, but the
 encoded representation is typically what you would send to a web
 server. For example, the unencoded URL
-&quot;http://b&#252;hler.example.com/List of applicants.xml&quot; would be
+"http://b&#252;hler.example.com/List of applicants.xml" would be
 sent to the server as
-&quot;http://xn--bhler-kva.example.com/List%20of%20applicants.xml&quot;, and
+"http://xn--bhler-kva.example.com/List%20of%20applicants.xml", and
 this can be verified by calling the <a href="qurl.html#toEncoded">toEncoded</a>() function.</p>
 <p>A URL can also be constructed piece by piece by calling <a href="qurl.html#setScheme">setScheme</a>(), <a href="qurl.html#setUserName">setUserName</a>(), <a href="qurl.html#setPassword">setPassword</a>(), <a href="qurl.html#setHost">setHost</a>(), <a href="qurl.html#setPort">setPort</a>(), <a href="qurl.html#setPath">setPath</a>(), <a href="qurl.html#setEncodedQuery">setEncodedQuery</a>() and <a href="qurl.html#setFragment">setFragment</a>(). Some convenience
 functions are also available: <a href="qurl.html#setAuthority">setAuthority</a>() sets the user name,
@@ -481,7 +481,7 @@ the URL to be reported as valid.</p>
 <pre class="cpp">
  <span class="type">bool</span> checkUrl(<span class="keyword">const</span> <span class="type"><a href="qurl.html">QUrl</a></span> <span class="operator">&amp;</span>url) {
      <span class="keyword">if</span> (<span class="operator">!</span>url<span class="operator">.</span>isValid()) {
-         <a href="qtcore.html#qDebug">qDebug</a>(<span class="type"><a href="qstring.html">QString</a></span>(<span class="string">"Invalid URL: %1"</span>)<span class="operator">.</span>arg(url<span class="operator">.</span>toString()));
+         <a href="qtcore.html#qDebugx">qDebug</a>(<span class="type"><a href="qstring.html">QString</a></span>(<span class="string">"Invalid URL: %1"</span>)<span class="operator">.</span>arg(url<span class="operator">.</span>toString()));
          <span class="keyword">return</span> <span class="keyword">false</span>;
      }
 
@@ -578,7 +578,7 @@ following example:</p>
 <pre class="cpp">
  <span class="type"><a href="qurl.html">QUrl</a></span> baseUrl(<span class="string">"http://qt.nokia.com/support"</span>);
  <span class="type"><a href="qurl.html">QUrl</a></span> relativeUrl(<span class="string">"../products/solutions"</span>);
- <a href="qtcore.html#qDebug">qDebug</a>(baseUrl<span class="operator">.</span>resolved(relativeUrl)<span class="operator">.</span>toString());
+ <a href="qtcore.html#qDebugx">qDebug</a>(baseUrl<span class="operator">.</span>resolved(relativeUrl)<span class="operator">.</span>toString());
  <span class="comment">// prints "http://qt.nokia.com/products/solutions"</span>
 </pre>
 <p>Calling resolved() with ".." returns a <a href="qurl.html">QUrl</a> whose directory is one level higher than the
@@ -898,7 +898,7 @@ characters to be percent encoded pass them to <i>include</i>.</p>
 <p>Unreserved is defined as: ALPHA / DIGIT / "-" / "." / "<a href="index.html">_</a>" / "~"</p>
 <pre class="cpp">
  <span class="type"><a href="qbytearray.html">QByteArray</a></span> ba <span class="operator">=</span> <span class="type"><a href="qurl.html">QUrl</a></span><span class="operator">.</span>toPercentEncoding(<span class="string">"{a fishy string?}"</span><span class="operator">,</span> <span class="string">"{}"</span><span class="operator">,</span> <span class="string">"s"</span>);
- <a href="qtcore.html#qDebug">qDebug</a>(ba<span class="operator">.</span>constData());
+ <a href="qtcore.html#qDebugx">qDebug</a>(ba<span class="operator">.</span>constData());
  <span class="comment">// prints "{a fi%73hy %73tring%3F}"</span>
 </pre>
 
@@ -927,4 +927,4 @@ empty string is returned.</p>
 <p><b>See also</b> <a href="qurl.html#setUserName">setUserName</a>() and <a href="qurl.html#encodedUserName">encodedUserName</a>().</p>
 
 
-<h3 class="fn"><a name="__eq__" />bool QUrl.__eq__ (<i>self</i>, <a href="qurl.html">QUrl</a>&#160;<i>url</i>)</h3><h3 class="fn"><a name="__ge__" />bool QUrl.__ge__ (<i>self</i>, <a href="qurl.html">QUrl</a>&#160;<i>url</i>)</h3><h3 class="fn"><a name="__hash__" />int QUrl.__hash__ (<i>self</i>)</h3><h3 class="fn"><a name="__lt__" />bool QUrl.__lt__ (<i>self</i>, <a href="qurl.html">QUrl</a>&#160;<i>url</i>)</h3><h3 class="fn"><a name="__ne__" />bool QUrl.__ne__ (<i>self</i>, <a href="qurl.html">QUrl</a>&#160;<i>url</i>)</h3><h3 class="fn"><a name="__repr__" />str QUrl.__repr__ (<i>self</i>)</h3><address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<h3 class="fn"><a name="__eq__" />bool QUrl.__eq__ (<i>self</i>, <a href="qurl.html">QUrl</a>&#160;<i>url</i>)</h3><h3 class="fn"><a name="__ge__" />bool QUrl.__ge__ (<i>self</i>, <a href="qurl.html">QUrl</a>&#160;<i>url</i>)</h3><h3 class="fn"><a name="__hash__" />int QUrl.__hash__ (<i>self</i>)</h3><h3 class="fn"><a name="__lt__" />bool QUrl.__lt__ (<i>self</i>, <a href="qurl.html">QUrl</a>&#160;<i>url</i>)</h3><h3 class="fn"><a name="__ne__" />bool QUrl.__ne__ (<i>self</i>, <a href="qurl.html">QUrl</a>&#160;<i>url</i>)</h3><h3 class="fn"><a name="__repr__" />str QUrl.__repr__ (<i>self</i>)</h3><address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

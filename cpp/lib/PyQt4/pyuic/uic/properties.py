@@ -147,8 +147,18 @@ class Properties(object):
         if prop.get('notr', notr) == 'true':
             return text
 
-        return QtGui.QApplication.translate(self.uiname, text,
-                prop.get('comment'), QtGui.QApplication.UnicodeUTF8)
+        disambig = prop.get('comment')
+
+        # Allow for Qt5 without deprecated features.
+        try:
+            encoding = QtGui.QApplication.UnicodeUTF8
+            translated = QtGui.QApplication.translate(self.uiname, text,
+                    disambig, encoding)
+        except AttributeError:
+            translated = QtGui.QApplication.translate(self.uiname, text,
+                    disambig)
+
+        return translated
 
     _char = _string
 

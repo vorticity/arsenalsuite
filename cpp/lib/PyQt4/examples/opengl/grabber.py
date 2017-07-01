@@ -55,6 +55,9 @@ except ImportError:
             "PyOpenGL must be installed to run this example.")
     sys.exit(1)
 
+from sip import setdestroyonexit
+setdestroyonexit(False)
+
 
 class GLWidget(QtOpenGL.QGLWidget):
     xRotationChanged = QtCore.pyqtSignal(int)
@@ -75,12 +78,6 @@ class GLWidget(QtOpenGL.QGLWidget):
         timer = QtCore.QTimer(self)
         timer.timeout.connect(self.advanceGears)
         timer.start(20)
-
-    def __del__(self):
-        self.makeCurrent()
-        glDeleteLists(self.gear1, 1)
-        glDeleteLists(self.gear2, 1)
-        glDeleteLists(self.gear3, 1)
 
     def setXRotation(self, angle):
         self.normalizeAngle(angle)
@@ -147,7 +144,7 @@ class GLWidget(QtOpenGL.QGLWidget):
         if side < 0:
             return
 
-        glViewport((width - side) / 2, (height - side) / 2, side, side)
+        glViewport((width - side) // 2, (height - side) // 2, side, side)
 
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()

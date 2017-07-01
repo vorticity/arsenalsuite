@@ -1,26 +1,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Old-style Signal and Slot Support &mdash; PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide</title>
+    <title>Old-style Signal and Slot Support &mdash; PyQt 4.11.1 Reference Guide</title>
+    
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '#',
-        VERSION:     'snapshot-4.9.5-9eb6aac99275',
-        COLLAPSE_MODINDEX: false,
+        URL_ROOT:    './',
+        VERSION:     '4.11.1',
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/logo_tn.ico"/>
-    <link rel="top" title="PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide" href="index.html" />
+    <link rel="top" title="PyQt 4.11.1 Reference Guide" href="index.html" />
     <link rel="next" title="Things to be Aware Of" href="gotchas.html" />
     <link rel="prev" title="New-style Signal and Slot Support" href="new_style_signals_slots.html" /> 
   </head>
@@ -32,15 +36,15 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="gotchas.html" title="Things to be Aware Of"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="new_style_signals_slots.html" title="New-style Signal and Slot Support"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide</a> &raquo;</li> 
+        <li><a href="index.html">PyQt 4.11.1 Reference Guide</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -67,9 +71,9 @@ no exception is raised, either when the signal is connected or emitted.</li>
 <li>It is not Pythonic.</li>
 </ul>
 <p>This older style of connecting signals and slots will continue to be supported
-throughout the life of PyQt v4.</p>
-<div class="section" id="pyqt-signals-and-qt-signals">
-<h2>PyQt Signals and Qt Signals<a class="headerlink" href="#pyqt-signals-and-qt-signals" title="Permalink to this headline">¶</a></h2>
+throughout the life of PyQt4.</p>
+<div class="section" id="pyqt4-signals-and-qt-signals">
+<h2>PyQt4 Signals and Qt Signals<a class="headerlink" href="#pyqt4-signals-and-qt-signals" title="Permalink to this headline">¶</a></h2>
 <p>Qt signals are statically defined as part of a C++ class.  They are referenced
 using the <tt class="docutils literal"><span class="pre">QtCore.SIGNAL()</span></tt> function.  This method takes a single string
 argument that is the name of the signal and its C++ signature.  For example:</p>
@@ -78,8 +82,8 @@ argument that is the name of the signal and its C++ signature.  For example:</p>
 </div>
 <p>The returned value is normally passed to the <tt class="docutils literal"><span class="pre">QtCore.QObject.connect()</span></tt>
 method.</p>
-<p>PyQt allows new signals to be defined dynamically.  The act of emitting a
-PyQt signal implicitly defines it.  PyQt v4 signals are also referenced using
+<p>PyQt4 allows new signals to be defined dynamically.  The act of emitting a
+PyQt4 signal implicitly defines it.  PyQt4 signals are also referenced using
 the <tt class="docutils literal"><span class="pre">QtCore.SIGNAL()</span></tt> function.</p>
 </div>
 <div class="section" id="the-pyqt-pyobject-signal-argument-type">
@@ -99,17 +103,17 @@ after the call to <tt class="docutils literal"><span class="pre">QtCore.QObject.
 </div>
 <div class="section" id="short-circuit-signals">
 <h2>Short-circuit Signals<a class="headerlink" href="#short-circuit-signals" title="Permalink to this headline">¶</a></h2>
-<p>There is also a special form of a PyQt v4 signal known as a short-circuit
-signal.  Short-circut signals implicitly declare each argument as being of
-type <tt class="docutils literal"><span class="pre">PyQt_PyObject</span></tt>.</p>
+<p>There is also a special form of a PyQt4 signal known as a short-circuit signal.
+Short-circut signals implicitly declare each argument as being of type
+<tt class="docutils literal"><span class="pre">PyQt_PyObject</span></tt>.</p>
 <p>Short-circuit signals do not have a list of arguments or the surrounding
 parentheses.</p>
 <p>Short-circuit signals may only be connected to slots that have been implemented
 in Python.  They cannot be connected to Qt slots or the Python callables that
 wrap Qt slots.</p>
 </div>
-<div class="section" id="pyqt-slots-and-qt-slots">
-<h2>PyQt Slots and Qt Slots<a class="headerlink" href="#pyqt-slots-and-qt-slots" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pyqt4-slots-and-qt-slots">
+<h2>PyQt4 Slots and Qt Slots<a class="headerlink" href="#pyqt4-slots-and-qt-slots" title="Permalink to this headline">¶</a></h2>
 <p>Qt slots are statically defined as part of a C++ class.  They are referenced
 using the <tt class="docutils literal"><span class="pre">QtCore.SLOT()</span></tt> function.  This method takes a single string
 argument that is the name of the slot and its C++ signature.  For example:</p>
@@ -118,13 +122,13 @@ argument that is the name of the slot and its C++ signature.  For example:</p>
 </div>
 <p>The returned value is normally passed to the <tt class="docutils literal"><span class="pre">QtCore.QObject.connect()</span></tt>
 method.</p>
-<p>PyQt allows any Python callable to be used as a slot, not just Qt slots.  This
+<p>PyQt4 allows any Python callable to be used as a slot, not just Qt slots.  This
 is done by simply referencing the callable.  Because Qt slots are implemented
 as class methods they are also available as Python callables.  Therefore it is
 not usually necessary to use <tt class="docutils literal"><span class="pre">QtCore.SLOT()</span></tt> for Qt slots.  However, doing so
 is more efficient as it avoids a conversion to Python and back to C++.</p>
 <p>Qt allows a signal to be connected to a slot that requires fewer arguments than
-the signal passes.  The extra arguments are quietly discarded.  PyQt slots can
+the signal passes.  The extra arguments are quietly discarded.  PyQt4 slots can
 be used in the same way.</p>
 <p>Note that when a slot is a Python callable its reference count is not
 increased.  This means that a class instance can be deleted without having to
@@ -146,7 +150,7 @@ collected.</p>
 </div>
 <p>Disconnecting signals works in exactly the same way using the
 <tt class="docutils literal"><span class="pre">QtCore.QObject.disconnect()</span></tt> method.  However, not all the variations of
-that method are supported by PyQt.  Signals must be disconnected one at a
+that method are supported by PyQt4.  Signals must be disconnected one at a
 time.</p>
 </div>
 <div class="section" id="emitting-signals">
@@ -163,7 +167,7 @@ slots as the signal arguments.  For example:</p>
 <div class="section" id="the-qtcore-pyqtsignature-decorator">
 <h2>The <tt class="docutils literal"><span class="pre">QtCore.pyqtSignature()</span></tt> Decorator<a class="headerlink" href="#the-qtcore-pyqtsignature-decorator" title="Permalink to this headline">¶</a></h2>
 <p>The <tt class="docutils literal"><span class="pre">QtCore.pyqtSignature()</span></tt> serves the same purpose as the
-<a title="PyQt4.QtCore.pyqtSlot" class="reference external" href="new_style_signals_slots.html#PyQt4.QtCore.pyqtSlot"><tt class="xref docutils literal"><span class="pre">pyqtSlot()</span></tt></a> decorator but has a less Pythonic API.</p>
+<a class="reference internal" href="new_style_signals_slots.html#PyQt4.QtCore.pyqtSlot" title="PyQt4.QtCore.pyqtSlot"><tt class="xref py py-func docutils literal"><span class="pre">pyqtSlot()</span></tt></a> decorator but has a less Pythonic API.</p>
 </div>
 </div>
 
@@ -176,39 +180,39 @@ slots as the signal arguments.  For example:</p>
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/logo.png" alt="Logo"/>
             </a></p>
-            <h3><a href="index.html">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference external" href="#">Old-style Signal and Slot Support</a><ul>
-<li><a class="reference external" href="#pyqt-signals-and-qt-signals">PyQt Signals and Qt Signals</a></li>
-<li><a class="reference external" href="#the-pyqt-pyobject-signal-argument-type">The <tt class="docutils literal"><span class="pre">PyQt_PyObject</span></tt> Signal Argument Type</a></li>
-<li><a class="reference external" href="#short-circuit-signals">Short-circuit Signals</a></li>
-<li><a class="reference external" href="#pyqt-slots-and-qt-slots">PyQt Slots and Qt Slots</a></li>
-<li><a class="reference external" href="#connecting-signals-and-slots">Connecting Signals and Slots</a></li>
-<li><a class="reference external" href="#emitting-signals">Emitting Signals</a></li>
-<li><a class="reference external" href="#the-qtcore-pyqtsignature-decorator">The <tt class="docutils literal"><span class="pre">QtCore.pyqtSignature()</span></tt> Decorator</a></li>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Old-style Signal and Slot Support</a><ul>
+<li><a class="reference internal" href="#pyqt4-signals-and-qt-signals">PyQt4 Signals and Qt Signals</a></li>
+<li><a class="reference internal" href="#the-pyqt-pyobject-signal-argument-type">The <tt class="docutils literal"><span class="pre">PyQt_PyObject</span></tt> Signal Argument Type</a></li>
+<li><a class="reference internal" href="#short-circuit-signals">Short-circuit Signals</a></li>
+<li><a class="reference internal" href="#pyqt4-slots-and-qt-slots">PyQt4 Slots and Qt Slots</a></li>
+<li><a class="reference internal" href="#connecting-signals-and-slots">Connecting Signals and Slots</a></li>
+<li><a class="reference internal" href="#emitting-signals">Emitting Signals</a></li>
+<li><a class="reference internal" href="#the-qtcore-pyqtsignature-decorator">The <tt class="docutils literal"><span class="pre">QtCore.pyqtSignature()</span></tt> Decorator</a></li>
 </ul>
 </li>
 </ul>
 
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="new_style_signals_slots.html"
-                                  title="previous chapter">New-style Signal and Slot Support</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="gotchas.html"
-                                  title="next chapter">Things to be Aware Of</a></p>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="new_style_signals_slots.html"
+                        title="previous chapter">New-style Signal and Slot Support</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="gotchas.html"
+                        title="next chapter">Things to be Aware Of</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -220,7 +224,7 @@ slots as the signal arguments.  For example:</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
+          <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
           <a href="gotchas.html" title="Things to be Aware Of"
@@ -228,12 +232,12 @@ slots as the signal arguments.  For example:</p>
         <li class="right" >
           <a href="new_style_signals_slots.html" title="New-style Signal and Slot Support"
              >previous</a> |</li>
-        <li><a href="index.html">PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide</a> &raquo;</li> 
+        <li><a href="index.html">PyQt 4.11.1 Reference Guide</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2011 Riverbank Computing Limited.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.4.
+        &copy; Copyright 2014 Riverbank Computing Limited.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

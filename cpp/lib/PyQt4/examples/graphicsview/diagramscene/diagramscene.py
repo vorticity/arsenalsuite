@@ -50,7 +50,10 @@ import math
 
 from PyQt4 import QtCore, QtGui
 
-import diagramscene_rc
+try:
+    import diagramscene_rc3
+except ImportError:
+    import diagramscene_rc2
 
 
 class Arrow(QtGui.QGraphicsLineItem):
@@ -451,7 +454,7 @@ class MainWindow(QtGui.QMainWindow):
         self.scene.setMode(self.pointerTypeGroup.checkedId())
 
     def bringToFront(self):
-        if not scene.selectedItems():
+        if not self.scene.selectedItems():
             return
 
         selectedItem = self.scene.selectedItems()[0]
@@ -464,7 +467,7 @@ class MainWindow(QtGui.QMainWindow):
         selectedItem.setZValue(zValue)
 
     def sendToBack(self):
-        if not scene.selectedItems():
+        if not self.scene.selectedItems():
             return
 
         selectedItem = self.scene.selectedItems()[0]

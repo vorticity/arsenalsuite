@@ -1,7 +1,7 @@
 /*
  * This is the interface of the Qt Designer plugin.
  *
- * Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+ * Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
  * 
  * This file is part of PyQt.
  * 
@@ -44,6 +44,9 @@ class PyCustomWidgets
     : public QObject, public QDesignerCustomWidgetCollectionInterface
 {
     Q_OBJECT
+#if QT_VERSION >= 0x050000
+    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QDesignerCustomWidgetCollectionInterface")
+#endif
     Q_INTERFACES(QDesignerCustomWidgetCollectionInterface)
 
 public:

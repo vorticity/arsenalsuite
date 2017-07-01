@@ -49,7 +49,10 @@ sip.setapi('QVariant', 2)
 
 from PyQt4 import QtCore, QtGui
 
-import pixelator_rc
+try:
+    import pixelator_rc3
+except ImportError:
+    import pixelator_rc2
 
 
 ItemSize = 256
@@ -243,7 +246,7 @@ class MainWindow(QtGui.QMainWindow):
         painter.translate(printer.pageRect().x()+printer.pageRect().width()/2,
                           printer.pageRect().y()+printer.pageRect().height()/2)
         painter.scale(scale, scale)
-        painter.translate(-sourceWidt/2, -sourceHeight/2)
+        painter.translate(-sourceWidth/2, -sourceHeight/2)
 
         option = QtGui.QStyleOptionViewItem()
         parent = QtCore.QModelIndex()
@@ -260,7 +263,7 @@ class MainWindow(QtGui.QMainWindow):
 
             x = ItemSize / 2.0
 
-            for col in range(columns):
+            for column in range(columns):
                 option.rect = QtCore.QRect(x, y, ItemSize, ItemSize)
                 self.view.itemDelegate.paint(painter, option,
                         self.model.index(row, column, parent))

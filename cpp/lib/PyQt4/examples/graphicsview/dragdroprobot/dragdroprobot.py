@@ -44,7 +44,10 @@
 
 from PyQt4 import QtCore, QtGui
 
-import dragdroprobot_rc
+try:
+    import dragdroprobot_rc3
+except ImportError:
+    import dragdroprobot_rc2
 
 
 class ColorItem(QtGui.QGraphicsItem):

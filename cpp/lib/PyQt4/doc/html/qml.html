@@ -1,26 +1,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Integrating Python and QML &mdash; PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide</title>
+    <title>Integrating Python and QML &mdash; PyQt 4.11.1 Reference Guide</title>
+    
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '#',
-        VERSION:     'snapshot-4.9.5-9eb6aac99275',
-        COLLAPSE_MODINDEX: false,
+        URL_ROOT:    './',
+        VERSION:     '4.11.1',
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/logo_tn.ico"/>
-    <link rel="top" title="PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide" href="index.html" />
+    <link rel="top" title="PyQt 4.11.1 Reference Guide" href="index.html" />
     <link rel="next" title="Integrating Python and JavaScript in QtWebKit" href="webkit.html" />
     <link rel="prev" title="Support for QSettings" href="pyqt_qsettings.html" /> 
   </head>
@@ -32,15 +36,15 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="webkit.html" title="Integrating Python and JavaScript in QtWebKit"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="pyqt_qsettings.html" title="Support for QSettings"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide</a> &raquo;</li> 
+        <li><a href="index.html">PyQt 4.11.1 Reference Guide</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -54,22 +58,22 @@
 <p>Qt v4.7 introduced QML as a means of declaratively describing a user interface
 and using JavaScript as a scripting language within QML.  It is possible to
 write complete standalone QML applications, or to combine them with C++.</p>
-<p>PyQt supports the integration of Python and QML as far as it can - given the
+<p>PyQt4 supports the integration of Python and QML as far as it can - given the
 limitations of the QML implementation.</p>
 <p>There are three types of QML application:</p>
 <ul class="simple">
 <li><em>Pure</em> applications that are written entirely in QML and can be run using the
-<strong>qmlviewer</strong> tool provided with Qt.  PyQt fully supports this type of
-application.  The examples provided by <strong>qtdemo.py</strong> under the <em>Qt
+<strong class="program">qmlviewer</strong> tool provided with Qt.  PyQt4 fully supports this type
+of application.  The examples provided by <strong class="program">qtdemo.py</strong> under the <em>Qt
 Declarative Examples</em> heading are all of this type.</li>
 <li>QML allows <tt class="docutils literal"><span class="pre">QObject</span></tt> instances to be used in QML applications.  QML code is
 able to call an object&#8217;s slots and has read and write access to the object&#8217;s
 properties.  QML code can also respond to changes to the value of a property.
-PyQt fully supports the use objects created in Python in this way.  The
-<strong>minehunt.py</strong> example under the <em>Demonstrations</em> heading of
-<strong>qtdemo.py</strong> is an example of this type of application.</li>
+PyQt4 fully supports the use objects created in Python in this way.  The
+<strong class="program">minehunt.py</strong> example under the <em>Demonstrations</em> heading of
+<strong class="program">qtdemo.py</strong> is an example of this type of application.</li>
 <li>QML also allows <tt class="docutils literal"><span class="pre">QObject</span></tt> sub-classes to be used in QML applications so
-that new instances are created from QML.  PyQt does not support this.  The
+that new instances are created from QML.  PyQt4 does not support this.  The
 reason is that QML uses information generated at compile time (specifically
 it uses <tt class="docutils literal"><span class="pre">QObject::staticMetaObject</span></tt>) rather than information created
 dynamically at run time (i.e. <tt class="docutils literal"><span class="pre">QObject::metaObject()</span></tt>).  This approach is
@@ -78,13 +82,13 @@ Python that allow types to created dynamically.  This limitation doesn&#8217;t
 place any restriction on the functionality of a Python/QML application, it
 only places restrictions on how that application is written.</li>
 </ul>
-<p>QML can implement JavaScript functions and define signals.  PyQt allows both of
-these to be accessed transparently from Python.  The following is a simple
+<p>QML can implement JavaScript functions and define signals.  PyQt4 allows both
+of these to be accessed transparently from Python.  The following is a simple
 example application that displays the current date and time when the user
 clicks on it.</p>
-<p>The following is the QML (in the <tt class="docutils literal"><span class="pre">message.qml</span></tt>) that defines the user
+<p>The following is the QML (in the <tt class="file docutils literal"><span class="pre">message.qml</span></tt>) that defines the user
 interface:</p>
-<div class="highlight-python"><pre>import Qt 4.7
+<div class="highlight-python"><div class="highlight"><pre>import Qt 4.7
 
 Rectangle {
     signal messageRequired;
@@ -93,18 +97,19 @@ Rectangle {
         messageText.text = text
     }
 
-    anchors.fill: parent; color: "black"
+    anchors.fill: parent; color: &quot;black&quot;
 
     Text {
         id: messageText
-        anchors.centerIn: parent; color: "white"
+        anchors.centerIn: parent; color: &quot;white&quot;
     }
 
     MouseArea {
         anchors.fill: parent
         onClicked: messageRequired()
     }
-}</pre>
+}
+</pre></div>
 </div>
 <p>This defines a signal <tt class="docutils literal"><span class="pre">messageRequired</span></tt> which is emitted when the user clicks
 on the mouse area.  It also implements a function <tt class="docutils literal"><span class="pre">updateMessage()</span></tt> which
@@ -174,25 +179,25 @@ called respectively.</p>
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/logo.png" alt="Logo"/>
             </a></p>
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="pyqt_qsettings.html"
-                                  title="previous chapter">Support for QSettings</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="webkit.html"
-                                  title="next chapter">Integrating Python and JavaScript in QtWebKit</a></p>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyqt_qsettings.html"
+                        title="previous chapter">Support for QSettings</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="webkit.html"
+                        title="next chapter">Integrating Python and JavaScript in QtWebKit</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -204,7 +209,7 @@ called respectively.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
+          <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
           <a href="webkit.html" title="Integrating Python and JavaScript in QtWebKit"
@@ -212,12 +217,12 @@ called respectively.</p>
         <li class="right" >
           <a href="pyqt_qsettings.html" title="Support for QSettings"
              >previous</a> |</li>
-        <li><a href="index.html">PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide</a> &raquo;</li> 
+        <li><a href="index.html">PyQt 4.11.1 Reference Guide</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2011 Riverbank Computing Limited.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.4.
+        &copy; Copyright 2014 Riverbank Computing Limited.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

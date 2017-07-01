@@ -1,5 +1,5 @@
-PyQt Reference Guide
-====================
+PyQt4 Reference Guide
+=====================
 
 .. toctree::
     :maxdepth: 2
@@ -8,6 +8,7 @@ PyQt Reference Guide
     incompatibilities
     installation
     python_v3
+    qt_v5
     keyword_arguments
     qt_properties
     new_style_signals_slots

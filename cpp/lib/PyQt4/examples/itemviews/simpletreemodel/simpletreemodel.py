@@ -44,7 +44,10 @@
 
 from PyQt4 import QtCore, QtGui
 
-import simpletreemodel_rc
+try:
+    import simpletreemodel_rc3
+except ImportError:
+    import simpletreemodel_rc2
 
 
 class TreeItem(object):

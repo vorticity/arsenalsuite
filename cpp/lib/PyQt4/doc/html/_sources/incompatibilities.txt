@@ -1,8 +1,33 @@
 Potential Incompatibilities with Earlier Versions
 =================================================
 
-PyQt v4.9.2
+PyQt4 v4.11
 -----------
+
+Execution of Python Slots
+*************************
+
+Until the release of PyQt4 v4.9.4, when a signal was emitted to a Python slot
+that was not decorated with :func:`~PyQt4.QtCore.pyqtSlot`, it would first
+check that the underlying C++ receiver instance still existed.  If it didn't
+then the slot was ignored thereby reflecting the standard C++ behaviour.
+
+In v4.9.4 (strictly speaking it was the release of SIP at the time) the check
+was removed. It was done so that an object could connect its
+:func:`~PyQt4.QtCore.QObject.destroyed` signal to itself so that it could
+monitor when its underlying C++ instance was destroyed.  Unfortunately this
+turned out to be an undocumented and incompatible change and a potential source
+of obscure bugs for more common code.
+
+In v4.11 the check was reintroduced - hence creating an incompatibility for any
+code that relies on the v4.9.4 behaviour.  As a workaround for this the
+``no_receiver_check`` argument has been added to
+:func:`~PyQt4.QtCore.QObject.connect` which allows the check to be suppressed
+on a per connection basis.
+
+
+PyQt4 v4.9.2
+------------
 
 QPyNullVariant
 **************
@@ -15,8 +40,8 @@ converted to a bool.  This makes it behave like ``None`` in these
 circumstances.
 
 
-PyQt v4.8.3
------------
+PyQt4 v4.8.3
+------------
 
 SQL Models
 **********
@@ -36,14 +61,14 @@ implement an ``isNull()`` method.  This ensures that existing code that uses
 non-SQL models will continue to work unchanged.
 
 
-PyQt v4.8
----------
+PyQt4 v4.8
+----------
 
 QVariantList
 ************
 
-In previous versions PyQt would always try and convert a Python list to a
-``QVariantList``.  In this version PyQt will first try to convert it to a
+In previous versions PyQt4 would always try and convert a Python list to a
+``QVariantList``.  In this version PyQt4 will first try to convert it to a
 ``QVariant`` containing a ``QList<QObject *>``, but only if
 ``QList<QObject *>`` has been registered with Qt as a meta-type.
 
@@ -53,28 +78,28 @@ It is possible however that you might observe different conversion behaviour
 after importing the :mod:`~PyQt4.QtDeclarative` module.
 
 
-PyQt v4.7.4
------------
+PyQt4 v4.7.4
+------------
 
 :func:`~PyQt4.QtCore.pyqtSignal` with dict and list
 ***************************************************
 
 In previous versions a Qt signal defined using
 :func:`~PyQt4.QtCore.pyqtSignal` that had an argument specified as a dict then,
-when emitting a value, PyQt would try and convert the value to a
+when emitting a value, PyQt4 would try and convert the value to a
 ``QVariantMap`` if possible.  If it wasn't possible, normally because the dict
 had non-string keys, then the value would be left as a dict object.
 
-In this version PyQt will not attempt to convert the value to a ``QVariantMap``
-and will always leave it as a dict object.  If you want the value to be
-converted to a ``QVariantMap`` then define the signal argument as
+In this version PyQt4 will not attempt to convert the value to a
+``QVariantMap`` and will always leave it as a dict object.  If you want the
+value to be converted to a ``QVariantMap`` then define the signal argument as
 ``'QVariantMap'``.
 
 The same applies to conversions between lists and ``QVariantList``.
 
 
-PyQt v4.7.1
------------
+PyQt4 v4.7.1
+------------
 
 QVariant
 ********
@@ -92,7 +117,7 @@ Take, for example, the following code::
     myfloat = MyFloat(5.0)
     variant = QVariant(myfloat)
 
-With this version of PyQt ``myfloat`` will be converted in such a way as to
+With this version of PyQt4 ``myfloat`` will be converted in such a way as to
 preserve any additional attributes (including methods) and will not be
 converted to a C++ ``double``.  In other words, the following assertions are
 true::
@@ -113,8 +138,8 @@ which would mean that it was converted back to a Python ``list`` rather than to
 the original type.
 
 
-PyQt v4.5
----------
+PyQt4 v4.5
+----------
 
 QVariant
 ********
@@ -134,7 +159,7 @@ Take, for example, the following code::
     mysize = MySize(5, 5)
     variant = QVariant(mysize)
 
-With this version of PyQt ``mysize`` will be converted in such a way as to
+With this version of PyQt4 ``mysize`` will be converted in such a way as to
 preserve any additional attributes (including methods) and will not be
 converted to a C++ ``QSize`` instance.  In other words, the following
 assertions are true::

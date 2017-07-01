@@ -92,9 +92,9 @@ body { background: #ffffff; color: black; }
 </ol>
 <p>Consider the following element:</p>
 <pre>&#160;   &lt;author xmlns:fnord = 'http://trolltech.com/fnord/'
-                 title=&quot;Ms&quot;
-                 fnord:title=&quot;Goddess&quot;
-                 name=&quot;Eris Kallisti&quot;/&gt;</pre>
+                 title="Ms"
+                 fnord:title="Goddess"
+                 name="Eris Kallisti"/&gt;</pre>
 <p>With <i>http://xml.org/sax/features/namespace-prefixes</i> set to true the reader will report four attributes; but with the <i>namespace-prefixes</i> feature set to false only three, with the <i>xmlns:fnord</i> attribute defining a namespace being "invisible" to the reader.</p>
 <p>The <i>http://xml.org/sax/features/namespaces</i> feature is responsible for reporting local names, namespace prefixes and URIs. With <i>http://xml.org/sax/features/namespaces</i> set to true the parser will report <i>title</i> as the local name of the <i>fnord:title</i> attribute, <i>fnord</i> being the namespace prefix and <i>http://trolltech.com/fnord/</i> as the namespace URI. When <i>http://xml.org/sax/features/namespaces</i> is false none of them are reported.</p>
 <p>In the current implementation the Qt XML classes follow the definition that the prefix <i>xmlns</i> itself isn't associated with any namespace at all (see <a href="http://www.w3.org/TR/1999/REC-xml-names-19990114/#ns-using">http://www.w3.org/TR/1999/REC-xml-names-19990114/#ns-using</a>). Therefore even with <i>http://xml.org/sax/features/namespaces</i> and <i>http://xml.org/sax/features/namespace-prefixes</i> both set to true the reader won't return either a local name, a namespace prefix or a namespace URI for <i>xmlns:fnord</i>.</p>
@@ -191,7 +191,7 @@ body { background: #ffffff; color: black; }
 <pre>&#160;   &lt;document&gt;
     &lt;book&gt;
       &lt;title&gt;Practical XML&lt;/title&gt;
-      &lt;author title=&quot;Ms&quot; name=&quot;Eris Kallisti&quot;/&gt;
+      &lt;author title="Ms" name="Eris Kallisti"/&gt;
       &lt;chapter&gt;
         &lt;title&gt;A Namespace Called fnord&lt;/title&gt;
       &lt;/chapter&gt;
@@ -204,9 +204,9 @@ body { background: #ffffff; color: black; }
 <p>Before we can apply a namespace to element or attribute names we must declare it.</p>
 <p>Namespaces are URIs like <i>http://trolltech.com/fnord/book/</i>. This does not mean that data must be available at this address; the URI is simply used to provide a unique name.</p>
 <p>We declare namespaces in the same way as attributes; strictly speaking they <i>are</i> attributes. To make for example <i>http://trolltech.com/fnord/</i> the document's default XML namespace <i>xmlns</i> we write</p>
-<pre>&#160;   xmlns=&quot;http://trolltech.com/fnord/&quot;</pre>
+<pre>&#160;   xmlns="http://trolltech.com/fnord/"</pre>
 <p>To distinguish the <i>http://trolltech.com/fnord/book/</i> namespace from the default, we must supply it with a prefix:</p>
-<pre>&#160;   xmlns:book=&quot;http://trolltech.com/fnord/book/&quot;</pre>
+<pre>&#160;   xmlns:book="http://trolltech.com/fnord/book/"</pre>
 <p>A namespace that is declared like this can be applied to element and attribute names by prepending the appropriate prefix and a ":" delimiter. We have already seen this with the <i>book:title</i> element.</p>
 <p>Element names without a prefix belong to the default namespace. This rule does not apply to attributes: an attribute without a prefix does not belong to any of the declared XML namespaces at all. Attributes always belong to the "traditional" namespace of the element in which they appear. A "traditional" namespace is not an XML namespace, it simply means that all attribute names belonging to one element must be different. Later we will see how to assign an XML namespace to an attribute.</p>
 <p>Due to the fact that attributes without prefixes are not in any XML namespace there is no collision between the attribute <i>title</i> (that belongs to the <i>author</i> element) and for example the <i>title</i> element within a <i>chapter</i>.</p>
@@ -216,9 +216,9 @@ body { background: #ffffff; color: black; }
     &lt;book&gt;
       &lt;book:title&gt;Practical XML&lt;/book:title&gt;
       &lt;book:author xmlns:fnord = 'http://trolltech.com/fnord/'
-                   title=&quot;Ms&quot;
-                   fnord:title=&quot;Goddess&quot;
-                   name=&quot;Eris Kallisti&quot;/&gt;
+                   title="Ms"
+                   fnord:title="Goddess"
+                   name="Eris Kallisti"/&gt;
       &lt;chapter&gt;
         &lt;title&gt;A Namespace Called fnord&lt;/title&gt;
       &lt;/chapter&gt;
@@ -246,4 +246,4 @@ body { background: #ffffff; color: black; }
 <li>The <i>namespace URI</i> ("Uniform Resource Identifier") is a unique identifier for a namespace. It looks like a URL (e.g. <i>http://trolltech.com/fnord/</i> ) but does not require data to be accessible by the given protocol at the named address.</li>
 </ul>
 <p>Elements without a ":" (like <i>chapter</i> in the example) do not have a namespace prefix. In this case the local part and the qualified name are identical (i.e. <i>chapter</i>).</p>
-<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

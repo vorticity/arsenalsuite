@@ -54,7 +54,10 @@ except ImportError:
             "PyOpenGL must be installed to run this example.")
     sys.exit(1)
 
-import textures_rc
+try:
+    import textures_rc3
+except ImportError:
+    import textures_rc2
 
 
 class GLWidget(QtOpenGL.QGLWidget):
@@ -172,7 +175,7 @@ void main(void)
 
     def resizeGL(self, width, height):
         side = min(width, height)
-        glViewport((width - side) / 2, (height - side) / 2, side, side)
+        glViewport((width - side) // 2, (height - side) // 2, side, side)
 
     def mousePressEvent(self, event):
         self.lastPos = event.pos()

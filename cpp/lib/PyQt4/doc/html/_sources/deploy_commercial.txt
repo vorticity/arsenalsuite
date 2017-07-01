@@ -1,23 +1,21 @@
-.. _ref-deploy-commercial:
+Deploying Commercial PyQt4 Applications
+=======================================
 
-Deploying Commercial PyQt Applications
-======================================
+Deploying commercial PyQt4 applications can be a complicated process for a
+number of reasons:
 
-When deploying commercial PyQt applications it is necessary to discourage
-users from accessing the underlying PyQt modules for themselves.  A user that
-used the modules shipped with your application to develop new applications
-would themselves be considered a developer and would need their own commercial
-PyQt license.
+- It is usually better not to rely on pre-requisite packages being already
+  installed on the user's system.  This means that as well as your application
+  code, you also need to include the Python interpreter, the standard library,
+  third-pary packages and extension modules, and Qt itself.
 
-One solution to this problem is the `VendorID
-<http://www.riverbankcomputing.com/software/vendorid/>`__ package.  This allows
-you to build Python extension modules that can only be imported by a digitally
-signed custom interpreter.  The package enables you to create such an
-interpreter with your application embedded within it.  The result is an
-interpreter that can only run your application, and PyQt modules that can only
-be imported by that interpreter.  You can use the package to similarly restrict
-access to any extension module.
+- Some target platforms (iOS for example) have restrictions on how an
+  application is built in order for it to be included in app stores.
 
-In order to build PyQt with support for the VendorID package, pass the
-:option:`--vendorid <configure.py -i>` command line option to
-:program:`configure.py`.
+- It is necessary to discourage users from accessing the underlying PyQt4
+  modules for themselves.  A user that used the modules shipped with your
+  application to develop new applications would themselves be considered a
+  developer and would need their own commercial PyQt4 license.
+
+The recommended solution to all of these issues is to use `pyqtdeploy
+<http://www.riverbankcomputing.com/software/pyqtdeploy/>`__.

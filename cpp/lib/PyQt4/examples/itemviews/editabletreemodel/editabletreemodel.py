@@ -48,7 +48,11 @@ sip.setapi('QVariant', 2)
 
 from PyQt4 import QtCore, QtGui
 
-import editabletreemodel_rc
+try:
+    import editabletreemodel_rc3
+except ImportError:
+    import editabletreemodel_rc2
+
 from ui_mainwindow import Ui_MainWindow
 
 

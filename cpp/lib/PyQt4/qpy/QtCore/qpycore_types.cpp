@@ -1,6 +1,6 @@
 // This contains the meta-type used by PyQt.
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -144,6 +144,9 @@ PyTypeObject qpycore_pyqtWrapperType_Type = {
 #if PY_VERSION_HEX >= 0x02060000
     0,                      /* tp_version_tag */
 #endif
+#if PY_VERSION_HEX >= 0x03040000
+    0,                      /* tp_finalize */
+#endif
 };
 
 
@@ -161,7 +164,7 @@ static int pyqtWrapperType_init(pyqtWrapperType *self, PyObject *args,
     {
         // Create a dynamic meta-object as its base wrapped type has a static
         // Qt meta-object.
-        if (pyqt_td->qt4_static_metaobject && create_dynamic_metaobject(self) < 0)
+        if (pyqt_td->static_metaobject && create_dynamic_metaobject(self) < 0)
             return -1;
     }
 
@@ -303,8 +306,13 @@ static int create_dynamic_metaobject(pyqtWrapperType *pyqt_wt)
                 qpycore_set_signal_name(ps, pytype->tp_name, ascii_key);
 
                 // Add all the overloads.
-                for (int ol = 0; ol < ps->overloads->size(); ++ol)
-                    psigs.append(ps->overloads->at(ol)->signature);
+                do
+                {
+                    psigs.append(ps->signature->signature);
+
+                    ps = ps->next;
+                }
+                while (ps);
 
                 Py_DECREF(key);
             }
@@ -547,7 +555,7 @@ static int create_dynamic_metaobject(pyqtWrapperType *pyqt_wt)
         if (pp->pyqtprop_notify)
         {
             qpycore_pyqtSignal *ps = (qpycore_pyqtSignal *)pp->pyqtprop_notify;
-            const QByteArray &sig = ps->master->overloads->at(ps->master_index)->signature;
+            const QByteArray &sig = ps->signature->signature;
 
 #if QT_VERSION >= 0x050000
             notifier_id = builder.indexOfSignal(sig.mid(1));
@@ -810,7 +818,7 @@ static const QMetaObject *get_qmetaobject(pyqtWrapperType *pyqt_wt)
         return QPYCORE_QMETAOBJECT(pyqt_wt->metaobject);
 
     // It's a wrapped type.
-    return reinterpret_cast<const QMetaObject *>(((pyqt4ClassTypeDef *)((sipWrapperType *)pyqt_wt)->type)->qt4_static_metaobject);
+    return reinterpret_cast<const QMetaObject *>(((pyqt4ClassTypeDef *)((sipWrapperType *)pyqt_wt)->type)->static_metaobject);
 }
 
 

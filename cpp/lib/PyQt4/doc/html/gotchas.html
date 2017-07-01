@@ -1,26 +1,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Things to be Aware Of &mdash; PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide</title>
+    <title>Things to be Aware Of &mdash; PyQt 4.11.1 Reference Guide</title>
+    
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '#',
-        VERSION:     'snapshot-4.9.5-9eb6aac99275',
-        COLLAPSE_MODINDEX: false,
+        URL_ROOT:    './',
+        VERSION:     '4.11.1',
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/logo_tn.ico"/>
-    <link rel="top" title="PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide" href="index.html" />
+    <link rel="top" title="PyQt 4.11.1 Reference Guide" href="index.html" />
     <link rel="next" title="Using Qt Designer" href="designer.html" />
     <link rel="prev" title="Old-style Signal and Slot Support" href="old_style_signals_slots.html" /> 
   </head>
@@ -32,15 +36,15 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="designer.html" title="Using Qt Designer"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="old_style_signals_slots.html" title="Old-style Signal and Slot Support"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide</a> &raquo;</li> 
+        <li><a href="index.html">PyQt 4.11.1 Reference Guide</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -53,44 +57,44 @@
 <h1>Things to be Aware Of<a class="headerlink" href="#things-to-be-aware-of" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="python-strings-qt-strings-and-unicode">
 <h2>Python Strings, Qt Strings and Unicode<a class="headerlink" href="#python-strings-qt-strings-and-unicode" title="Permalink to this headline">¶</a></h2>
-<p>PyQt uses the <tt class="docutils literal"><span class="pre">QString</span></tt> class to represent Unicode strings, and the
+<p>PyQt4 uses the <tt class="docutils literal"><span class="pre">QString</span></tt> class to represent Unicode strings, and the
 <tt class="docutils literal"><span class="pre">QByteArray</span></tt> to represent byte arrays or strings.  In Python v3 the
 corresponding native object types are <tt class="docutils literal"><span class="pre">str</span></tt> and <tt class="docutils literal"><span class="pre">bytes</span></tt>.  In Python v2 the
 corresponding native object types are <tt class="docutils literal"><span class="pre">unicode</span></tt> and <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
-<p>PyQt does its best to automatically convert between objects of the various
+<p>PyQt4 does its best to automatically convert between objects of the various
 types.  Explicit conversions can be easily made where necessary.</p>
-<p>In some cases PyQt will not perform automatic conversions where it is
+<p>In some cases PyQt4 will not perform automatic conversions where it is
 necessary to distinguish between different overloaded methods.</p>
 <p>For Python v3 the following conversions are done by default.</p>
 <ul class="simple">
-<li>If Qt expects a <tt class="docutils literal"><span class="pre">char</span> <span class="pre">*</span></tt> (or a <tt class="docutils literal"><span class="pre">const</span></tt> version) then PyQt will accept a
+<li>If Qt expects a <tt class="docutils literal"><span class="pre">char</span> <span class="pre">*</span></tt> (or a <tt class="docutils literal"><span class="pre">const</span></tt> version) then PyQt4 will accept a
 <tt class="docutils literal"><span class="pre">str</span></tt> or <tt class="docutils literal"><span class="pre">QString</span></tt> that contains only ASCII characters, a <tt class="docutils literal"><span class="pre">bytes</span></tt>, a
 <tt class="docutils literal"><span class="pre">QByteArray</span></tt>, or a Python object that implements the buffer protocol.</li>
-<li>If Qt expects a <tt class="docutils literal"><span class="pre">char</span></tt> (or a <tt class="docutils literal"><span class="pre">const</span></tt> version) then PyQt will accept the
+<li>If Qt expects a <tt class="docutils literal"><span class="pre">char</span></tt> (or a <tt class="docutils literal"><span class="pre">const</span></tt> version) then PyQt4 will accept the
 same types as for <tt class="docutils literal"><span class="pre">char</span> <span class="pre">*</span></tt> and also require that a single character is
 provided.</li>
 <li>If Qt expects a <tt class="docutils literal"><span class="pre">signed</span> <span class="pre">char</span> <span class="pre">*</span></tt> or an <tt class="docutils literal"><span class="pre">unsigned</span> <span class="pre">char</span> <span class="pre">*</span></tt> (or a <tt class="docutils literal"><span class="pre">const</span></tt>
-version) then PyQt will accept a <tt class="docutils literal"><span class="pre">bytes</span></tt>.</li>
+version) then PyQt4 will accept a <tt class="docutils literal"><span class="pre">bytes</span></tt>.</li>
 <li>If Qt expects a <tt class="docutils literal"><span class="pre">signed</span> <span class="pre">char</span></tt> or an <tt class="docutils literal"><span class="pre">unsigned</span> <span class="pre">char</span></tt> (or a <tt class="docutils literal"><span class="pre">const</span></tt>
-version) then PyQt will accept a <tt class="docutils literal"><span class="pre">bytes</span></tt> of length 1.</li>
-<li>If Qt expects a <tt class="docutils literal"><span class="pre">QString</span></tt> then PyQt will accept a <tt class="docutils literal"><span class="pre">str</span></tt>, a <tt class="docutils literal"><span class="pre">bytes</span></tt> that
-contains only ASCII characters, a <tt class="docutils literal"><span class="pre">QChar</span></tt> or a <tt class="docutils literal"><span class="pre">QByteArray</span></tt>.</li>
-<li>If Qt expects a <tt class="docutils literal"><span class="pre">QByteArray</span></tt> then PyQt will also accept a <tt class="docutils literal"><span class="pre">str</span></tt> that
+version) then PyQt4 will accept a <tt class="docutils literal"><span class="pre">bytes</span></tt> of length 1.</li>
+<li>If Qt expects a <tt class="docutils literal"><span class="pre">QString</span></tt> then PyQt4 will accept a <tt class="docutils literal"><span class="pre">str</span></tt>, a <tt class="docutils literal"><span class="pre">bytes</span></tt>
+that contains only ASCII characters, a <tt class="docutils literal"><span class="pre">QChar</span></tt> or a <tt class="docutils literal"><span class="pre">QByteArray</span></tt>.</li>
+<li>If Qt expects a <tt class="docutils literal"><span class="pre">QByteArray</span></tt> then PyQt4 will also accept a <tt class="docutils literal"><span class="pre">str</span></tt> that
 contains only Latin-1 characters, or a <tt class="docutils literal"><span class="pre">bytes</span></tt>.</li>
 </ul>
 <p>For Python v2 the following conversions are done by default.</p>
 <ul class="simple">
 <li>If Qt expects a <tt class="docutils literal"><span class="pre">char</span> <span class="pre">*</span></tt>, <tt class="docutils literal"><span class="pre">signed</span> <span class="pre">char</span> <span class="pre">*</span></tt> or an <tt class="docutils literal"><span class="pre">unsigned</span> <span class="pre">char</span> <span class="pre">*</span></tt> (or a
-<tt class="docutils literal"><span class="pre">const</span></tt> version) then PyQt will accept a <tt class="docutils literal"><span class="pre">unicode</span></tt> or <tt class="docutils literal"><span class="pre">QString</span></tt> that
+<tt class="docutils literal"><span class="pre">const</span></tt> version) then PyQt4 will accept a <tt class="docutils literal"><span class="pre">unicode</span></tt> or <tt class="docutils literal"><span class="pre">QString</span></tt> that
 contains only ASCII characters, a <tt class="docutils literal"><span class="pre">str</span></tt>, a <tt class="docutils literal"><span class="pre">QByteArray</span></tt>, or a Python
 object that implements the buffer protocol.</li>
 <li>If Qt expects a <tt class="docutils literal"><span class="pre">char</span></tt>, <tt class="docutils literal"><span class="pre">signed</span> <span class="pre">char</span></tt> or an <tt class="docutils literal"><span class="pre">unsigned</span> <span class="pre">char</span></tt> (or a
-<tt class="docutils literal"><span class="pre">const</span></tt> version) then PyQt will accept the same types as for <tt class="docutils literal"><span class="pre">char</span> <span class="pre">*</span></tt>,
+<tt class="docutils literal"><span class="pre">const</span></tt> version) then PyQt4 will accept the same types as for <tt class="docutils literal"><span class="pre">char</span> <span class="pre">*</span></tt>,
 <tt class="docutils literal"><span class="pre">signed</span> <span class="pre">char</span> <span class="pre">*</span></tt> and <tt class="docutils literal"><span class="pre">unsigned</span> <span class="pre">char</span> <span class="pre">*</span></tt> and also require that a single
 character is provided.</li>
-<li>If Qt expects a <tt class="docutils literal"><span class="pre">QString</span></tt> then PyQt will accept a <tt class="docutils literal"><span class="pre">unicode</span></tt>, a <tt class="docutils literal"><span class="pre">str</span></tt>
+<li>If Qt expects a <tt class="docutils literal"><span class="pre">QString</span></tt> then PyQt4 will accept a <tt class="docutils literal"><span class="pre">unicode</span></tt>, a <tt class="docutils literal"><span class="pre">str</span></tt>
 that contains only ASCII characters, a <tt class="docutils literal"><span class="pre">QChar</span></tt> or a <tt class="docutils literal"><span class="pre">QByteArray</span></tt>.</li>
-<li>If Qt expects a <tt class="docutils literal"><span class="pre">QByteArray</span></tt> then PyQt will accept a <tt class="docutils literal"><span class="pre">unicode</span></tt> that
+<li>If Qt expects a <tt class="docutils literal"><span class="pre">QByteArray</span></tt> then PyQt4 will accept a <tt class="docutils literal"><span class="pre">unicode</span></tt> that
 contains only Latin-1 characters, or a <tt class="docutils literal"><span class="pre">str</span></tt>.</li>
 </ul>
 <p>Note that the different behaviour between Python v2 and v3 is due to v3&#8217;s
@@ -101,8 +105,9 @@ reduced support for the buffer protocol.</p>
 <p>C++ does not garbage collect unreferenced class instances, whereas Python does.
 In the following C++ fragment both colours exist even though the first can no
 longer be referenced from within the program:</p>
-<div class="highlight-python"><pre>col = new QColor();
-col = new QColor();</pre>
+<div class="highlight-python"><div class="highlight"><pre>col = new QColor();
+col = new QColor();
+</pre></div>
 </div>
 <p>In the corresponding Python fragment, the first colour is destroyed when the
 second is assigned to <tt class="docutils literal"><span class="pre">col</span></tt>:</p>
@@ -145,15 +150,15 @@ methods corresponding to the instance&#8217;s virtual member functions will neve
 called.</p>
 </div>
 <div class="section" id="none-and-null">
-<h2><tt class="xref docutils literal"><span class="pre">None</span></tt> and <tt class="docutils literal"><span class="pre">NULL</span></tt><a class="headerlink" href="#none-and-null" title="Permalink to this headline">¶</a></h2>
-<p>Throughout PyQt, the <tt class="xref docutils literal"><span class="pre">None</span></tt> value can be specified wherever <tt class="docutils literal"><span class="pre">NULL</span></tt> is
+<h2><tt class="docutils literal"><span class="pre">None</span></tt> and <tt class="docutils literal"><span class="pre">NULL</span></tt><a class="headerlink" href="#none-and-null" title="Permalink to this headline">¶</a></h2>
+<p>Throughout PyQt4, the <tt class="docutils literal"><span class="pre">None</span></tt> value can be specified wherever <tt class="docutils literal"><span class="pre">NULL</span></tt> is
 acceptable to the underlying C++ code.</p>
-<p>Equally, <tt class="docutils literal"><span class="pre">NULL</span></tt> is converted to <tt class="xref docutils literal"><span class="pre">None</span></tt> whenever it is returned by the
+<p>Equally, <tt class="docutils literal"><span class="pre">NULL</span></tt> is converted to <tt class="docutils literal"><span class="pre">None</span></tt> whenever it is returned by the
 underlying C++ code.</p>
 </div>
 <div class="section" id="support-for-void">
 <h2>Support for <tt class="docutils literal"><span class="pre">void</span> <span class="pre">*</span></tt><a class="headerlink" href="#support-for-void" title="Permalink to this headline">¶</a></h2>
-<p>PyQt (actually SIP) represents <tt class="docutils literal"><span class="pre">void</span> <span class="pre">*</span></tt> values as objects of type
+<p>PyQt4 (actually SIP) represents <tt class="docutils literal"><span class="pre">void</span> <span class="pre">*</span></tt> values as objects of type
 <tt class="docutils literal"><span class="pre">sip.voidptr</span></tt>.  Such values are often used to pass the addresses of external
 objects between different Python modules.  To make this easier, a Python
 integer (or anything that Python can convert to an integer) can be used
@@ -165,16 +170,16 @@ builtin function.</p>
 argument which is the length of the data in bytes.</p>
 <p>A <tt class="docutils literal"><span class="pre">sip.voidptr</span></tt> may also be given a size (ie. the size of the block of
 memory that is pointed to) by calling its <tt class="docutils literal"><span class="pre">setsize()</span></tt> method.  If it has a
-size then it is also able to support Python&#8217;s buffer protocol and behaves just
-like a Python <tt class="docutils literal"><span class="pre">memoryview</span></tt> object so that the block of memory can be treated
-as a mutable list of bytes.  It also means that the Python <tt class="xref docutils literal"><span class="pre">struct</span></tt> module
-can be used to unpack and pack binary data structures in memory, memory mapped
+size then it is also able to support Python&#8217;s buffer protocol and behaves like
+a Python <tt class="docutils literal"><span class="pre">memoryview</span></tt> object so that the block of memory can be treated as a
+mutable list of bytes.  It also means that the Python <tt class="xref py py-mod docutils literal"><span class="pre">struct</span></tt> module can
+be used to unpack and pack binary data structures in memory, memory mapped
 files or shared memory.</p>
 </div>
-<div class="section" id="super-and-pyqt-classes">
-<h2><tt class="docutils literal"><span class="pre">super</span></tt> and PyQt Classes<a class="headerlink" href="#super-and-pyqt-classes" title="Permalink to this headline">¶</a></h2>
-<p>In versions of PyQt earlier than v4.5 there were restrictions on the use of
-<tt class="docutils literal"><span class="pre">super</span></tt> with PyQt classes.  These restrictions no longer apply with v4.5 and
+<div class="section" id="super-and-pyqt4-classes">
+<h2><tt class="docutils literal"><span class="pre">super</span></tt> and PyQt4 Classes<a class="headerlink" href="#super-and-pyqt4-classes" title="Permalink to this headline">¶</a></h2>
+<p>In versions of PyQt4 earlier than v4.5 there were restrictions on the use of
+<tt class="docutils literal"><span class="pre">super</span></tt> with PyQt4 classes.  These restrictions no longer apply with v4.5 and
 later.</p>
 </div>
 </div>
@@ -188,39 +193,39 @@ later.</p>
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/logo.png" alt="Logo"/>
             </a></p>
-            <h3><a href="index.html">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference external" href="#">Things to be Aware Of</a><ul>
-<li><a class="reference external" href="#python-strings-qt-strings-and-unicode">Python Strings, Qt Strings and Unicode</a></li>
-<li><a class="reference external" href="#garbage-collection">Garbage Collection</a></li>
-<li><a class="reference external" href="#multiple-inheritance">Multiple Inheritance</a></li>
-<li><a class="reference external" href="#access-to-protected-member-functions">Access to Protected Member Functions</a></li>
-<li><a class="reference external" href="#none-and-null"><tt class="xref docutils literal"><span class="pre">None</span></tt> and <tt class="docutils literal"><span class="pre">NULL</span></tt></a></li>
-<li><a class="reference external" href="#support-for-void">Support for <tt class="docutils literal"><span class="pre">void</span> <span class="pre">*</span></tt></a></li>
-<li><a class="reference external" href="#super-and-pyqt-classes"><tt class="docutils literal"><span class="pre">super</span></tt> and PyQt Classes</a></li>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Things to be Aware Of</a><ul>
+<li><a class="reference internal" href="#python-strings-qt-strings-and-unicode">Python Strings, Qt Strings and Unicode</a></li>
+<li><a class="reference internal" href="#garbage-collection">Garbage Collection</a></li>
+<li><a class="reference internal" href="#multiple-inheritance">Multiple Inheritance</a></li>
+<li><a class="reference internal" href="#access-to-protected-member-functions">Access to Protected Member Functions</a></li>
+<li><a class="reference internal" href="#none-and-null"><tt class="docutils literal"><span class="pre">None</span></tt> and <tt class="docutils literal"><span class="pre">NULL</span></tt></a></li>
+<li><a class="reference internal" href="#support-for-void">Support for <tt class="docutils literal"><span class="pre">void</span> <span class="pre">*</span></tt></a></li>
+<li><a class="reference internal" href="#super-and-pyqt4-classes"><tt class="docutils literal"><span class="pre">super</span></tt> and PyQt4 Classes</a></li>
 </ul>
 </li>
 </ul>
 
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="old_style_signals_slots.html"
-                                  title="previous chapter">Old-style Signal and Slot Support</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="designer.html"
-                                  title="next chapter">Using Qt Designer</a></p>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="old_style_signals_slots.html"
+                        title="previous chapter">Old-style Signal and Slot Support</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="designer.html"
+                        title="next chapter">Using Qt Designer</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -232,7 +237,7 @@ later.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
+          <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
           <a href="designer.html" title="Using Qt Designer"
@@ -240,12 +245,12 @@ later.</p>
         <li class="right" >
           <a href="old_style_signals_slots.html" title="Old-style Signal and Slot Support"
              >previous</a> |</li>
-        <li><a href="index.html">PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide</a> &raquo;</li> 
+        <li><a href="index.html">PyQt 4.11.1 Reference Guide</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2011 Riverbank Computing Limited.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.4.
+        &copy; Copyright 2014 Riverbank Computing Limited.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

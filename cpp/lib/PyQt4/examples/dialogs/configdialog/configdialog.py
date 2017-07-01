@@ -44,7 +44,10 @@
 
 from PyQt4 import QtCore, QtGui
 
-import configdialog_rc
+try:
+    import configdialog_rc3
+except ImportError:
+    import configdialog_rc2
 
 
 class ConfigurationPage(QtGui.QWidget):

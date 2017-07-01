@@ -1,8 +1,64 @@
-v4.9.5 ??? ??? 2012
+v4.11.1 3rd July 2014
+  - Added the -tr-function, -trUtf8-function and -translate-function command
+    line options to pylupdate4.
+  - Bug fixes.
+
+v4.11 26th May 2014
+  - By default a Python slot is only invoked if the underlying C++ instance
+    still exists.
+  - Added the no_receiver_check argument to connect().
+  - Added support for Qt v4.8.6.
+  - Added --target-py-version, --sysroot and --no-tools options to
+    configure-ng.py.
+  - Cross-compiling (specifically to iOS and Android when building against Qt
+    v5) is now supported.
+  - SIP v4.16 is now required.
+  - Bug fixes.
+
+v4.10.4 14th March 2014
+  - Added the port of the webftpclient from Moritz Warning.
+  - The --use-arch argument to configure.py can now be specified more than
+    once.
+  - Bug fixes.
+
+v4.10.3 21st August 2013
+  - Bug fixes.
+
+v4.10.2 16th June 2013
+  - Bug fixes.
+
+v4.10.1 21st April 2013
+  - Added support for QtCore.pyqtSetPickleProtocol() and
+    QtCore.pyqtPickleProtocol() to set and get the protocol used to pickle
+    Python objects when serialising them for Qt.
+  - Added support for the --resource-suffix option to pyuic4.
+  - Added a new build system (configure-ng.py) which will be compatible with
+    SIP v5 and will eventually support cross-compilation.
+  - Added support for Qt v5.0.2.
+  - Bug fixes.
+
+v4.10 1st March 2013
+  - Added support for QtCore.PYQT_CONFIGURATION in anticipation of SIP v5.
+  - Added support for Qt v5.0.1.
+  - Bug fixes.
+
+v4.9.6 8th December 2012
+  - Added the missing constBits() and constScanLine() methods to QImage.
+  - A QPoint can now be specified whenever a QPointF is expected.
+  - Added support for Qt v4.8.4.
+  - Added support for Qt v5-rc1 (QtCore, QtGui, QtHelp, QtNetwork, QtSql,
+    QtSvg, QtWebKit and QtXml only).
+  - Added the --no-deprecated option to configure.py.
+  - SIP v4.14.2 is now required.
+  - Bug fixes.
+
+v4.9.5 29th September 2012
   - Added support for Qt v4.8.3.
   - Added support for Qt v5-beta1 (QtCore, QtGui, QtHelp, QtNetwork, QtSql,
     QtSvg, QtWebKit and QtXml only).
   - Implemented __str__ and __unicode__ for QChar.
+  - Added the missing QPointF operator*(qreal, QPointF).
+  - Added the customcompleter.py example.
   - SIP v4.14 is now required.
   - Bug fixes.
 

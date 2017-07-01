@@ -48,7 +48,10 @@ sip.setapi('QString', 2)
 
 from PyQt4 import QtCore, QtGui, QtOpenGL, QtSvg
 
-import svgviewer_rc
+try:
+    import svgviewer_rc3
+except ImportError:
+    import svgviewer_rc2
 
 
 class MainWindow(QtGui.QMainWindow):

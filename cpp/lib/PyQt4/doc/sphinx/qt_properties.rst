@@ -1,11 +1,11 @@
 Support for Qt Properties
 =========================
 
-PyQt does not support the setting and getting of Qt properties as if they were
+PyQt4 does not support the setting and getting of Qt properties as if they were
 normal instance attributes.  This is because the name of a property often
 conflicts with the name of the property's getter method.
 
-However, PyQt does support the initial setting of properties using keyword
+However, PyQt4 does support the initial setting of properties using keyword
 arguments passed when an instance is created.  For example::
 
     act = QtGui.QAction("&Save", self, shortcut=QtGui.QKeySequence.Save,
@@ -14,7 +14,7 @@ arguments passed when an instance is created.  For example::
 The example also demonstrates the use of a keyword argument to connect a
 signal to a slot.
 
-PyQt also supports setting the values of properties (and connecting a signal
+PyQt4 also supports setting the values of properties (and connecting a signal
 to a slot) using the ``pyqtConfigure()`` method of ``QObject``.  For example,
 the following gives the same results as above::
 

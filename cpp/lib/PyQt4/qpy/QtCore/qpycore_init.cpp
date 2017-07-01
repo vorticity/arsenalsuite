@@ -1,6 +1,6 @@
 // This is the initialisation support code for the QtCore module.
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -53,8 +53,6 @@ void qpycore_init()
     sipExportSymbol("qpycore_qobject_sender", (void *)qpycore_qobject_sender);
     sipExportSymbol("qpycore_qobject_receivers",
             (void *)qpycore_qobject_receivers);
-
-    sipExportSymbol("pyqt_kw_handler", (void *)qpycore_pyqtconfigure);
 
     sipExportSymbol("qpycore_ArgvToC", (void *)qpycore_ArgvToC);
     sipExportSymbol("qpycore_UpdatePyArgv", (void *)qpycore_UpdatePyArgv);

@@ -1,6 +1,6 @@
 # This script generates the PyQt configuration and generates the Makefiles.
 #
-# Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+# Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 # 
 # This file is part of PyQt.
 # 
@@ -33,10 +33,10 @@ import sipconfig
 
 
 # Initialise the globals.
-pyqt_version = 0x040905
-pyqt_version_str = "snapshot-4.9.5-9eb6aac99275"
+pyqt_version = 0x040b01
+pyqt_version_str = "4.11.1"
 
-sip_min_version = 0x040e00
+sip_min_version = 0x041000
 
 qt_version = 0
 qt_edition = ""
@@ -46,9 +46,10 @@ qt_incdir = None
 qt_libdir = None
 qt_bindir = None
 qt_datadir = None
+qt_archdatadir = None
 qt_pluginsdir = None
 qt_xfeatures = None
-qt_shared = ""
+qt_shared = ''
 qt_framework = 0
 
 # This default value will be used by the code that bootstraps the Qt
@@ -177,6 +178,9 @@ def create_optparser():
     g.add_option("-T", "--no-timestamp", action="store_true", default=False,
             dest="no_timestamp", help="suppress timestamps in the header "
             "comments of generated code [default: include timestamps]")
+    g.add_option("--no-deprecated", action="store_false", default=True,
+            dest="with_deprecated", help="disable Qt v4 features deprecated "
+            "in Qt v5 [default: enabled]")
 
     if sys.platform != 'win32':
         if sys.platform.startswith('linux') or sys.platform == 'darwin':
@@ -206,10 +210,10 @@ def create_optparser():
 
     if sys.platform == 'darwin':
         g = optparse.OptionGroup(p, title="MacOS X Configuration")
-        g.add_option("--use-arch", action="store", metavar="ARCH",
+        g.add_option("--use-arch", action="append", metavar="ARCH",
                 dest="use_arch", choices=["i386", "x86_64", "ppc"],
-                help="the architecture to use when running pyuic4 "
-                        "[default: system default]")
+                help="add ARCH to the list of architectures to use when "
+                        "running pyuic4 [default: system default]")
         p.add_option_group(g)
 
     # Installation.
@@ -273,8 +277,8 @@ def create_optparser():
 
 
 class pyrccMakefile(sipconfig.ProgramMakefile):
-    """This class implements the Makefile for pyrcc.  This is specialised so
-    that pyrcc is automatically run against the examples.
+    """This class implements the Makefile for pyrcc.  This was specialised so
+    that pyrcc was automatically run against the examples (no longer done).
     """
 
     def __init__(self):
@@ -284,28 +288,6 @@ class pyrccMakefile(sipconfig.ProgramMakefile):
                 qt=["QtCore", "QtXml"], debug=opts.debug, warnings=1,
                 universal=sipcfg.universal, arch=sipcfg.arch,
                 deployment_target=sipcfg.deployment_target)
-
-    def generate_target_default(self, mfile):
-        """Generate the default target."""
-        sipconfig.ProgramMakefile.generate_target_default(self, mfile)
-
-        # The correct call to pyrcc depends on the Python version.
-        if sys.hexversion >= 0x03000000:
-            flag = "-py3"
-        else:
-            flag = "-py2"
-
-        exe = "$(TARGET)"
-        if sys.platform != 'win32':
-            exe = "./" + exe
-
-        # Find all the .qrc files in the examples.
-        for root, _, files in os.walk("examples"):
-            rel_root = os.path.join("..", root)
-
-            for fn in files:
-                if fn.endswith(".qrc"):
-                    mfile.write("\t%s %s -o %s %s\n" % (exe, flag, os.path.join(rel_root, fn[:-4] + "_rc.py"), os.path.join(rel_root, fn)))
 
 
 class ConfigurePyQt4:
@@ -340,7 +322,9 @@ class ConfigurePyQt4:
             0x040702: "Qt_4_7_1",
             0x040800: "Qt_4_7_2",
             0x040803: "Qt_4_8_0",
-            0x050000: "Qt_4_8_3",
+            0x040804: "Qt_4_8_3",
+            0x040806: "Qt_4_8_4",
+            0x050000: "Qt_4_8_6",
             0x060000: "Qt_5_0_0"
         }
 
@@ -363,55 +347,44 @@ class ConfigurePyQt4:
 
         check_module("QtGui", "qwidget.h", "new QWidget()")
         check_module("QtHelp", "qhelpengine.h", "new QHelpEngine(\"foo\")")
-        if qt_version < 0x050000: check_module("QtMultimedia", "QAudioDeviceInfo",
+        check_module("QtMultimedia", "QAudioDeviceInfo",
                 "new QAudioDeviceInfo()")
         check_module("QtNetwork", "qhostaddress.h", "new QHostAddress()")
-        if qt_version < 0x050000: check_module("QtDBus", "qdbusconnection.h",
-                "QDBusConnection::systemBus()")
-        if qt_version < 0x050000: check_module("QtDeclarative", "qdeclarativeview.h",
-                "new QDeclarativeView()")
-        if qt_version < 0x050000: check_module("QtOpenGL", "qgl.h", "new QGLWidget()")
-        if qt_version < 0x050000: check_module("QtScript", "qscriptengine.h", "new QScriptEngine()")
-        if qt_version < 0x050000: check_module("QtScriptTools", "qscriptenginedebugger.h",
-                "new QScriptEngineDebugger()")
+
+        # Qt v4.7 was current when we added support for QtDBus and we didn't
+        # bother properly versioning its API.
+        if qt_version >= 0x040700:
+            check_module("QtDBus", "qdbusconnection.h",
+                    "QDBusConnection::systemBus()")
+
+        if qt_version < 0x050000 or opts.with_deprecated:
+            check_module("QtDeclarative", "qdeclarativeview.h",
+                    "new QDeclarativeView()")
+            check_module("QtScript", "qscriptengine.h", "new QScriptEngine()")
+            check_module("QtScriptTools", "qscriptenginedebugger.h",
+                    "new QScriptEngineDebugger()")
+            check_module("QtXml", "qdom.h", "new QDomDocument()")
+
+        check_module("QtOpenGL", "qgl.h", "new QGLWidget()")
         check_module("QtSql", "qsqldatabase.h", "new QSqlDatabase()",
                 extra_libs=sql_libs)
         check_module("QtSvg", "qsvgwidget.h", "new QSvgWidget()")
-        if qt_version < 0x050000: check_module("QtTest", "QtTest", "QTest::qSleep(0)")
-
-        # Qt v5-beta1 doesn't install the Headers directory for a framework
-        # build of QtWebKit on OS/X.
-        if qt_version >= 0x050000:
-            webkit_inc_dirs = [os.path.join(qt_incdir, "QtWebKit")]
-        else:
-            webkit_inc_dirs = None
-
-        check_module("QtWebKit", "qwebpage.h", "new QWebPage()",
-                extra_include_dirs=webkit_inc_dirs)
-
-        check_module("QtXml", "qdom.h", "new QDomDocument()")
-
-        # Qt v5-beta1 causes compiler error messages.  Wait to see if it fixed
-        # in a later release.
-        if qt_version < 0x050000:
-            check_module("QtXmlPatterns", "qxmlname.h", "new QXmlName()")
-
-        if qt_version < 0x050000: check_module("phonon", "phonon/videowidget.h",
+        check_module("QtTest", "QtTest", "QTest::qSleep(0)")
+        check_module("QtWebKit", "qwebpage.h", "new QWebPage()")
+        check_module("QtXmlPatterns", "qxmlname.h", "new QXmlName()")
+        check_module("phonon", "phonon/videowidget.h",
                 "new Phonon::VideoWidget()")
         check_module("QtAssistant", "qassistantclient.h",
                 "new QAssistantClient(\"foo\")", extra_lib_dirs=ass_lib_dirs,
                 extra_libs=ass_libs)
 
-        if not qt_shared:
+        if qt_shared == '':
             sipconfig.inform("QtDesigner module disabled with static Qt libraries.")
-        elif sipcfg.universal:
-            sipconfig.inform("QtDesigner module disabled with universal binaries.")
         else:
-            if qt_version < 0x050000: check_module("QtDesigner", "QExtensionFactory",
+            check_module("QtDesigner", "QExtensionFactory",
                     "new QExtensionFactory()")
 
-        if qt_version < 0x050000: check_module("QAxContainer", "qaxobject.h", "new QAxObject()",
-                extra_libs=["QAxContainer"])
+        check_module("QAxContainer", "qaxobject.h", "new QAxObject()")
 
         if os.path.isdir(os.path.join(src_dir, "dbus")):
             check_dbus()
@@ -499,8 +472,6 @@ class ConfigurePyQt4:
                         extra_lib_dirs=[qpy_lib_dir], extra_libs=[qpy_lib])
 
         if "QtOpenGL" in pyqt_modules:
-            generate_OpenGL_extras()
-
             qpy_inc_dir, qpy_lib_dir, qpy_lib = self._qpy_directories("QtOpenGL", "qpyopengl")
 
             if opts.bigqt:
@@ -538,14 +509,7 @@ class ConfigurePyQt4:
             generate_code("QtTest")
 
         if "QtWebKit" in pyqt_modules:
-            # Qt v5-beta1 doesn't install the Headers directory for a framework
-            # build of QtWebKit on OS/X.
-            if qt_version >= 0x050000:
-                webkit_inc_dirs = [os.path.join(qt_incdir, "QtWebKit")]
-            else:
-                webkit_inc_dirs = None
-
-            generate_code("QtWebKit", extra_include_dirs=webkit_inc_dirs)
+            generate_code("QtWebKit")
 
         if "QtXml" in pyqt_modules:
             generate_code("QtXml")
@@ -692,21 +656,18 @@ class ConfigurePyQt4:
         for the given module.
 
         mname is the name of the module.
-        lib_name is the normal name of the support library.
+        lib_name is the normal name of the support library.  (Note that this is
+        historical and the unchanged name is always returned.)
         """
         qpy_dir = os.path.join("qpy", mname)
 
         if sys.platform == 'win32':
             if opts.debug:
                 qpy_lib_dir = os.path.join(qpy_dir, "debug")
-                lib_name = 'd' + lib_name
             else:
                 qpy_lib_dir = os.path.join(qpy_dir, "release")
         else:
             qpy_lib_dir = qpy_dir
-
-            if sys.platform == 'darwin' and opts.debug:
-                lib_name += '_debug'
 
         return os.path.join(src_dir, qpy_dir), os.path.abspath(qpy_lib_dir), lib_name
 
@@ -832,6 +793,9 @@ class ConfigurePyQt4:
                 if sipcfg.sip_inc_dir != sipcfg.py_inc_dir:
                     inc_path.insert(0, sipcfg.sip_inc_dir)
 
+                if sipcfg.py_conf_inc_dir != sipcfg.py_inc_dir:
+                    inc_path.insert(0, sipcfg.py_conf_inc_dir)
+
                 if opts.bigqt:
                     api_dir = "../../_qt"
                 else:
@@ -918,7 +882,11 @@ include(%s)
 
         if sys.platform == 'darwin':
             gui = True
-            use_arch = opts.use_arch
+
+            if opts.use_arch is None:
+                use_arch = ''
+            else:
+                use_arch = ' '.join(opts.use_arch)
         else:
             gui = False
             use_arch = ''
@@ -946,45 +914,41 @@ include(%s)
         makefile.generate()
         tool.append("pyuic")
 
-        if "QtXml" in pyqt_modules:
-            sipconfig.inform("Creating pylupdate4 Makefile...")
+        sipconfig.inform("Creating pylupdate4 Makefile...")
 
-            cxxflags_app = sipcfg.build_macros().get("CXXFLAGS_APP", "")
+        cxxflags_app = sipcfg.build_macros().get("CXXFLAGS_APP", "")
 
-            makefile = sipconfig.ProgramMakefile(
-                configuration=sipcfg,
-                build_file=os.path.join(src_dir, "pylupdate", "pylupdate.sbf"),
-                dir="pylupdate",
-                install_dir=opts.pyqtbindir,
-                console=1,
-                qt=["QtCore", "QtXml"],
-                debug=opts.debug,
-                warnings=1,
-                universal=sipcfg.universal,
-                arch=sipcfg.arch,
-                deployment_target=sipcfg.deployment_target
-            )
+        makefile = sipconfig.ProgramMakefile(
+            configuration=sipcfg,
+            build_file=os.path.join(src_dir, "pylupdate", "pylupdate.sbf"),
+            dir="pylupdate",
+            install_dir=opts.pyqtbindir,
+            console=1,
+            qt=["QtCore", "QtXml"],
+            debug=opts.debug,
+            warnings=1,
+            universal=sipcfg.universal,
+            arch=sipcfg.arch,
+            deployment_target=sipcfg.deployment_target
+        )
 
-            makefile.extra_include_dirs.append(
-                    os.path.join(src_dir, "pylupdate"))
+        makefile.extra_include_dirs.append(os.path.join(src_dir, "pylupdate"))
 
-            if cxxflags_app != "":
-                makefile.extra_cxxflags.append(cxxflags_app)
+        if cxxflags_app != "":
+            makefile.extra_cxxflags.append(cxxflags_app)
 
-            makefile.generate()
-            tool.append("pylupdate")
+        makefile.generate()
+        tool.append("pylupdate")
 
-            sipconfig.inform("Creating pyrcc4 Makefile...")
+        sipconfig.inform("Creating pyrcc4 Makefile...")
 
-            makefile = pyrccMakefile()
+        makefile = pyrccMakefile()
 
-            if cxxflags_app != "":
-                makefile.extra_cxxflags.append(cxxflags_app)
+        if cxxflags_app != "":
+            makefile.extra_cxxflags.append(cxxflags_app)
 
-            makefile.generate()
-            tool.append("pyrcc")
-        else:
-            sipconfig.inform("pylupdate4 and pyrcc4 will not be built because the Qt XML module is missing.")
+        makefile.generate()
+        tool.append("pyrcc")
 
         if opts.designer_plugin and "QtDesigner" in pyqt_modules:
             py_major = sipcfg.py_version >> 16
@@ -1016,6 +980,8 @@ include(%s)
                 if dynamic_pylib:
                     if glob.glob("%s/lib/libpython%d.%d*" % (ducfg["exec_prefix"], py_major, py_minor)):
                         lib_dir_flag = quote("-L%s/lib" % ducfg["exec_prefix"])
+                    elif 'MULTIARCH' in ducfg and glob.glob('%s/lib/%s/libpython%d.%d*' % (ducfg['exec_prefix'], ducfg['MULTIARCH'], py_major, py_minor)):
+                        lib_dir_flag = quote('-L%s/lib/%s' % (ducfg['exec_prefix'], ducfg['MULTIARCH']))
                     elif glob.glob("%s/libpython%d.%d*" % (ducfg["LIBDIR"], py_major, py_minor)):
                         lib_dir_flag = quote("-L%s" % ducfg["LIBDIR"])
                     else:
@@ -1124,9 +1090,15 @@ def inform_user():
     sipconfig.inform("The Qt header files are in %s." % qt_incdir)
     sipconfig.inform("The %s Qt libraries are in %s." % (lib_type, qt_libdir))
     sipconfig.inform("The Qt binaries are in %s." % qt_bindir)
-    sipconfig.inform("The Qt mkspecs directory is in %s." % qt_datadir)
+    sipconfig.inform("The Qt mkspecs directory is in %s." % qt_archdatadir)
     sipconfig.inform("These PyQt modules will be built: %s." % ", ".join(pyqt_modules))
     sipconfig.inform("The PyQt Python package will be installed in %s." % opts.pyqtmoddir)
+
+    if qt_version >= 0x050000:
+        if opts.with_deprecated:
+            sipconfig.inform("PyQt is being built with deprecated Qt v4 features.")
+        else:
+            sipconfig.inform("PyQt is being built without deprecated Qt v4 features.")
 
     if opts.no_docstrings:
         sipconfig.inform("PyQt is being built without generated docstrings.")
@@ -1179,6 +1151,7 @@ def create_config(module, template, macros):
         "qt_threaded":        1,
         "qt_dir":             qt_dir,
         "qt_data_dir":        qt_datadir,
+        "qt_archdata_dir":    qt_archdatadir,
         "qt_inc_dir":         qt_incdir,
         "qt_lib_dir":         qt_libdir
     }
@@ -1226,73 +1199,6 @@ def remove_file(fname):
         pass
 
 
-def generate_OpenGL_extras():
-    """Generate the extras needed by the QtOpenGL module (i.e. the .sip file
-    defining the correct typedefs for the OpenGL data types.
-    """
-    sipconfig.inform("Determining the OpenGL data types...")
-
-    src = "opengl_extras.cpp"
-
-    f = open(src, "w")
-
-    f.write(
-"""#include <QFile>
-#include <QTextStream>
-#include <qgl.h>
-
-int main(int, char **)
-{
-    QFile outf("./sip/QtOpenGL/opengl_types.sip");
-
-    if (!outf.open(QIODevice::WriteOnly|QIODevice::Truncate|QIODevice::Text))
-        return 1;
-
-    QTextStream out(&outf);
-
-    if (sizeof (long) == sizeof (GLint))
-        out << "typedef long GLint;\\n";
-    else
-        out << "typedef int GLint;\\n";
-
-    if (sizeof (unsigned long) == sizeof (GLuint))
-        out << "typedef unsigned long GLuint;\\n";
-    else
-        out << "typedef unsigned GLuint;\\n";
-
-    if (sizeof (unsigned long) == sizeof (GLenum))
-        out << "typedef unsigned long GLenum;\\n";
-    else
-        out << "typedef unsigned GLenum;\\n";
-
-    if (sizeof (unsigned long) == sizeof (GLbitfield))
-        out << "typedef unsigned long GLbitfield;\\n";
-    else
-        out << "typedef unsigned GLbitfield;\\n";
-
-    out << "typedef float GLfloat;\\n";
-
-    return 0;
-}
-""")
-
-    f.close()
-
-    cmd = compile_qt_program(src, "QtOpenGL")
-
-    if cmd is None:
-        sipconfig.error("Unable to determine the OpenGL data types.")
-
-    # SIP's build system (specifically ProgramMakefile.build_command()) assumes
-    # that an executable can be created by running a single command.  In the
-    # case of MSVC this is incorrect.  As a quick hack we do the extra step
-    # here if it looks like it is needed.
-    if os.access("opengl_extras.manifest", os.F_OK):
-        run_command("mt -nologo -manifest opengl_extras.manifest -outputresource:opengl_extras.exe;1")
-
-    run_command(cmd)
-
-
 def compile_qt_program(name, mname, extra_include_dirs=None, extra_lib_dirs=None, extra_libs=None):
     """Compile a simple Qt application.
 
@@ -1307,9 +1213,8 @@ def compile_qt_program(name, mname, extra_include_dirs=None, extra_lib_dirs=None
     """
     opengl = (mname == "QtOpenGL")
 
-    qt = [mname]
-    if mname in ("QtAssistant", "QtHelp", "QtOpenGL", "QtWebKit"):
-        qt.append("QtCore")
+    qt = []
+    needed_qt_libs(mname, qt)
 
     makefile = sipconfig.ProgramMakefile(sipcfg, console=1, qt=qt, warnings=0,
             opengl=opengl, debug=opts.debug, arch=sipcfg.arch,
@@ -1525,11 +1430,17 @@ def set_sip_flags(pyqt):
 
     pyqt is the configuration instance.
     """
+    sip_flags = []
+
     # If we don't check for signed interpreters, we exclude the 'VendorID'
     # feature
     if not opts.vendorcheck:
-        qt_sip_flags.append("-x")
-        qt_sip_flags.append("VendorID")
+        sip_flags.append("-x")
+        sip_flags.append("VendorID")
+
+    if qt_version >= 0x050000 and not opts.with_deprecated:
+        sip_flags.append("-x")
+        sip_flags.append("PyQt_Deprecated_5_0")
 
     # Handle the platform tag.
     if sys.platform == 'win32':
@@ -1542,34 +1453,39 @@ def set_sip_flags(pyqt):
     else:
         plattag = "WS_X11"
 
-    qt_sip_flags.append("-t")
-    qt_sip_flags.append(plattag)
+    sip_flags.append("-t")
+    sip_flags.append(plattag)
 
     # Handle the Qt version tag.
     verstag = sipconfig.version_to_sip_tag(qt_version, pyqt.qt_version_tags(), "Qt")
 
     # Handle any feature flags.
     for xf in qt_xfeatures:
-        qt_sip_flags.append("-x")
-        qt_sip_flags.append(xf)
+        sip_flags.append("-x")
+        sip_flags.append(xf)
 
     if verstag:
-        qt_sip_flags.append("-t")
-        qt_sip_flags.append(verstag)
+        sip_flags.append("-t")
+        sip_flags.append(verstag)
 
     # Handle the version specific Python features.
     if sipcfg.py_version < 0x020400:
-        qt_sip_flags.append("-x")
-        qt_sip_flags.append("Py_DateTime")
+        sip_flags.append("-x")
+        sip_flags.append("Py_DateTime")
 
     if sipcfg.py_version < 0x030000:
-        qt_sip_flags.append("-x")
-        qt_sip_flags.append("Py_v3")
+        sip_flags.append("-x")
+        sip_flags.append("Py_v3")
+
+    qt_sip_flags.extend(sip_flags)
 
     # There is an issue creating QObjects while the GIL is held causing
     # deadlocks in multi-threaded applications.  We don't fully understand this
     # yet so we make sure we avoid the problem by always releasing the GIL.
     qt_sip_flags.append("-g")
+
+    # Return the sip flags that sub-modules need to know about.
+    return " ".join(sip_flags)
 
 
 def needed_qt_libs(mname, qt_libs):
@@ -1773,6 +1689,10 @@ def generate_code(mname, extra_include_dirs=None, extra_lib_dirs=None, extra_lib
 
     add_makefile_extras(makefile, extra_include_dirs, extra_lib_dirs, extra_libs)
 
+    if qt_version >= 0x050000 and opts.with_deprecated:
+        # The name of this macro is very confusing.
+        makefile.extra_defines.append('QT_DISABLE_DEPRECATED_BEFORE=0x04ffff')
+
     makefile.generate()
 
 
@@ -1810,7 +1730,6 @@ def fix_license(name):
 
 
 def check_license():
-    return
     """Handle the validation of the PyQt license.
     """
     try:
@@ -1904,21 +1823,31 @@ def get_build_macros(overrides):
     if "QMAKESPEC" in list(os.environ.keys()):
         fname = os.environ["QMAKESPEC"]
 
-        if not os.path.dirname(fname):
+        if not os.path.dirname(fname) or fname.startswith("unsupported"):
             qt_macx_spec = fname
-            fname = os.path.join(qt_datadir, "mkspecs", fname)
+            fname = os.path.join(qt_archdatadir, "mkspecs", fname)
     elif sys.platform == "darwin":
         # The Qt Mac binary installer defaults to xcode which we don't want.
         # Use Qt5's macx-clang if it is available, otherwise fall back to
         # macx-g++.
-        fname = os.path.join(qt_datadir, "mkspecs", "macx-clang")
+        fname = os.path.join(qt_archdatadir, "mkspecs", "macx-clang")
         if os.path.isdir(fname):
             qt_macx_spec = "macx-clang"
         else:
-            fname = os.path.join(qt_datadir, "mkspecs", "macx-g++")
+            fname = os.path.join(qt_archdatadir, "mkspecs", "macx-g++")
             qt_macx_spec = "macx-g++"
     else:
-        fname = os.path.join(qt_datadir, "mkspecs", "default")
+        fname = os.path.join(qt_archdatadir, "mkspecs", "default")
+
+        # Qt5 doesn't have the 'default' link.
+        if not os.path.isdir(fname):
+            f = get_command_stdout(opts.qmake + " -query QMAKE_SPEC")
+            fname = f.read().strip()
+            if sys.hexversion >= 0x03000000:
+                fname = fname.decode()
+            f.close()
+
+            fname = os.path.join(qt_archdatadir, "mkspecs", fname)
 
     fname = os.path.join(fname, "qmake.conf")
 
@@ -2013,7 +1942,8 @@ def fix_qmake_args(args=""):
 
 def get_qt_configuration():
     """Set the qt_dir, qt_incdir, qt_libdir, qt_bindir, qt_datadir,
-    qt_pluginsdir and qt_xfeatures globals for the Qt installation.
+    qt_archdatadir, qt_pluginsdir and qt_xfeatures globals for the Qt
+    installation.
     """
     sipconfig.inform("Determining the layout of your Qt installation...")
 
@@ -2064,12 +1994,10 @@ SOURCES = %s
 #include <QLibraryInfo>
 #include <QTextStream>
 
-// These seem to be missing from the Qt v5 beta.
-#if !defined(QT_EDITION_DESKTOP)
-#define QT_EDITION_DESKTOP      8
-#endif
-#if !defined(QT_EDITION_OPENSOURCE)
-#define QT_EDITION_OPENSOURCE   8
+// This is for Qt v5.  The value isn't accurate but triggers the desired
+// description of the edition.
+#if !defined(QT_EDITION)
+#define QT_EDITION      0x200
 #endif
 
 int main(int argc, char **argv)
@@ -2087,6 +2015,11 @@ int main(int argc, char **argv)
     out << QLibraryInfo::location(QLibraryInfo::LibrariesPath) << '\\n';
     out << QLibraryInfo::location(QLibraryInfo::BinariesPath) << '\\n';
     out << QLibraryInfo::location(QLibraryInfo::DataPath) << '\\n';
+#if QT_VERSION >= 0x050000
+    out << QLibraryInfo::location(QLibraryInfo::ArchDataPath) << '\\n';
+#else
+    out << QLibraryInfo::location(QLibraryInfo::DataPath) << '\\n';
+#endif
     out << QLibraryInfo::location(QLibraryInfo::PluginsPath) << '\\n';
 
     out << QT_VERSION << '\\n';
@@ -2094,11 +2027,11 @@ int main(int argc, char **argv)
 
     out << QLibraryInfo::licensee() << '\\n';
 
-//#if defined(QT_SHARED) || defined(QT_DLL)
+#if defined(QT_SHARED) || defined(QT_DLL)
     out << "shared\\n";
-//#else
-//    out << "\\n";
-//#endif
+#else
+    out << "static\\n";
+#endif
 
     // Determine which features should be disabled.
 
@@ -2150,6 +2083,10 @@ int main(int argc, char **argv)
     out << "PyQt_PrintPreviewWidget\\n";
 #endif
 
+#if defined(QT_NO_RAWFONT)
+    out << "PyQt_RawFont\\n";
+#endif
+
 #if !defined(QT3_SUPPORT) || QT_VERSION >= 0x040200
     out << "PyQt_NoPrintRangeBug\\n";
 #endif
@@ -2158,8 +2095,9 @@ int main(int argc, char **argv)
     out << "PyQt_NoOpenGLES\\n";
 #endif
 
-    if (sizeof (qreal) != sizeof (double))
-        out << "PyQt_qreal_double\\n";
+#if defined(QT_NO_FPU) || defined(QT_ARCH_ARM) || defined(QT_ARCH_WINDOWSCE) || defined(QT_ARCH_SYMBIAN) || defined(QT_ARCH_VXWORKS)
+    out << "PyQt_qreal_double\\n";
+#endif
 
     return 0;
 }
@@ -2203,7 +2141,8 @@ int main(int argc, char **argv)
     lines = f.read().strip().split("\n")
     f.close()
 
-    global qt_dir, qt_incdir, qt_libdir, qt_bindir, qt_datadir, qt_pluginsdir
+    global qt_dir, qt_incdir, qt_libdir, qt_bindir, qt_datadir, qt_archdatadir
+    global qt_pluginsdir
     global qt_version, qt_edition, qt_licensee, qt_shared, qt_xfeatures
 
     qt_dir = lines[0]
@@ -2211,15 +2150,18 @@ int main(int argc, char **argv)
     qt_libdir = lines[2]
     qt_bindir = lines[3]
     qt_datadir = lines[4]
-    qt_pluginsdir = lines[5]
-    qt_version = lines[6]
-    qt_edition = lines[7]
-    qt_licensee = lines[8]
-    qt_shared = lines[9]
-    qt_xfeatures = lines[10:]
+    qt_archdatadir = lines[5]
+    qt_pluginsdir = lines[6]
+    qt_version = lines[7]
+    qt_edition = lines[8]
+    qt_licensee = lines[9]
+    qt_shared = lines[10]
+    qt_xfeatures = lines[11:]
 
     if opts.assume_shared:
-        qt_shared = "shared"
+        qt_shared = 'shared'
+    elif qt_shared == 'static':
+        qt_shared = ''
 
     # 'Nokia' is the value that is used by Maemo's version of Qt.
     if qt_licensee in ('Open Source', 'Nokia'):
@@ -2333,10 +2275,22 @@ def main():
     check_vendorid()
 
     # Set the SIP platform, version and feature flags.
-    set_sip_flags(pyqt)
+    sip_flags = set_sip_flags(pyqt)
 
     # Tell the user what's been found.
     inform_user()
+
+    # Embed the sip flags.
+    sipconfig.inform("Embedding sip flags...")
+    in_f = open(os.path.join(src_dir, "qpy", "QtCore", "qpycore_post_init.cpp.in"))
+    out_f = open(os.path.join(src_dir, "qpy", "QtCore", "qpycore_post_init.cpp"), "wt")
+
+    for line in in_f:
+        line = line.replace("@@PYQT_SIP_FLAGS@@", sip_flags)
+        out_f.write(line)
+
+    in_f.close()
+    out_f.close()
 
     # Generate the code.
     pyqt.code()

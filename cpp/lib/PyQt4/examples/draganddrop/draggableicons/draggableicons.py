@@ -44,7 +44,10 @@
 
 from PyQt4 import QtCore, QtGui
 
-import draggableicons_rc
+try:
+    import draggableicons_rc3
+except ImportError:
+    import draggableicons_rc2
 
 
 class DragWidget(QtGui.QFrame):

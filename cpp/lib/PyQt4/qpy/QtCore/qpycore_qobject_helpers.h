@@ -1,6 +1,6 @@
 // This defines the interfaces of the helpers for QObject.
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -48,7 +48,6 @@ int qpycore_qobject_qt_metacast(sipSimpleWrapper *pySelf, sipTypeDef *base,
         const char *_clname);
 QObject *qpycore_qobject_sender(QObject *obj);
 int qpycore_qobject_receivers(QObject *obj, const char *signal, int nr);
-int qpycore_qobject_kw_handler(PyObject *obj, QObject *qobj, PyObject *kwds);
 
 
 #endif

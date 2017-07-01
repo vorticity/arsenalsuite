@@ -43,6 +43,11 @@ import sys
 
 from PyQt4 import QtCore, QtGui, QAxContainer
 
+try:
+    import mainwindow_rc3
+except ImportError:
+    import mainwindow_rc2
+
 from ui_mainwindow import Ui_MainWindow
 
 

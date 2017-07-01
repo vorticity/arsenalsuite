@@ -41,8 +41,8 @@ calling <a href="qiodevice.html#read">read</a>(), <a href="qiodevice.html#readLi
 <a href="qiodevice.html">QIODevice</a>, QProcess can also be used
 as an input source for <a href="qxmlreader.html">QXmlReader</a>, or
 for generating data to be uploaded using <a href="qftp.html">QFtp</a>.</p>
-<p><b>Note:</b> On Windows CE and Symbian, reading and writing to a
-process is not supported.</p>
+<p><b>Note:</b> On VxWorks, Windows CE and Symbian, reading and
+writing to a process is not supported.</p>
 <p>When the process exits, QProcess reenters the <a href="qprocess.html#ProcessState-enum">NotRunning</a> state (the initial
 state), and emits <a href="qprocess.html#finished">finished</a>().</p>
 <p>The <a href="qprocess.html#finished">finished</a>() signal
@@ -89,6 +89,8 @@ calling <a href="qprocess.html#setEnvironment">setEnvironment</a>(). To set a
 working directory, call <a href="qprocess.html#setWorkingDirectory">setWorkingDirectory</a>(). By
 default, processes are run in the current working directory of the
 calling process.</p>
+<p><b>Note:</b> On VxWorks, communicating via channels with a
+process is not supported.</p>
 <p><b>Note:</b> On Symbian, setting environment or working
 directory is not supported. The working directory will always be
 the private directory of the running process.</p>
@@ -141,6 +143,21 @@ directly, it won't work. One possible solution is to execute the
 command interpreter itself (<tt>cmd.exe</tt> on some Windows
 systems), and ask the interpreter to execute the desired
 command.</p>
+<a id="notes-for-vxworks-users" name="notes-for-vxworks-users" />
+<h3>Notes for VxWorks Users</h3>
+<p>QProcess support is only available on RTP mode, and only a
+limited functionality is provided. When using QProcess to launch Qt
+applications, the launched application has to have the following
+code:</p>
+<pre class="cpp">
+ <span class="preprocessor">#include &lt;signal.h&gt;</span>
+</pre>
+<p>Add following to your class constructor:</p>
+<pre class="cpp">
+ <span class="type"><a href="qobject.html">QObject</a></span><span class="operator">.</span><a href="qobject.html#connect">connect</a>(<span class="type"><a href="qapplication.html">QApplication</a></span><span class="operator">.</span>instance()<span class="operator">,</span> SIGNAL(unixSignal(<span class="type">int</span>))<span class="operator">,</span> qApp<span class="operator">,</span> SLOT(quit()));
+ <span class="type"><a href="qcoreapplication.html">QCoreApplication</a></span><span class="operator">.</span>watchUnixSignal(SIGKILL<span class="operator">,</span> <span class="keyword">true</span>);
+ <span class="type"><a href="qcoreapplication.html">QCoreApplication</a></span><span class="operator">.</span>watchUnixSignal(SIGTERM<span class="operator">,</span> <span class="keyword">true</span>);
+</pre>
 <a id="symbian-platform-security-requirements" name="symbian-platform-security-requirements" />
 <h3>Symbian Platform Security Requirements</h3>
 <p>On Symbian, processes which use the functions <a href="qprocess.html#kill">kill</a>() or <a href="qprocess.html#terminate">terminate</a>() must have the
@@ -510,9 +527,9 @@ example:</p>
  builder<span class="operator">.</span>start(<span class="string">"make"</span><span class="operator">,</span> <span class="type"><a href="qstringlist.html">QStringList</a></span>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"-j2"</span>);
 
  <span class="keyword">if</span> (<span class="operator">!</span>builder<span class="operator">.</span>waitForFinished())
-     <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"Make failed:"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> builder<span class="operator">.</span>errorString();
+     <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"Make failed:"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> builder<span class="operator">.</span>errorString();
  <span class="keyword">else</span>
-     <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"Make output:"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> builder<span class="operator">.</span>readAll();
+     <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"Make output:"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> builder<span class="operator">.</span>readAll();
 </pre>
 <p>This function was introduced in Qt 4.2.</p>
 <p><b>See also</b> <a href="qprocess.html#processChannelMode">processChannelMode</a>(),
@@ -736,6 +753,8 @@ process.</p>
 <i>workingDirectory</i>.</p>
 <p><b>Note:</b> On QNX, this may cause all application threads to
 temporarily freeze.</p>
+<p><b>Note:</b> On VxWorks, this will start RTP process always with
+priority set to 220.</p>
 <p>If the function is successful then *<i>pid</i> is set to the
 process identifier of the started process.</p>
 
@@ -893,4 +912,4 @@ when the process has started, and <a href="qprocess.html#state">state</a>() retu
 is the state <a href="qprocess.html">QProcess</a> changed to.</p>
 
 
-<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

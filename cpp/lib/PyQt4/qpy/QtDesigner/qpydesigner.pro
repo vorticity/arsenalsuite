@@ -1,7 +1,7 @@
 # This is the qmake project file for the QPy support code for the QtDesigner
-# module.
+# module.  Note that it is not required by configure-ng.py.
 #
-# Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+# Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 # 
 # This file is part of PyQt.
 # 
@@ -24,14 +24,18 @@
 # WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
 
-CONFIG      += designer static plugin
+CONFIG      += static plugin warn_on
+
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += designer
+}
+
+lessThan(QT_MAJOR_VERSION, 5) {
+    CONFIG += designer
+}
+
 TARGET      = qpydesigner
 TEMPLATE    = lib
-
-CONFIG(debug, debug|release) {
-    mac: TARGET = $$join(TARGET,,,_debug)
-    win32: TARGET = $$join(TARGET,,d)
-}
 
 HEADERS   = \
             qpydesignercontainerextension.h \

@@ -486,9 +486,9 @@ function returns the topmost item.</p>
  <span class="type">void</span> CustomView<span class="operator">.</span>mousePressEvent(<span class="type"><a href="qmouseevent.html">QMouseEvent</a></span> <span class="operator">*</span>event)
  {
      <span class="keyword">if</span> (<span class="type"><a href="qgraphicsitem.html">QGraphicsItem</a></span> <span class="operator">*</span>item <span class="operator">=</span> itemAt(event<span class="operator">-</span><span class="operator">&gt;</span>pos())) {
-         <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"You clicked on item"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> item;
+         <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"You clicked on item"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> item;
      } <span class="keyword">else</span> {
-         <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"You didn't click on an item."</span>;
+         <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"You didn't click on an item."</span>;
      }
  }
 </pre>
@@ -519,7 +519,7 @@ untransformed viewport coordinates, just like <a href="qmouseevent.html#pos">QMo
 <pre class="cpp">
  <span class="type">void</span> CustomView<span class="operator">.</span>mousePressEvent(<span class="type"><a href="qmouseevent.html">QMouseEvent</a></span> <span class="operator">*</span>event)
  {
-     <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"There are"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> items(event<span class="operator">-</span><span class="operator">&gt;</span>pos())<span class="operator">.</span>size()
+     <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"There are"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> items(event<span class="operator">-</span><span class="operator">&gt;</span>pos())<span class="operator">.</span>size()
               <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"items at position"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> mapToScene(event<span class="operator">-</span><span class="operator">&gt;</span>pos());
  }
 </pre>
@@ -824,7 +824,7 @@ floating point scene coordinates to view coordinates.</p>
 <p><b>See also</b> <a href="qgraphicsview.html#transform">transform</a>(), <a href="qgraphicsview.html#rotate">rotate</a>(), <a href="qgraphicsview.html#scale">scale</a>(), <a href="qgraphicsview.html#shear">shear</a>(), and <a href="qgraphicsview.html#translate">translate</a>().</p>
 
 
-<h3 class="fn"><a name="setTransformationAnchor" />QGraphicsView.setTransformationAnchor (<i>self</i>, <a href="qgraphicsview.html#ViewportAnchor-enum">ViewportAnchor</a>&#160;<i>anchor</i>)</h3><h3 class="fn"><a name="setupViewport" />QGraphicsView.setupViewport (<i>self</i>, <a href="qwidget.html">QWidget</a>&#160;<i>widget</i>)</h3><p>This method is also a Qt slot with the C++ signature <tt>void setupViewport(QWidget *)</tt>.</p><p>This slot is called by <a href="qabstractscrollarea.html">QAbstractScrollArea</a> after <a href="qabstractscrollarea.html#setViewport">setViewport</a>() has been
+<h3 class="fn"><a name="setTransformationAnchor" />QGraphicsView.setTransformationAnchor (<i>self</i>, <a href="qgraphicsview.html#ViewportAnchor-enum">ViewportAnchor</a>&#160;<i>anchor</i>)</h3><h3 class="fn"><a name="setupViewport" />QGraphicsView.setupViewport (<i>self</i>, <a href="qwidget.html">QWidget</a>&#160;<i>widget</i>)</h3><p>This method is also a Qt slot with the C++ signature <tt>void setupViewport(QWidget*)</tt>.</p><p>This slot is called by <a href="qabstractscrollarea.html">QAbstractScrollArea</a> after <a href="qabstractscrollarea.html#setViewport">setViewport</a>() has been
 called. Reimplement this function in a subclass of <a href="qgraphicsview.html">QGraphicsView</a> to initialize the new
 viewport <i>widget</i> before it is used.</p>
 <p><b>See also</b> <a href="qabstractscrollarea.html#setViewport">setViewport</a>().</p>
@@ -871,4 +871,4 @@ coordinates.</p>
 
 
 <h3 class="fn"><a name="viewportUpdateMode" /><a href="qgraphicsview.html#ViewportUpdateMode-enum">ViewportUpdateMode</a> QGraphicsView.viewportUpdateMode (<i>self</i>)</h3><h3 class="fn"><a name="wheelEvent" />QGraphicsView.wheelEvent (<i>self</i>, <a href="qwheelevent.html">QWheelEvent</a>&#160;<i>event</i>)</h3><p>Reimplemented from <a href="qwidget.html#wheelEvent">QWidget.wheelEvent</a>().</p>
-<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

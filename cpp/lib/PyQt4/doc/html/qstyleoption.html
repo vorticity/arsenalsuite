@@ -244,7 +244,7 @@ complex controls values must be above this value</td>
 <td class="topAlign"><a href="qstyleoptionq3listviewitem.html">QStyleOptionQ3ListViewItem</a></td>
 </tr>
 </table>
-<p><b>See also</b> <a href="qstyleoption.html#type-varx">type</a>.</p>
+<p><b>See also</b> <a href="qstyleoption.html#type-var">type</a>.</p>
 
 
 <h3 class="fn"><a name="StyleOptionType-enum" />QStyleOption.StyleOptionType</h3><p>This enum is used to hold information about the type of the
@@ -294,7 +294,7 @@ to distinguish between different version of the same option
 type.</p>
 <p>The <a href="qstyleoption.html#state-var">state</a> member
 variable is initialized to <a href="qstyle.html#StateFlag-enum">QStyle.State_None</a>.</p>
-<p><b>See also</b> <a href="qstyleoption.html#version-var">version</a> and <a href="qstyleoption.html#type-varx">type</a>.</p>
+<p><b>See also</b> <a href="qstyleoption.html#version-var">version</a> and <a href="qstyleoption.html#type-var">type</a>.</p>
 
 
 <h3 class="fn"><a name="QStyleOption-2" />QStyleOption.__init__ (<i>self</i>, <a href="qstyleoption.html">QStyleOption</a>&#160;<i>other</i>)</h3><p>Constructs a copy of <i>other</i>.</p>
@@ -347,9 +347,14 @@ the control.</p>
 and <a href="qstyle.html#StateFlag-enum">QStyle.State</a>.</p>
 
 
-<h3 class="fn"><a name="type-var" />int type</h3><h3 class="fn"><a name="version-var" />int version</h3><p>This variable holds the version of the style option.</p>
+<h3 class="fn"><a name="type-var" />int type</h3><p>This variable holds the option type of the style option.</p>
+<p>The default value is <a href="qstyleoption.html#OptionType-enum">SO_Default</a>.</p>
+<p><b>See also</b> <a href="qstyleoption.html#OptionType-enum">OptionType</a>.</p>
+
+
+<h3 class="fn"><a name="version-var" />int version</h3><p>This variable holds the version of the style option.</p>
 <p>This value can be used by subclasses to implement extensions
 without breaking compatibility. If you use the <a href="qstyleoption.html#qstyleoption_cast">qstyleoption_cast</a>()
 function, you normally do not need to check it.</p>
 <p>The default value is 1.</p>
-<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

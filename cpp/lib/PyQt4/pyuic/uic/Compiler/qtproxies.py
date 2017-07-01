@@ -89,7 +89,7 @@ class i18n_string(object):
         else:
             disambig = as_string(self.disambig, encode=False)
 
-        return 'QtGui.QApplication.translate("%s", %s, %s, QtGui.QApplication.UnicodeUTF8)' % (i18n_context, as_string(self.string, encode=False), disambig)
+        return '_translate("%s", %s, %s)' % (i18n_context, as_string(self.string, encode=False), disambig)
 
 
 # Classes with this flag will be handled as literal values. If functions are

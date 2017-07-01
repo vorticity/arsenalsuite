@@ -351,6 +351,10 @@ in the following registry paths:</p>
 <p><b>Note:</b> On Windows, for 32-bit programs running in WOW64
 mode, settings are stored in the following registry path:
 <tt>HKEY_LOCAL_MACHINE\Software\WOW6432node</tt>.</p>
+<p>On BlackBerry only a single file is used (see <a href="#platform-limitations">Platform Limitations</a>). If the file
+format is <a href="qsettings.html#Format-enum">NativeFormat</a>,
+this is "Settings/MySoft/Star Runner.conf" in the application's
+home directory.</p>
 <p>If the file format is <a href="qsettings.html#Format-enum">IniFormat</a>, the following files are
 used on Unix and Mac OS X:</p>
 <ol class="1">
@@ -372,6 +376,10 @@ Linux: <tt>$HOME/Settings/MySoft/Star Runner.ini</tt>)</li>
 Settings\<i>User Name</i>\Application Data</tt>; the
 <tt>%COMMON_APPDATA%</tt> path is usually <tt>C:\Documents and
 Settings\All Users\Application Data</tt>.</p>
+<p>On BlackBerry only a single file is used (see <a href="#platform-limitations">Platform Limitations</a>). If the file
+format is <a href="qsettings.html#Format-enum">IniFormat</a>, this
+is "Settings/MySoft/Star Runner.ini" in the application's home
+directory.</p>
 <p>On Symbian, the following files are used for both <a href="qsettings.html#Format-enum">IniFormat</a> and <a href="qsettings.html#Format-enum">NativeFormat</a> (in this example, we
 assume that the application is installed on the <tt>e-drive</tt>
 and its Secure ID is <tt>0xECB00931</tt>):</p>
@@ -390,7 +398,7 @@ private to the application and not shared between applications,
 unlike other environments.</p>
 <p>The paths for the <tt>.ini</tt> and <tt>.conf</tt> files can be
 changed using <a href="qsettings.html#setPath">setPath</a>(). On
-Unix and Mac OS X, the user can override them by by setting the
+Unix and Mac OS X, the user can override them by setting the
 <tt>XDG_CONFIG_HOME</tt> environment variable; see <a href="qsettings.html#setPath">setPath</a>() for details.</p>
 <a id="accessing-ini-and-plist-files-directly" name="accessing-ini-and-plist-files-directly" />
 <h4>Accessing INI and .plist Files Directly</h4>
@@ -549,6 +557,17 @@ disabled if NFS (or AutoFS or CacheFS) is detected to work around a
 bug in the NFS fcntl() implementation, which hangs forever if statd
 or lockd aren't running. Also, the locking isn't performed when
 accessing <tt>.plist</tt> files.</li>
+<li>On the BlackBerry platform, applications run in a sandbox. They
+are not allowed to read or write outside of this sandbox. This
+involves the following limitations:
+<ul>
+<li>As there is only a single scope the scope is simply ignored,
+i.e. there is no difference between <a href="qsettings.html#Scope-enum">SystemScope</a> and <a href="qsettings.html#Scope-enum">UserScope</a>.</li>
+<li>The <a href="#fallback-mechanism">Fallback Mechanism</a> is not
+applied, i.e. only a single location is considered.</li>
+<li>It is advised against setting and using custom file paths.</li>
+</ul>
+</li>
 </ul>
 <hr /><h2>Type Documentation</h2><h3 class="fn"><a name="Format-enum" />QSettings.Format</h3><p>This enum type specifies the storage format used by <a href="qsettings.html">QSettings</a>.</p>
 <table class="valuelist">
@@ -1292,4 +1311,4 @@ Syntax</a> rules.</p>
  settings<span class="operator">.</span>value(<span class="string">"animal/zebra"</span>)<span class="operator">.</span>toInt();         <span class="comment">// returns 0</span>
 </pre>
 <p><b>See also</b> <a href="qsettings.html#setValue">setValue</a>(), <a href="qsettings.html#contains">contains</a>(), and <a href="qsettings.html#remove">remove</a>().</p>
-<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

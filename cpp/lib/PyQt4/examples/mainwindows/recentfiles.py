@@ -194,7 +194,7 @@ class MainWindow(QtGui.QMainWindow):
             self.setWindowTitle("Recent Files")
 
         settings = QtCore.QSettings('Trolltech', 'Recent Files Example')
-        files = settings.value('recentFileList')
+        files = settings.value('recentFileList', [])
 
         try:
             files.remove(fileName)
@@ -212,7 +212,7 @@ class MainWindow(QtGui.QMainWindow):
 
     def updateRecentFileActions(self):
         settings = QtCore.QSettings('Trolltech', 'Recent Files Example')
-        files = settings.value('recentFileList')
+        files = settings.value('recentFileList', [])
 
         numRecentFiles = min(len(files), MainWindow.MaxRecentFiles)
 

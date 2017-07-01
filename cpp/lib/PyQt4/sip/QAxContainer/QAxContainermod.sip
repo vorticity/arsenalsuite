@@ -1,6 +1,6 @@
 // This is the SIP interface definition for the QAxContainer module of PyQt v4.
 //
-// Copyright (c) 2009 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -16,24 +16,19 @@
 // GPL Exception version 1.1, which can be found in the file
 // GPL_EXCEPTION.txt in this package.
 // 
-// Please review the following information to ensure GNU General
-// Public Licensing requirements will be met:
-// http://trolltech.com/products/qt/licenses/licensing/opensource/. If
-// you are unsure which license is appropriate for your use, please
-// review the following information:
-// http://trolltech.com/products/qt/licenses/licensing/licensingoverview
-// or contact the sales department at sales@riverbankcomputing.com.
+// If you are unsure which license is appropriate for your use, please
+// contact the sales department at sales@riverbankcomputing.com.
 // 
 // This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
 // WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
 
-%Module PyQt4.QAxContainer 0
+%Module(name=PyQt4.QAxContainer, keyword_arguments="Optional")
 
 %Import QtGui/QtGuimod.sip
 
 %Copying
-Copyright (c) 2009 Riverbank Computing Limited <info@riverbankcomputing.com>
+Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 
 This file is part of PyQt.
 
@@ -49,13 +44,8 @@ certain additional rights. These rights are described in the Riverbank
 GPL Exception version 1.1, which can be found in the file
 GPL_EXCEPTION.txt in this package.
 
-Please review the following information to ensure GNU General
-Public Licensing requirements will be met:
-http://trolltech.com/products/qt/licenses/licensing/opensource/. If
-you are unsure which license is appropriate for your use, please
-review the following information:
-http://trolltech.com/products/qt/licenses/licensing/licensingoverview
-or contact the sales department at sales@riverbankcomputing.com.
+If you are unsure which license is appropriate for your use, please
+contact the sales department at sales@riverbankcomputing.com.
 
 This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
 WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.

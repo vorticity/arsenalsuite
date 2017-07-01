@@ -330,7 +330,7 @@ returns false.</p>
  q<span class="operator">.</span><a href="qsqlquery.html#addBindValue">addBindValue</a>(names);
 
  <span class="keyword">if</span> (<span class="operator">!</span>q<span class="operator">.</span>execBatch())
-     <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> q<span class="operator">.</span><a href="qsqlquery.html#lastError">lastError</a>();
+     <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> q<span class="operator">.</span><a href="qsqlquery.html#lastError">lastError</a>();
 </pre>
 <p>The example above inserts four new rows into
 <tt>myTable</tt>:</p>
@@ -592,11 +592,11 @@ obtain the index of a column.</p>
  <span class="type"><a href="qsqlquery.html">QSqlQuery</a></span> q(<span class="string">"select * from employees"</span>);
  <span class="type"><a href="qsqlrecord.html">QSqlRecord</a></span> rec <span class="operator">=</span> q<span class="operator">.</span>record();
 
- <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"Number of columns: "</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> rec<span class="operator">.</span>count();
+ <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"Number of columns: "</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> rec<span class="operator">.</span>count();
 
  <span class="type">int</span> nameCol <span class="operator">=</span> rec<span class="operator">.</span>indexOf(<span class="string">"name"</span>); <span class="comment">// index of the field "name"</span>
  <span class="keyword">while</span> (q<span class="operator">.</span>next())
-     <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> q<span class="operator">.</span><a href="qsqlquery.html#value">value</a>(nameCol)<span class="operator">.</span>toString(); <span class="comment">// output all names</span>
+     <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> q<span class="operator">.</span><a href="qsqlquery.html#value">value</a>(nameCol)<span class="operator">.</span>toString(); <span class="comment">// output all names</span>
 </pre>
 <p><b>See also</b> <a href="qsqlquery.html#value">value</a>().</p>
 
@@ -709,4 +709,4 @@ the query is positioned on an invalid record.</p>
 <p><b>See also</b> <a href="qsqlquery.html#previous">previous</a>(), <a href="qsqlquery.html#next">next</a>(), <a href="qsqlquery.html#first">first</a>(), <a href="qsqlquery.html#last">last</a>(), <a href="qsqlquery.html#seek">seek</a>(), <a href="qsqlquery.html#isActive">isActive</a>(), and <a href="qsqlquery.html#isValid">isValid</a>().</p>
 
 
-<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

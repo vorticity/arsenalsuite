@@ -28,7 +28,7 @@ is for debugging purposes, as in the following example:</p>
 
      slowOperation1();
 
-     <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"The slow operation took"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> timer<span class="operator">.</span>elapsed() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"milliseconds"</span>;
+     <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"The slow operation took"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> timer<span class="operator">.</span>elapsed() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"milliseconds"</span>;
 </pre>
 <p>In this example, the timer is started by a call to <a href="qelapsedtimer.html#start">start</a>() and the elapsed timer is
 calculated by the <a href="qelapsedtimer.html#elapsed">elapsed</a>() function.</p>
@@ -273,8 +273,9 @@ value returned will be the best estimate available.</p>
 <h3 class="fn"><a name="restart" />int QElapsedTimer.restart (<i>self</i>)</h3><p>Restarts the timer and returns the time elapsed since the
 previous start. This function is equivalent to obtaining the
 elapsed time with <a href="qelapsedtimer.html#elapsed">elapsed</a>() and then starting the
-timer again with restart(), but it does so in one single operation,
-avoiding the need to obtain the clock value twice.</p>
+timer again with <a href="qelapsedtimer.html#start">start</a>(),
+but it does so in one single operation, avoiding the need to obtain
+the clock value twice.</p>
 <p>The following example illustrates how to use this function to
 calibrate a parameter to a slow operation (for example, an
 iteration count) so that this operation takes at least 250
@@ -315,10 +316,10 @@ such as:</p>
 
      slowOperation1();
 
-     <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"The slow operation took"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> timer<span class="operator">.</span>elapsed() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"milliseconds"</span>;
+     <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"The slow operation took"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> timer<span class="operator">.</span>elapsed() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"milliseconds"</span>;
 </pre>
 <p>Also, starting a timer makes it valid again.</p>
 <p><b>See also</b> <a href="qelapsedtimer.html#restart">restart</a>(), <a href="qelapsedtimer.html#invalidate">invalidate</a>(), and <a href="qelapsedtimer.html#elapsed">elapsed</a>().</p>
 
 
-<h3 class="fn"><a name="__eq__" />bool QElapsedTimer.__eq__ (<i>self</i>, <a href="qelapsedtimer.html">QElapsedTimer</a>&#160;<i>other</i>)</h3><h3 class="fn"><a name="__ge__" />bool QElapsedTimer.__ge__ (<i>self</i>, <a href="qelapsedtimer.html">QElapsedTimer</a>&#160;<i>v2</i>)</h3><h3 class="fn"><a name="__lt__" />bool QElapsedTimer.__lt__ (<i>self</i>, <a href="qelapsedtimer.html">QElapsedTimer</a>&#160;<i>v2</i>)</h3><h3 class="fn"><a name="__ne__" />bool QElapsedTimer.__ne__ (<i>self</i>, <a href="qelapsedtimer.html">QElapsedTimer</a>&#160;<i>other</i>)</h3><address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<h3 class="fn"><a name="__eq__" />bool QElapsedTimer.__eq__ (<i>self</i>, <a href="qelapsedtimer.html">QElapsedTimer</a>&#160;<i>other</i>)</h3><h3 class="fn"><a name="__ge__" />bool QElapsedTimer.__ge__ (<i>self</i>, <a href="qelapsedtimer.html">QElapsedTimer</a>&#160;<i>v2</i>)</h3><h3 class="fn"><a name="__lt__" />bool QElapsedTimer.__lt__ (<i>self</i>, <a href="qelapsedtimer.html">QElapsedTimer</a>&#160;<i>v2</i>)</h3><h3 class="fn"><a name="__ne__" />bool QElapsedTimer.__ne__ (<i>self</i>, <a href="qelapsedtimer.html">QElapsedTimer</a>&#160;<i>other</i>)</h3><address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

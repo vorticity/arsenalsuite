@@ -3,7 +3,7 @@
 DBus Support
 ============
 
-PyQt provides two different modules that implement support for DBus.  The
+PyQt4 provides two different modules that implement support for DBus.  The
 :mod:`~PyQt4.QtDBus` module provides wrappers for the standard Qt DBus classes.
 The :mod:`dbus.mainloop.qt` module add support for the Qt event loop to the
 standard ``dbus-python`` Python module.
@@ -83,7 +83,7 @@ The :mod:`dbus.mainloop.qt` module contains the following function.
         keyword argument, and not as a positional argument.
 
 The following code fragment is all that is normally needed to set up the
-standard ``dbus-python`` language bindings package to be used with PyQt::
+standard ``dbus-python`` language bindings package to be used with PyQt4::
 
     from dbus.mainloop.qt import DBusQtMainLoop
 

@@ -232,13 +232,13 @@ to determine if an exception occurred.</p>
  <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> global <span class="operator">=</span> engine<span class="operator">.</span>globalObject();
  <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> fullName <span class="operator">=</span> global<span class="operator">.</span><a href="qscriptvalue.html#property">property</a>(<span class="string">"fullName"</span>);
  <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> who <span class="operator">=</span> global<span class="operator">.</span><a href="qscriptvalue.html#property">property</a>(<span class="string">"somePerson"</span>);
- <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> fullName<span class="operator">.</span>call(who)<span class="operator">.</span><a href="qscriptvalue.html#toString">toString</a>(); <span class="comment">// "John Doe"</span>
+ <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> fullName<span class="operator">.</span>call(who)<span class="operator">.</span><a href="qscriptvalue.html#toString">toString</a>(); <span class="comment">// "John Doe"</span>
 
  engine<span class="operator">.</span>evaluate(<span class="string">"function cube(x) { return x * x * x; }"</span>);
  <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> cube <span class="operator">=</span> global<span class="operator">.</span><a href="qscriptvalue.html#property">property</a>(<span class="string">"cube"</span>);
  <span class="type">QScriptValueList</span> args;
  args <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="number">3</span>;
- <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> cube<span class="operator">.</span>call(<span class="type"><a href="qscriptvalue.html">QScriptValue</a></span>()<span class="operator">,</span> args)<span class="operator">.</span><a href="qscriptvalue.html#toNumber">toNumber</a>(); <span class="comment">// 27</span>
+ <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> cube<span class="operator">.</span>call(<span class="type"><a href="qscriptvalue.html">QScriptValue</a></span>()<span class="operator">,</span> args)<span class="operator">.</span><a href="qscriptvalue.html#toNumber">toNumber</a>(); <span class="comment">// 27</span>
 </pre>
 <p><b>See also</b> <a href="qscriptvalue.html#construct">construct</a>().</p>
 
@@ -789,4 +789,4 @@ recursively; cyclic references are not followed.</td>
 <p><b>See also</b> <a href="qscriptvalue.html#isVariant">isVariant</a>().</p>
 
 
-<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

@@ -92,13 +92,13 @@ been established.</p>
  <span class="type">QSslSocket</span> socket;
  socket<span class="operator">.</span><a href="qsslsocket.html#connectToHostEncrypted">connectToHostEncrypted</a>(<span class="string">"http.example.com"</span><span class="operator">,</span> <span class="number">443</span>);
  <span class="keyword">if</span> (<span class="operator">!</span>socket<span class="operator">.</span>waitForEncrypted()) {
-     <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> socket<span class="operator">.</span>errorString();
+     <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> socket<span class="operator">.</span>errorString();
      <span class="keyword">return</span> <span class="keyword">false</span>;
  }
 
  socket<span class="operator">.</span><a href="qiodevice.html#write">write</a>(<span class="string">"GET / HTTP/1.0\r\n\r\n"</span>);
  <span class="keyword">while</span> (socket<span class="operator">.</span>waitForReadyRead())
-     <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> socket<span class="operator">.</span><a href="qiodevice.html#readAll">readAll</a>()<span class="operator">.</span>data();
+     <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> socket<span class="operator">.</span><a href="qiodevice.html#readAll">readAll</a>()<span class="operator">.</span>data();
 </pre>
 <p>QSslSocket provides an extensive, easy-to-use API for handling
 cryptographic ciphers, private keys, and local, peer, and
@@ -465,10 +465,13 @@ emitted.</p>
 <p>If there are no errors during the SSL handshake phase (i.e., the
 identity of the peer is established with no problems), <a href="qsslsocket.html">QSslSocket</a> will not emit the <a href="qsslsocket.html#sslErrors">sslErrors</a>() signal, and it is
 unnecessary to call this function.</p>
-<p>Ignoring errors that occur during an SSL handshake should be
-done with caution. A fundamental characteristic of secure
-connections is that they should be established with an error free
-handshake.</p>
+<p><b>Warning:</b> Be sure to always let the user inspect the
+errors reported by the <a href="qsslsocket.html#sslErrors">sslErrors</a>() signal, and only call
+this method upon confirmation from the user that proceeding is ok.
+If there are unexpected errors, the connection should be aborted.
+Calling this method without inspecting the actual errors will most
+likely pose a security risk for your application. Use it with great
+care!</p>
 <p><b>See also</b> <a href="qsslsocket.html#sslErrors">sslErrors</a>().</p>
 
 
@@ -901,7 +904,7 @@ be encrypted:</p>
 <pre class="cpp">
  socket<span class="operator">-</span><span class="operator">&gt;</span><a href="qsslsocket.html#connectToHostEncrypted">connectToHostEncrypted</a>(<span class="string">"imap"</span><span class="operator">,</span> <span class="number">993</span>);
  <span class="keyword">if</span> (socket<span class="operator">-</span><span class="operator">&gt;</span>waitForEncrypted(<span class="number">1000</span>))
-     <a href="qtcore.html#qDebug">qDebug</a>(<span class="string">"Encrypted!"</span>);
+     <a href="qtcore.html#qDebugx">qDebug</a>(<span class="string">"Encrypted!"</span>);
 </pre>
 <p>If msecs is -1, this function will not time out.</p>
 <p><b>See also</b> <a href="qsslsocket.html#startClientEncryption">startClientEncryption</a>(),
@@ -969,4 +972,4 @@ will have no effect.</p>
 <p><b>See also</b> <a href="qsslsocket.html#peerVerifyError">peerVerifyError</a>().</p>
 
 
-<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

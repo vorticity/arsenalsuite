@@ -1,7 +1,7 @@
-The PyQt Resource System
-========================
+The PyQt4 Resource System
+=========================
 
-PyQt supports Qt's resource system.  This is a facility for embedding
+PyQt4 supports Qt's resource system.  This is a facility for embedding
 resources such as icons and translation files in an application.  This makes
 the packaging and distribution of those resources much easier.
 
@@ -16,7 +16,7 @@ Resource System in the Qt documentation.
 :program:`pyrcc4`
 -----------------
 
-:program:`pyrcc4` is PyQt's equivalent to Qt's :program:`rcc` utility and is
+:program:`pyrcc4` is PyQt4's equivalent to Qt's :program:`rcc` utility and is
 used in exactly the same way.  :program:`pyrcc4` reads the ``.qrc`` file, and
 the resource files, and generates a Python module that only needs to be
 ``import`` ed by the application in order for those resources to be made

@@ -1,6 +1,6 @@
 // This contains the implementation of the pyqtMethodProxy type.
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -98,6 +98,9 @@ PyTypeObject qpycore_pyqtMethodProxy_Type = {
     0,                      /* tp_del */
 #if PY_VERSION_HEX >= 0x02060000
     0,                      /* tp_version_tag */
+#endif
+#if PY_VERSION_HEX >= 0x03040000
+    0,                      /* tp_finalize */
 #endif
 };
 

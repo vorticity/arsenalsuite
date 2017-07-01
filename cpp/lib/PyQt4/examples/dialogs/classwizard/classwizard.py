@@ -49,7 +49,10 @@ sip.setapi('QVariant', 2)
 
 from PyQt4 import QtCore, QtGui
 
-import classwizard_rc
+try:
+    import classwizard_rc3
+except ImportError:
+    import classwizard_rc2
 
 
 class ClassWizard(QtGui.QWizard):

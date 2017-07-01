@@ -21,7 +21,7 @@ properties of a <a href="qscriptvalue.html">QScriptValue</a>:</p>
  <span class="type">QScriptValueIterator</span> it(object);
  <span class="keyword">while</span> (it<span class="operator">.</span>hasNext()) {
      it<span class="operator">.</span>next();
-     <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> it<span class="operator">.</span>name() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">": "</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> it<span class="operator">.</span>value()<span class="operator">.</span>toString();
+     <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> it<span class="operator">.</span>name() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">": "</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> it<span class="operator">.</span>value()<span class="operator">.</span>toString();
  }
 </pre>
 <p>The <a href="qscriptvalueiterator.html#next">next</a>() advances
@@ -39,7 +39,7 @@ follow the prototype chain:</p>
      <span class="type">QScriptValueIterator</span> it(obj);
      <span class="keyword">while</span> (it<span class="operator">.</span>hasNext()) {
          it<span class="operator">.</span>next();
-         <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> it<span class="operator">.</span>name();
+         <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> it<span class="operator">.</span>name();
      }
      obj <span class="operator">=</span> obj<span class="operator">.</span>prototype();
  }
@@ -54,7 +54,7 @@ following:</p>
      it<span class="operator">.</span>next();
      <span class="keyword">if</span> (it<span class="operator">.</span>flags() <span class="operator">&amp;</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">.</span>SkipInEnumeration)
          <span class="keyword">continue</span>;
-     <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"found enumerated property:"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> it<span class="operator">.</span>name();
+     <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"found enumerated property:"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> it<span class="operator">.</span>name();
  }
 </pre><hr /><h2>Method Documentation</h2><h3 class="fn"><a name="QScriptValueIterator" />QScriptValueIterator.__init__ (<i>self</i>, <a href="qscriptvalue.html">QScriptValue</a>&#160;<i>value</i>)</h3><p>Constructs an iterator for traversing <i>object</i>. The
 iterator is set to be at the front of the sequence of properties
@@ -126,4 +126,4 @@ using <a href="qscriptvalueiterator.html#next">next</a>() or
 <p><b>See also</b> <a href="qscriptvalueiterator.html#setValue">setValue</a>() and <a href="qscriptvalueiterator.html#name">name</a>().</p>
 
 
-<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

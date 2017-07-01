@@ -1,7 +1,7 @@
 Support for Pickling
 ====================
 
-The following PyQt classes may be pickled.
+The following PyQt4 classes may be pickled.
 
 - QByteArray
 - QChar

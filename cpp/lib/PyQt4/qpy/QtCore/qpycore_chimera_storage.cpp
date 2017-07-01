@@ -1,6 +1,6 @@
 // This is the implementation of the Chimera::Storage class.
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -116,6 +116,9 @@ PyObject *Chimera::Storage::toPyObject() const
 
         return sipConvertFromType(_ptr_storage, _parsed_type->typeDef(), 0);
     }
+
+    if (_parsed_type->typeDef() == sipType_QVariant)
+            return Chimera::toAnyPyObject(_value_storage);
 
     return _parsed_type->toPyObject(_value_storage);
 }

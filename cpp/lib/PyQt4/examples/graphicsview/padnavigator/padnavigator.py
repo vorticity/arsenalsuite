@@ -46,7 +46,11 @@ import math
 
 from PyQt4 import QtCore, QtGui, QtOpenGL
 
-from padnavigator_rc import *
+try:
+    import padnavigator_rc3
+except ImportError:
+    import padnavigator_rc2
+
 from ui_backside import Ui_BackSide
 
 

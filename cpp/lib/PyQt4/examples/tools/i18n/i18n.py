@@ -48,7 +48,10 @@ sip.setapi('QString', 2)
 
 from PyQt4 import QtCore, QtGui
 
-import i18n_rc
+try:
+    import i18n_rc3
+except ImportError:
+    import i18n_rc2
 
 
 class LanguageChooser(QtGui.QDialog):

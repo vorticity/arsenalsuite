@@ -1,6 +1,6 @@
 // This contains the definition of the PyQtProxy class.
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -78,7 +78,8 @@ public:
     virtual int qt_metacall(QMetaObject::Call, int, void **);
 
     void unislot(void **qargs);
-    static PyObject *invokeSlot(const qpycore_slot &slot, void **qargs);
+    static PyObject *invokeSlot(const qpycore_slot &slot, void **qargs,
+            int no_receiver_check = 0);
     void disable();
 
     int getReceivers(const char *signal) const {return receivers(signal);}
@@ -87,6 +88,8 @@ public:
 
     static PyQtProxy *findSlotProxy(void *tx, const char *sig, PyObject *rxObj,
             const char *slot, const char **member);
+
+    void disableReceiverCheck();
 
     // The type of a proxy hash.
     typedef QMultiHash<void *, PyQtProxy *> ProxyHash;

@@ -1,6 +1,6 @@
 // This contains the implementation of the PyQtProxy class.
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -43,6 +43,8 @@
 #define PROXY_SLOT_DISABLED 0x40    // The proxy deleteLater() has been called
                                     // or should be called after the slot has
                                     // finished executing.
+#define PROXY_NO_RCVR_CHECK 0x80    // The existence of the receiver C++ object
+                                    // should not be checked.
 
 
 // The last QObject sender.
@@ -149,11 +151,11 @@ PyQtProxy::PyQtProxy(sipWrapper *txObj, const char *sig, PyObject *rxObj,
 PyQtProxy::PyQtProxy(qpycore_pyqtBoundSignal *bs, PyObject *rxObj,
         const char **member)
     : QObject(), type(PyQtProxy::ProxySlot), proxy_flags(0),
-            signature(bs->bound_overload->signature)
+        signature(bs->unbound_signal->signature->signature)
 {
     SIP_BLOCK_THREADS
 
-    real_slot.signature = bs->bound_overload;
+    real_slot.signature = bs->unbound_signal->signature;
 
     // Save the slot.
     if (sipSaveSlot(&real_slot.sip_slot, rxObj, 0) < 0)
@@ -436,6 +438,7 @@ void PyQtProxy::unislot(void **qargs)
     QObject *saved_last_sender = last_sender;
     last_sender = new_last_sender;
 
+    int no_receiver_check = (proxy_flags & PROXY_NO_RCVR_CHECK);
     PyObject *res;
 
     // See if the sender was a short-circuit signal. */
@@ -444,12 +447,12 @@ void PyQtProxy::unislot(void **qargs)
         // The Python arguments will be the only argument.
         PyObject *pyargs = reinterpret_cast<PyQt_PyObject *>(qargs[1])->pyobject;
 
-        res = sipInvokeSlot(&real_slot.sip_slot, pyargs);
+        res = sipInvokeSlotEx(&real_slot.sip_slot, pyargs, no_receiver_check);
     }
     else
     {
         proxy_flags |= PROXY_SLOT_INVOKED;
-        res = invokeSlot(real_slot, qargs);
+        res = invokeSlot(real_slot, qargs, no_receiver_check);
         proxy_flags &= ~PROXY_SLOT_INVOKED;
 
         // Self destruct if we are a single shot or disabled.
@@ -492,7 +495,8 @@ void PyQtProxy::disable()
 
 
 // Invoke a slot on behalf of C++.
-PyObject *PyQtProxy::invokeSlot(const qpycore_slot &slot, void **qargs)
+PyObject *PyQtProxy::invokeSlot(const qpycore_slot &slot, void **qargs,
+        int no_receiver_check)
 {
     const QList<const Chimera *> &args = slot.signature->parsed_arguments;
 
@@ -519,11 +523,19 @@ PyObject *PyQtProxy::invokeSlot(const qpycore_slot &slot, void **qargs)
     }
 
     // Dispatch to the real slot.
-    PyObject *res = sipInvokeSlot(&slot.sip_slot, argtup);
+    PyObject *res = sipInvokeSlotEx(&slot.sip_slot, argtup, no_receiver_check);
 
     Py_DECREF(argtup);
 
     return res;
+}
+
+
+// Disable the check that the receiver C++ object exists before invoking a
+// slot.
+void PyQtProxy::disableReceiverCheck()
+{
+    proxy_flags |= PROXY_NO_RCVR_CHECK;
 }
 
 

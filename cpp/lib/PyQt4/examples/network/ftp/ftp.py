@@ -48,7 +48,10 @@ sip.setapi('QString', 2)
 
 from PyQt4 import QtCore, QtGui, QtNetwork
 
-import ftp_rc
+try:
+    import ftp_rc3
+except ImportError:
+    import ftp_rc2
 
 
 class FtpWindow(QtGui.QDialog):

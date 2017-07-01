@@ -1,9 +1,9 @@
-PyQt and Python v3
-==================
+PyQt4 and Python v3
+===================
 
-PyQt fully supports all versions of Python v3.  The default behaviour is
+PyQt4 fully supports all versions of Python v3.  The default behaviour is
 different in some areas to the default behaviour with Python v2.  These
-incompatible differences were introduced in order to make PyQt more Pythonic.
+incompatible differences were introduced in order to make PyQt4 more Pythonic.
 However it is very easy to revert to the default Python v2 behaviour on a class
 by class basis if required.  (See the section :ref:`ref-incompat-apis`.)
 
@@ -11,7 +11,7 @@ by class basis if required.  (See the section :ref:`ref-incompat-apis`.)
 QAbstractSpinBox
 ----------------
 
-The following PyQt calls have changed signatures to avoid the need for mutable
+The following PyQt4 calls have changed signatures to avoid the need for mutable
 strings::
 
     QAbstractSpinBox.fixup(str input) -> str
@@ -28,7 +28,7 @@ converted to and from a Python string.
 QClipboard
 ----------
 
-The following PyQt call has a changed signature to avoid the need for mutable
+The following PyQt4 call has a changed signature to avoid the need for mutable
 strings::
 
     QClipboard.text(str subtype, QClipboard.Mode mode=QClipboard.Clipboard) -> str, str
@@ -57,7 +57,7 @@ two objects with the same date and time will have different hashes.
 QDateTimeEdit
 -------------
 
-The following PyQt calls have changed signatures to avoid the need for mutable
+The following PyQt4 calls have changed signatures to avoid the need for mutable
 strings::
 
     QDateTimeEdit.fixup(str input) -> str
@@ -67,7 +67,7 @@ strings::
 QDoubleSpinBox
 --------------
 
-The following PyQt calls have changed signatures to avoid the need for mutable
+The following PyQt4 calls have changed signatures to avoid the need for mutable
 strings::
 
     QDoubleSpinBox.fixup(str input) -> str
@@ -77,7 +77,7 @@ strings::
 QDoubleValidator
 ----------------
 
-The following PyQt call has a changed signature to avoid the need for mutable
+The following PyQt4 call has a changed signature to avoid the need for mutable
 strings::
 
     QDoubleValidator.validate(str input, int pos) -> QValidator.State, str, int
@@ -86,7 +86,7 @@ strings::
 QFileDialog
 -----------
 
-The following PyQt calls have changed signatures to avoid the need for mutable
+The following PyQt4 calls have changed signatures to avoid the need for mutable
 strings::
 
     QFileDialog.getOpenFileName(QWidget parent=None, str caption=None, str dir=None, str filter=None, QFileDialog.Options options=0) -> str
@@ -122,7 +122,7 @@ string of length one and call the C++ ``QFontMetricsF::width()`` and
 QIntValidator
 -------------
 
-The following PyQt call has a changed signature to avoid the need for mutable
+The following PyQt4 call has a changed signature to avoid the need for mutable
 strings::
 
     QIntValidator.validate(str input, int pos) -> QValidator.State, str, int
@@ -157,7 +157,7 @@ converted to a ``QPyNullVariant``.
 QRegExpValidator
 ----------------
 
-The following PyQt call has a changed signature to avoid the need for mutable
+The following PyQt4 call has a changed signature to avoid the need for mutable
 strings::
 
     QRegExpValidator.validate(str input, int pos) -> QValidator.State, str, int
@@ -180,7 +180,7 @@ The argument can also be used with Python v2.
 QSpinBox
 --------
 
-The following PyQt calls have changed signatures to avoid the need for mutable
+The following PyQt4 calls have changed signatures to avoid the need for mutable
 strings::
 
     QSpinBox.fixup(str input) -> str
@@ -267,7 +267,7 @@ two objects with the same URL will have different hashes.
 QValidator
 ----------
 
-The following PyQt calls have changed signatures to avoid the need for mutable
+The following PyQt4 calls have changed signatures to avoid the need for mutable
 strings::
 
     QValidator.fixup(str input) -> str
@@ -290,7 +290,7 @@ The ``QPyNullVariant`` class is used to represent a null ``QVariant``.
 QWebPage
 --------
 
-The following PyQt call has a changed signature to avoid the need for mutable
+The following PyQt4 call has a changed signature to avoid the need for mutable
 strings::
 
     QWebPage.javaScriptPrompt(QWebFrame originatingFrame, str msg, str defaultValue) -> bool, str

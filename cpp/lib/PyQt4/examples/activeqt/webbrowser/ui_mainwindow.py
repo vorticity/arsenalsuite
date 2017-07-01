@@ -2,111 +2,115 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created: Tue Oct 31 21:22:31 2006
-#      by: PyQt4 UI code generator 4-snapshot-20061029
+# Created: Wed Mar 20 11:28:33 2013
+#      by: PyQt4 UI code generator snapshot-4.10.1-90522b46ebd0
 #
 # WARNING! All changes made in this file will be lost!
 
-import sys
 from PyQt4 import QtCore, QtGui
+
+try:
+    _fromUtf8 = QtCore.QString.fromUtf8
+except AttributeError:
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(QtCore.QSize(QtCore.QRect(0,0,812,605).size()).expandedTo(MainWindow.minimumSizeHint()))
-
+        MainWindow.setObjectName(_fromUtf8("MainWindow"))
+        MainWindow.resize(812, 605)
         self.centralWidget = QtGui.QWidget(MainWindow)
-        self.centralWidget.setObjectName("centralWidget")
-
+        self.centralWidget.setObjectName(_fromUtf8("centralWidget"))
         self.hboxlayout = QtGui.QHBoxLayout(self.centralWidget)
         self.hboxlayout.setMargin(0)
         self.hboxlayout.setSpacing(6)
-        self.hboxlayout.setObjectName("hboxlayout")
-
+        self.hboxlayout.setObjectName(_fromUtf8("hboxlayout"))
         self.Frame3 = QtGui.QFrame(self.centralWidget)
         self.Frame3.setFrameShape(QtGui.QFrame.StyledPanel)
         self.Frame3.setFrameShadow(QtGui.QFrame.Sunken)
-        self.Frame3.setObjectName("Frame3")
-
+        self.Frame3.setObjectName(_fromUtf8("Frame3"))
         self.vboxlayout = QtGui.QVBoxLayout(self.Frame3)
         self.vboxlayout.setMargin(1)
         self.vboxlayout.setSpacing(0)
-        self.vboxlayout.setObjectName("vboxlayout")
-
+        self.vboxlayout.setObjectName(_fromUtf8("vboxlayout"))
         self.WebBrowser = QAxContainer.QAxWidget(self.Frame3)
         self.WebBrowser.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.WebBrowser.setControl("{8856F961-340A-11D0-A96B-00C04FD705A2}")
-        self.WebBrowser.setObjectName("WebBrowser")
+        self.WebBrowser.setControl(_fromUtf8("{8856F961-340A-11D0-A96B-00C04FD705A2}"))
+        self.WebBrowser.setObjectName(_fromUtf8("WebBrowser"))
         self.vboxlayout.addWidget(self.WebBrowser)
         self.hboxlayout.addWidget(self.Frame3)
         MainWindow.setCentralWidget(self.centralWidget)
-
         self.tbNavigate = QtGui.QToolBar(MainWindow)
         self.tbNavigate.setOrientation(QtCore.Qt.Horizontal)
-        self.tbNavigate.setObjectName("tbNavigate")
-        MainWindow.addToolBar(self.tbNavigate)
-
+        self.tbNavigate.setObjectName(_fromUtf8("tbNavigate"))
+        MainWindow.addToolBar(4, self.tbNavigate)
         self.tbAddress = QtGui.QToolBar(MainWindow)
         self.tbAddress.setOrientation(QtCore.Qt.Horizontal)
-        self.tbAddress.setObjectName("tbAddress")
-        MainWindow.addToolBar(self.tbAddress)
-
+        self.tbAddress.setObjectName(_fromUtf8("tbAddress"))
+        MainWindow.addToolBar(4, self.tbAddress)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0,0,812,26))
-        self.menubar.setObjectName("menubar")
-
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 812, 26))
+        self.menubar.setObjectName(_fromUtf8("menubar"))
         self.PopupMenu = QtGui.QMenu(self.menubar)
-        self.PopupMenu.setObjectName("PopupMenu")
-
+        self.PopupMenu.setObjectName(_fromUtf8("PopupMenu"))
         self.FileNewGroup_2 = QtGui.QMenu(self.PopupMenu)
-        self.FileNewGroup_2.setObjectName("FileNewGroup_2")
-
+        self.FileNewGroup_2.setObjectName(_fromUtf8("FileNewGroup_2"))
         self.unnamed = QtGui.QMenu(self.menubar)
-        self.unnamed.setObjectName("unnamed")
+        self.unnamed.setObjectName(_fromUtf8("unnamed"))
         MainWindow.setMenuBar(self.menubar)
-
         self.actionGo = QtGui.QAction(MainWindow)
-        self.actionGo.setIcon(QtGui.QIcon(":/icons/image0.xpm"))
-        self.actionGo.setObjectName("actionGo")
-
+        icon = QtGui.QIcon()
+        icon.addFile(_fromUtf8(":/icons/image0.xpm"))
+        self.actionGo.setIcon(icon)
+        self.actionGo.setObjectName(_fromUtf8("actionGo"))
         self.actionBack = QtGui.QAction(MainWindow)
-        self.actionBack.setIcon(QtGui.QIcon(":/icons/image1.xpm"))
-        self.actionBack.setObjectName("actionBack")
-
+        icon1 = QtGui.QIcon()
+        icon1.addFile(_fromUtf8(":/icons/image1.xpm"))
+        self.actionBack.setIcon(icon1)
+        self.actionBack.setObjectName(_fromUtf8("actionBack"))
         self.actionForward = QtGui.QAction(MainWindow)
-        self.actionForward.setIcon(QtGui.QIcon(":/icons/image2.xpm"))
-        self.actionForward.setObjectName("actionForward")
-
+        icon2 = QtGui.QIcon()
+        icon2.addFile(_fromUtf8(":/icons/image2.xpm"))
+        self.actionForward.setIcon(icon2)
+        self.actionForward.setObjectName(_fromUtf8("actionForward"))
         self.actionStop = QtGui.QAction(MainWindow)
-        self.actionStop.setIcon(QtGui.QIcon(":/icons/image3.xpm"))
-        self.actionStop.setObjectName("actionStop")
-
+        icon3 = QtGui.QIcon()
+        icon3.addFile(_fromUtf8(":/icons/image3.xpm"))
+        self.actionStop.setIcon(icon3)
+        self.actionStop.setObjectName(_fromUtf8("actionStop"))
         self.actionRefresh = QtGui.QAction(MainWindow)
-        self.actionRefresh.setIcon(QtGui.QIcon(":/icons/image4.xpm"))
-        self.actionRefresh.setObjectName("actionRefresh")
-
+        icon4 = QtGui.QIcon()
+        icon4.addFile(_fromUtf8(":/icons/image4.xpm"))
+        self.actionRefresh.setIcon(icon4)
+        self.actionRefresh.setObjectName(_fromUtf8("actionRefresh"))
         self.actionHome = QtGui.QAction(MainWindow)
-        self.actionHome.setIcon(QtGui.QIcon(":/icons/image5.xpm"))
-        self.actionHome.setObjectName("actionHome")
-
+        icon5 = QtGui.QIcon()
+        icon5.addFile(_fromUtf8(":/icons/image5.xpm"))
+        self.actionHome.setIcon(icon5)
+        self.actionHome.setObjectName(_fromUtf8("actionHome"))
         self.actionFileClose = QtGui.QAction(MainWindow)
-        self.actionFileClose.setObjectName("actionFileClose")
-
+        self.actionFileClose.setObjectName(_fromUtf8("actionFileClose"))
         self.actionSearch = QtGui.QAction(MainWindow)
-        self.actionSearch.setIcon(QtGui.QIcon(":/icons/image6.xpm"))
-        self.actionSearch.setObjectName("actionSearch")
-
+        icon6 = QtGui.QIcon()
+        icon6.addFile(_fromUtf8(":/icons/image6.xpm"))
+        self.actionSearch.setIcon(icon6)
+        self.actionSearch.setObjectName(_fromUtf8("actionSearch"))
         self.actionAbout = QtGui.QAction(MainWindow)
-        self.actionAbout.setObjectName("actionAbout")
-
+        self.actionAbout.setObjectName(_fromUtf8("actionAbout"))
         self.actionAboutQt = QtGui.QAction(MainWindow)
-        self.actionAboutQt.setObjectName("actionAboutQt")
-
+        self.actionAboutQt.setObjectName(_fromUtf8("actionAboutQt"))
         self.FileNewGroup = QtGui.QActionGroup(MainWindow)
-        self.FileNewGroup.setObjectName("FileNewGroup")
-
+        self.FileNewGroup.setObjectName(_fromUtf8("FileNewGroup"))
         self.actionNewWindow = QtGui.QAction(self.FileNewGroup)
-        self.actionNewWindow.setObjectName("actionNewWindow")
+        self.actionNewWindow.setObjectName(_fromUtf8("actionNewWindow"))
         self.tbNavigate.addAction(self.actionBack)
         self.tbNavigate.addAction(self.actionForward)
         self.tbNavigate.addAction(self.actionStop)
@@ -128,26 +132,25 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Qt WebBrowser", None, QtGui.QApplication.UnicodeUTF8))
-        self.tbNavigate.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Navigation", None, QtGui.QApplication.UnicodeUTF8))
-        self.tbAddress.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Address", None, QtGui.QApplication.UnicodeUTF8))
-        self.PopupMenu.setTitle(QtGui.QApplication.translate("MainWindow", "&File", None, QtGui.QApplication.UnicodeUTF8))
-        self.FileNewGroup_2.setTitle(QtGui.QApplication.translate("MainWindow", "New", None, QtGui.QApplication.UnicodeUTF8))
-        self.unnamed.setTitle(QtGui.QApplication.translate("MainWindow", "&Help", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionGo.setIconText(QtGui.QApplication.translate("MainWindow", "Go", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionBack.setIconText(QtGui.QApplication.translate("MainWindow", "Back", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionBack.setShortcut(QtGui.QApplication.translate("MainWindow", "Backspace", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionForward.setIconText(QtGui.QApplication.translate("MainWindow", "Forward", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionStop.setIconText(QtGui.QApplication.translate("MainWindow", "Stop", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionRefresh.setIconText(QtGui.QApplication.translate("MainWindow", "Refresh", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionHome.setIconText(QtGui.QApplication.translate("MainWindow", "Home", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionFileClose.setText(QtGui.QApplication.translate("MainWindow", "C&lose", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionFileClose.setIconText(QtGui.QApplication.translate("MainWindow", "Close", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionSearch.setIconText(QtGui.QApplication.translate("MainWindow", "Search", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionAbout.setIconText(QtGui.QApplication.translate("MainWindow", "About", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionAboutQt.setIconText(QtGui.QApplication.translate("MainWindow", "About Qt", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionNewWindow.setIconText(QtGui.QApplication.translate("MainWindow", "Window", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionNewWindow.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+N", None, QtGui.QApplication.UnicodeUTF8))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Qt WebBrowser", None))
+        self.tbNavigate.setWindowTitle(_translate("MainWindow", "Navigation", None))
+        self.tbAddress.setWindowTitle(_translate("MainWindow", "Address", None))
+        self.PopupMenu.setTitle(_translate("MainWindow", "&File", None))
+        self.FileNewGroup_2.setTitle(_translate("MainWindow", "New", None))
+        self.unnamed.setTitle(_translate("MainWindow", "&Help", None))
+        self.actionGo.setIconText(_translate("MainWindow", "Go", None))
+        self.actionBack.setIconText(_translate("MainWindow", "Back", None))
+        self.actionBack.setShortcut(_translate("MainWindow", "Backspace", None))
+        self.actionForward.setIconText(_translate("MainWindow", "Forward", None))
+        self.actionStop.setIconText(_translate("MainWindow", "Stop", None))
+        self.actionRefresh.setIconText(_translate("MainWindow", "Refresh", None))
+        self.actionHome.setIconText(_translate("MainWindow", "Home", None))
+        self.actionFileClose.setText(_translate("MainWindow", "C&lose", None))
+        self.actionFileClose.setIconText(_translate("MainWindow", "Close", None))
+        self.actionSearch.setIconText(_translate("MainWindow", "Search", None))
+        self.actionAbout.setIconText(_translate("MainWindow", "About", None))
+        self.actionAboutQt.setIconText(_translate("MainWindow", "About Qt", None))
+        self.actionNewWindow.setIconText(_translate("MainWindow", "Window", None))
+        self.actionNewWindow.setShortcut(_translate("MainWindow", "Ctrl+N", None))
 
 from PyQt4 import QAxContainer
-import mainwindow_rc

@@ -1,6 +1,6 @@
 // This implements the helper for QObject.__getattr__().
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -114,14 +114,10 @@ PyObject *qpycore_qobject_getattr(QObject *qobj, PyObject *py_qobj,
 
         if (it == sig_hash->end())
         {
-            qpycore_pyqtSignal *sig = qpycore_pyqtSignal_New();
+            sig_obj = (PyObject *)qpycore_pyqtSignal_New(sig_str.constData());
 
-            if (!sig)
+            if (!sig_obj)
                 return 0;
-
-            qpycore_add_native_Qt_signal(sig, sig_str.constData(), 0);
-
-            sig_obj = (PyObject *)sig;
 
             sig_hash->insert(sig_str, sig_obj);
         }
@@ -130,7 +126,8 @@ PyObject *qpycore_qobject_getattr(QObject *qobj, PyObject *py_qobj,
             sig_obj = it.value();
         }
 
-        value = qpycore_pyqtBoundSignal_New(sig_obj, py_qobj, qobj, 0);
+        value = qpycore_pyqtBoundSignal_New((qpycore_pyqtSignal *)sig_obj,
+                py_qobj, qobj);
     }
     else
     {

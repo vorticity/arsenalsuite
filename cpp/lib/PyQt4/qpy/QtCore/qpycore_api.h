@@ -1,7 +1,7 @@
 // This defines the API provided by this library.  It must not be explicitly
 // included by the library itself.
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -47,12 +47,22 @@ PyObject *qpycore_pyqtslot(PyObject *args, PyObject *kwds);
 PyObject *qpycore_pyqtsignature(PyObject *args, PyObject *kwds);
 
 // Support for pyqtConfigure().
-int qpycore_pyqtconfigure(PyObject *self, QObject *qobj, PyObject *kwds);
+PyObject *qpycore_pyqtconfigure(PyObject *self, PyObject *args,
+        PyObject *kwds);
+
+// Support for the QObject %FinalisationCode.
+int qpycore_qobject_finalisation(PyObject *self, QObject *qobj, PyObject *kwds,
+        PyObject **updated_kwds);
 
 // Support for converting between PyObject and QString.
 PyObject *qpycore_PyObject_FromQString(const QString &qstr);
 QString qpycore_PyObject_AsQString(PyObject *obj);
+#if !defined(QT_DEPRECATED_SINCE)
+#define QT_DEPRECATED_SINCE(m, n)   1
+#endif
+#if QT_DEPRECATED_SINCE(5, 0)
 const char *qpycore_encode(PyObject **s, QCoreApplication::Encoding encoding);
+#endif
 
 // Support for converting between PyObject and QStringList.
 PyObject *qpycore_PyObject_FromQStringList(const QStringList &qstrlst);
@@ -96,6 +106,9 @@ void qpycore_qmetaobject_connectslotsbyname(QObject *qobj,
 
 // Support for QPyNullVariant.
 QVariant *qpycore_qpynullvariant(PyObject *type);
+
+// Support for pyqt[Set]PickleProtocol().
+extern PyObject *qpycore_pickle_protocol;
 
 // Utilities.
 #if PY_MAJOR_VERSION >= 3

@@ -1,6 +1,6 @@
 // This is the interface of the Chimera and related classes.
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -92,10 +92,6 @@ public:
         // The signature as declared by the user for use in exceptions.
         QByteArray py_signature;
 
-        // The optional docstring which will start with '\1' if it is auto
-        // generated and so can be used in exceptions.
-        const char *docstring;
-
         // Return the parsed signature wrapped in a Python object.  Ownership
         // of the signature is passed to the Python object.  Return 0 if there
         // was an error.
@@ -123,7 +119,7 @@ public:
         bool _cached;
 
         Signature(const QByteArray &sig, bool cached)
-            : result(0), signature(sig), py_signature(sig), docstring(0), _cached(cached) {}
+            : result(0), signature(sig), py_signature(sig), _cached(cached) {}
 
         Signature(const Signature &);
         Signature &operator=(const Signature &);
@@ -213,8 +209,9 @@ public:
     // Convert a QVariant to a Python object based on the type of the object.
     static PyObject *toAnyPyObject(const QVariant &var);
 
-    // Returns the Qt meta-type id.  It will be QMetaType::Void if the type
-    // isn't known to Qt's meta-type system.
+    // Returns the Qt meta-type id.  It will be QMetaType::Void (Qt4) or
+    // QMetaType::UnknownType (Qt5) if the type isn't known to Qt's meta-type
+    // system.
     int metatype() const {return _metatype;}
 
     // Returns a borrowed reference to the Python type object that was used to

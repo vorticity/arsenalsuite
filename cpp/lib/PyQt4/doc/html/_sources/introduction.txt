@@ -1,29 +1,29 @@
 Introduction
 ============
 
-This is the reference guide for PyQt snapshot-4.9.5-9eb6aac99275.  PyQt v4 is a set of
-`Python <http://www.python.org>`__ bindings for v4 of the Qt application
-framework from `Nokia <http://qt.nokia.com>`__.
+This is the reference guide for PyQt4 4.11.1.  PyQt4 is a set of
+`Python <http://www.python.org>`__ bindings for v4 and v5 of the Qt application
+framework from `Digia <http://qt.digia.com>`__.
 
-There is a separate `PyQt Class Reference <classes.html>`__.
+There is a separate `PyQt4 Class Reference <classes.html>`__.
 
 Qt is a set of C++ libraries and development tools that includes platform
 independent abstractions for graphical user interfaces, networking, threads,
 Unicode, regular expressions, SQL databases, SVG, OpenGL, XML, and user and
-application settings.  PyQt implements 440 of these classes as a set of
+application settings.  PyQt4 implements 440 of these classes as a set of
 Python modules.
 
-PyQt supports the Windows, Linux, UNIX and MacOS/X platforms.
+PyQt4 supports the Windows, Linux, UNIX and MacOS/X platforms.
 
-PyQt does not include Qt itself - you must obtain it separately.
+PyQt4 does not include Qt itself - you must obtain it separately.
 
-The homepage for PyQt is http://www.riverbankcomputing.com/software/pyqt/.
+The homepage for PyQt4 is http://www.riverbankcomputing.com/software/pyqt/.
 Here you will always find the latest stable version, current development
 snapshots, and the latest version of this documentation.
 
-PyQt is built using the `SIP bindings generator
+PyQt4 is built using the `SIP bindings generator
 <http://www.riverbankcomputing.com/software/sip/>`__.  SIP must be installed in
-order to build and use PyQt.
+order to build and use PyQt4.
 
 Earlier versions of Qt are supported by PyQt v3.
 
@@ -31,21 +31,21 @@ Earlier versions of Qt are supported by PyQt v3.
 License
 -------
 
-PyQt is licensed on all platforms under a commercial license, the GPL v2 and
-the GPL v3.  Your PyQt license must be compatible with your Qt license.  If
+PyQt4 is licensed on all platforms under a commercial license, the GPL v2 and
+the GPL v3.  Your PyQt4 license must be compatible with your Qt license.  If
 you use the GPL versions then your own code must also use a compatible
 license.
 
-PyQt, unlike Qt, is not available under the LGPL.
+PyQt4, unlike Qt, is not available under the LGPL.
 
-You can purchase a commercial PyQt license `here
+You can purchase a commercial PyQt4 license `here
 <http://www.riverbankcomputing.com/commercial/buy>`__.
 
 
-PyQt Components
----------------
+PyQt4 Components
+----------------
 
-PyQt comprises a number of different components.  First of all there are a
+PyQt4 comprises a number of different components.  First of all there are a
 number of Python extension modules.  These are all installed in the
 :mod:`PyQt4` Python package.
 
@@ -65,10 +65,10 @@ number of Python extension modules.  These are all installed in the
   HTTP clients and support DNS lookups.
 
 - The :mod:`~PyQt4.QtOpenGL` module.  This module contains classes that enable
-  the use of OpenGL in rendering 3D graphics in PyQt applications.
+  the use of OpenGL in rendering 3D graphics in PyQt4 applications.
 
 - The :mod:`~PyQt4.QtScript` module.  This module contains classes that enable
-  PyQt applications to be scripted using Qt's JavaScript interpreter.
+  PyQt4 applications to be scripted using Qt's JavaScript interpreter.
 
 - The :mod:`~PyQt4.QtScriptTools` module.  This module contains classes that
   contain additional components (e.g. a debugger) that are used with Qt's
@@ -83,10 +83,10 @@ number of Python extension modules.  These are all installed in the
   the contents of SVG files.
 
 - The :mod:`~PyQt4.QtTest` module.  This module contains functions that enable
-  unit testing of PyQt applications.  (PyQt does not implement the complete Qt
-  unit test framework.  Instead it assumes that the standard Python unit test
-  framework will be used and implements those functions that simulate a user
-  interacting with a GUI.)
+  unit testing of PyQt4 applications.  (PyQt4 does not implement the complete
+  Qt unit test framework.  Instead it assumes that the standard Python unit
+  test framework will be used and implements those functions that simulate a
+  user interacting with a GUI.)
 
 - The :mod:`~PyQt4.QtWebKit` module.  This module implements a web browser
   engine based on the WebKit open source browser engine.
@@ -99,7 +99,7 @@ number of Python extension modules.  These are all installed in the
 
 - The :mod:`~PyQt4.phonon` module.  This module contains classes that implement
   a cross-platform multimedia framework that enables the use of audio and video
-  content in PyQt applications.
+  content in PyQt4 applications.
 
 - The :mod:`~PyQt4.QtDBus` module.  This Unix-only module provides classes that
   support Inter-Process Communication using the D-Bus protocol.
@@ -112,13 +112,13 @@ number of Python extension modules.  These are all installed in the
   :mod:`~PyQt4.phonon` module.
 
 - The :mod:`~PyQt4.QtAssistant` module.  This module contains classes that
-  allow Qt Assistant to be integrated with a PyQt application to provide online
-  help.  This module is not available with Qt v4.7 and later - use the
+  allow Qt Assistant to be integrated with a PyQt4 application to provide
+  online help.  This module is not available with Qt v4.7 and later - use the
   :mod:`~PyQt4.QtHelp` module instead.
 
 - The :mod:`~PyQt4.QtDesigner` module.  This module contains classes that allow
-  Qt Designer to be extended using PyQt.  See :ref:`ref-designer-plugins` for a
-  full description of how to do this.
+  Qt Designer to be extended using PyQt4.  See :ref:`ref-designer-plugins` for
+  a full description of how to do this.
 
 - The :mod:`~PyQt4.QAxContainer` module.  This Windows-only module contains
   classes that allow access to ActiveX controls and COM objects.
@@ -136,9 +136,9 @@ number of Python extension modules.  These are all installed in the
   for the Qt event loop in the same way that the :mod:`dbus.mainloop.glib`
   included with the standard ``dbus-python`` bindings package provides support
   for the GLib event loop.  The API is described in :ref:`ref-dbus`.  It is
-  only available for PyQt for X11 and only if the ``dbus-python`` v0.80 (or
-  later) bindings package is installed.  The :mod:`~PyQt4.QtDBus` module
-  provides a more Qt-like interface to DBus.
+  only available if the ``dbus-python`` v0.80 (or later) bindings package is
+  installed.  The :mod:`~PyQt4.QtDBus` module provides a more Qt-like interface
+  to DBus.
 
 - The :mod:`~PyQt4.uic` module.  This module contains classes for handling the
   ``.ui`` files created by Qt Designer that describe the whole or part of a
@@ -147,12 +147,12 @@ number of Python extension modules.  These are all installed in the
   for later execution.
 
 - The :mod:`~PyQt4.pyqtconfig` module is an extention of the SIP build system
-  and is created when PyQt is configured.  It encapsulates all the necessary
+  and is created when PyQt4 is configured.  It encapsulates all the necessary
   information about your Qt installation and makes it easier to write
-  installation scripts for bindings built on top of PyQt.  It is covered in
+  installation scripts for bindings built on top of PyQt4.  It is covered in
   detail in :ref:`ref-build-system`.
 
-PyQt also contains a number of utility programs.
+PyQt4 also contains a number of utility programs.
 
 - :program:`pyuic4` corresponds to the Qt :program:`uic` utility.  It converts
   GUIs created using Qt Designer to Python code.
@@ -172,16 +172,16 @@ PyQt also contains a number of utility programs.
   .. note::
     It will only be included if your copy of Qt includes the XML module.
 
-When PyQt is configured a file called :file:`PyQt4.api` is generated.  This can
-be used by the QScintilla editor component (at
+When PyQt4 is configured a file called :file:`PyQt4.api` is generated.  This
+can be used by the QScintilla editor component (at
 http://www.riverbankcomputing.com/software/qscintilla/) to enable the use of
-auto-completion and call tips when editing PyQt code.  The API file is
+auto-completion and call tips when editing PyQt4 code.  The API file is
 installed automatically if QScintilla is already installed.
 
-PyQt includes a large number of examples.  These are ports to Python of many
+PyQt4 includes a large number of examples.  These are ports to Python of many
 of the C++ examples provided with Qt.  They can be found in the
 :file:`examples` directory.
 
-Finally, PyQt contains the ``.sip`` files used by SIP to generate PyQt
+Finally, PyQt4 contains the ``.sip`` files used by SIP to generate PyQt4
 itself.  These can be used by developers of bindings of other Qt based class
 libraries - for example `PyQwt and PyQwt3D <http://pyqwt.sourceforge.net/>`__.

@@ -48,7 +48,10 @@ sip.setapi('QString', 2)
 
 from PyQt4 import QtCore, QtGui
 
-import draggabletext_rc
+try:
+    import draggabletext_rc3
+except ImportError:
+    import draggabletext_rc2
 
 
 class DragLabel(QtGui.QLabel):

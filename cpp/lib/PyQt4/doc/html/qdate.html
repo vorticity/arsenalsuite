@@ -361,8 +361,8 @@ representation specified by <i>type</i>.</p>
 <li>6 = "Saturday"</li>
 <li>7 = "Sunday"</li>
 </ul>
-<p>The day names will be localized according to the system's locale
-settings.</p>
+<p>The day names will be localized according to the system's
+default locale settings.</p>
 <p>This function was introduced in Qt 4.5.</p>
 <p><b>See also</b> <a href="qdate.html#toString">toString</a>(),
 <a href="qdate.html#shortDayName">shortDayName</a>(), <a href="qdate.html#shortMonthName">shortMonthName</a>(), and <a href="qdate.html#longMonthName">longMonthName</a>().</p>
@@ -393,7 +393,7 @@ specified by <i>type</i>.</p>
 <li>12 = "December"</li>
 </ul>
 <p>The month names will be localized according to the system's
-locale settings.</p>
+default locale settings.</p>
 <p>This function was introduced in Qt 4.5.</p>
 <p><b>See also</b> <a href="qdate.html#toString">toString</a>(),
 <a href="qdate.html#shortMonthName">shortMonthName</a>(), <a href="qdate.html#shortDayName">shortDayName</a>(), and <a href="qdate.html#longDayName">longDayName</a>().</p>
@@ -446,8 +446,8 @@ representation specified by <i>type</i>.</p>
 <li>6 = "Sat"</li>
 <li>7 = "Sun"</li>
 </ul>
-<p>The day names will be localized according to the system's locale
-settings.</p>
+<p>The day names will be localized according to the system's
+default locale settings.</p>
 <p>This function was introduced in Qt 4.5.</p>
 <p><b>See also</b> <a href="qdate.html#toString">toString</a>(),
 <a href="qdate.html#shortMonthName">shortMonthName</a>(), <a href="qdate.html#longMonthName">longMonthName</a>(), and <a href="qdate.html#longDayName">longDayName</a>().</p>
@@ -478,7 +478,7 @@ representation specified by <i>type</i>.</p>
 <li>12 = "Dec"</li>
 </ul>
 <p>The month names will be localized according to the system's
-locale settings.</p>
+default locale settings.</p>
 <p>This function was introduced in Qt 4.5.</p>
 <p><b>See also</b> <a href="qdate.html#toString">toString</a>(),
 <a href="qdate.html#longMonthName">longMonthName</a>(), <a href="qdate.html#shortDayName">shortDayName</a>(), and <a href="qdate.html#longDayName">longDayName</a>().</p>
@@ -583,7 +583,8 @@ determines the format of the string.</p>
 <p>If the <i>format</i> is <a href="qt.html#DateFormat-enum">Qt.TextDate</a>, the string is formatted
 in the default way. <a href="qdate.html#shortDayName">QDate.shortDayName</a>() and <a href="qdate.html#shortMonthName">QDate.shortMonthName</a>() are used to
 generate the string, so the day and month names will be localized
-names. An example of this formatting is "Sat May 20 1995".</p>
+names using the default locale from the system. An example of this
+formatting is "Sat May 20 1995".</p>
 <p>If the <i>format</i> is <a href="qt.html#DateFormat-enum">Qt.ISODate</a>, the string format
 corresponds to the ISO 8601 extended specification for
 representations of dates and times, taking the form YYYY-MM-DD,
@@ -642,4 +643,4 @@ before 1 A.D. = 1 C.E., such that year -44 is 44 B.C.</p>
 <a href="qdate.html#day">day</a>().</p>
 
 
-<h3 class="fn"><a name="__bool__" />int QDate.__bool__ (<i>self</i>)</h3><h3 class="fn"><a name="__eq__" />bool QDate.__eq__ (<i>self</i>, <a href="qdate.html">QDate</a>&#160;<i>other</i>)</h3><h3 class="fn"><a name="__ge__" />bool QDate.__ge__ (<i>self</i>, <a href="qdate.html">QDate</a>&#160;<i>other</i>)</h3><h3 class="fn"><a name="__gt__" />bool QDate.__gt__ (<i>self</i>, <a href="qdate.html">QDate</a>&#160;<i>other</i>)</h3><h3 class="fn"><a name="__hash__" />int QDate.__hash__ (<i>self</i>)</h3><h3 class="fn"><a name="__le__" />bool QDate.__le__ (<i>self</i>, <a href="qdate.html">QDate</a>&#160;<i>other</i>)</h3><h3 class="fn"><a name="__lt__" />bool QDate.__lt__ (<i>self</i>, <a href="qdate.html">QDate</a>&#160;<i>other</i>)</h3><h3 class="fn"><a name="__ne__" />bool QDate.__ne__ (<i>self</i>, <a href="qdate.html">QDate</a>&#160;<i>other</i>)</h3><h3 class="fn"><a name="__repr__" />str QDate.__repr__ (<i>self</i>)</h3><address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<h3 class="fn"><a name="__bool__" />int QDate.__bool__ (<i>self</i>)</h3><h3 class="fn"><a name="__eq__" />bool QDate.__eq__ (<i>self</i>, <a href="qdate.html">QDate</a>&#160;<i>other</i>)</h3><h3 class="fn"><a name="__ge__" />bool QDate.__ge__ (<i>self</i>, <a href="qdate.html">QDate</a>&#160;<i>other</i>)</h3><h3 class="fn"><a name="__gt__" />bool QDate.__gt__ (<i>self</i>, <a href="qdate.html">QDate</a>&#160;<i>other</i>)</h3><h3 class="fn"><a name="__hash__" />int QDate.__hash__ (<i>self</i>)</h3><h3 class="fn"><a name="__le__" />bool QDate.__le__ (<i>self</i>, <a href="qdate.html">QDate</a>&#160;<i>other</i>)</h3><h3 class="fn"><a name="__lt__" />bool QDate.__lt__ (<i>self</i>, <a href="qdate.html">QDate</a>&#160;<i>other</i>)</h3><h3 class="fn"><a name="__ne__" />bool QDate.__ne__ (<i>self</i>, <a href="qdate.html">QDate</a>&#160;<i>other</i>)</h3><h3 class="fn"><a name="__repr__" />str QDate.__repr__ (<i>self</i>)</h3><address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

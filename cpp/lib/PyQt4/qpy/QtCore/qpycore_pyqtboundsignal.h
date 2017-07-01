@@ -1,6 +1,6 @@
 // This defines the interfaces for the pyqtBoundSignal type.
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -29,7 +29,7 @@
 
 #include <Python.h>
 
-#include "qpycore_chimera.h"
+#include "qpycore_pyqtsignal.h"
 #include "qpycore_namespace.h"
 
 
@@ -45,16 +45,13 @@ typedef struct {
     PyObject_HEAD
 
     // The unbound signal.
-    PyObject *unbound_signal;
+    qpycore_pyqtSignal *unbound_signal;
 
     // A borrowed reference to the wrapped QObject that is bound to the signal.
     PyObject *bound_pyobject;
 
     // The QObject that is bound to the signal.
     QObject *bound_qobject;
-
-    // The bound signal overload.
-    Chimera::Signature *bound_overload;
 } qpycore_pyqtBoundSignal;
 
 
@@ -63,8 +60,8 @@ extern PyTypeObject qpycore_pyqtBoundSignal_Type;
 }
 
 
-PyObject *qpycore_pyqtBoundSignal_New(PyObject *unbound_signal,
-        PyObject *bound_pyobject, QObject *bound_qobject, int signal_index);
+PyObject *qpycore_pyqtBoundSignal_New(qpycore_pyqtSignal *unbound_signal,
+        PyObject *bound_pyobject, QObject *bound_qobject);
 
 
 #endif

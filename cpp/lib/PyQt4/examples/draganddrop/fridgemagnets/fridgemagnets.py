@@ -48,7 +48,10 @@ sip.setapi('QString', 2)
 
 from PyQt4 import QtCore, QtGui
 
-import fridgemagnets_rc
+try:
+    import fridgemagnets_rc3
+except ImportError:
+    import fridgemagnets_rc2
 
 
 class DragLabel(QtGui.QLabel):

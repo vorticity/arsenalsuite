@@ -5,10 +5,10 @@ Support for QSettings
 
 Qt provies the ``QSettings`` class as a platform independent API for the
 persistent storage and retrieval of application settings.  Settings are
-retrieved using the ``QSettings.value()`` method which, when using v1 of PyQt's
-``QVariant`` API returns a ``QVariant`` object.  An application will then
-typically convert the ``QVariant`` to the appropriate fundamental type using
-``QVariant.toBool()``, ``QVariant.toInt()``.
+retrieved using the ``QSettings.value()`` method which, when using v1 of
+PyQt4's ``QVariant`` API returns a ``QVariant`` object.  An application will
+then typically convert the ``QVariant`` to the appropriate fundamental type
+using ``QVariant.toBool()``, ``QVariant.toInt()``.
 
 The explicit use of these conversion methods works around a problem with the
 way different platforms implement the storage of settings.  Some platforms only
@@ -22,7 +22,7 @@ Therefore a setting with an integer value of ``42`` may be retrieved as a
 string value of ``'42'``.  This inconsistency is made worse by being platform
 specific.
 
-As a solution to the problem PyQt's implementation of ``QSettings.value()``
+As a solution to the problem PyQt4's implementation of ``QSettings.value()``
 takes an optional third argument called ``type``.  This is either a Python type
 object, e.g. ``int``, or a string that is the name of a C++ type, e.g.
 ``'QStringList'``.  The value returned will be an object of the requested type.

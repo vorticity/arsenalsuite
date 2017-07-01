@@ -164,12 +164,12 @@ failed:</p>
  <span class="type">void</span> MyWidget<span class="operator">.</span>lookedUp(<span class="keyword">const</span> <span class="type"><a href="qhostinfo.html">QHostInfo</a></span> <span class="operator">&amp;</span>host)
  {
      <span class="keyword">if</span> (host<span class="operator">.</span>error() <span class="operator">!</span><span class="operator">=</span> <span class="type"><a href="qhostinfo.html">QHostInfo</a></span><span class="operator">.</span>NoError) {
-         <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"Lookup failed:"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> host<span class="operator">.</span>errorString();
+         <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"Lookup failed:"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> host<span class="operator">.</span>errorString();
          <span class="keyword">return</span>;
      }
 
      foreach (<span class="keyword">const</span> <span class="type"><a href="qhostaddress.html">QHostAddress</a></span> <span class="operator">&amp;</span>address<span class="operator">,</span> host<span class="operator">.</span>addresses())
-         <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"Found address:"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> address<span class="operator">.</span>toString();
+         <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"Found address:"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> address<span class="operator">.</span>toString();
  }
 </pre>
 <p>If you pass a literal IP address to <i>name</i> instead of a
@@ -214,4 +214,4 @@ to <i>str</i> if the lookup failed.</p>
 and <a href="qhostinfo.html#lookupHost">lookupHost</a>().</p>
 
 
-<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

@@ -1,6 +1,6 @@
 // This is the support for QString.
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -54,8 +54,87 @@ PyObject *qpycore_PyObject_FromQString(const QString &qstr)
     PyObject *obj;
 
 #if defined(PYQT_PEP_393)
-    obj = PyUnicode_FromKindAndData(PyUnicode_2BYTE_KIND, qstr.constData(),
-            qstr.length());
+    // We have to work out exactly which kind to use.  We assume ASCII while we
+    // are checking so that we only go through the string once in the most
+    // common case.  Note that we can't use PyUnicode_FromKindAndData() because
+    // it doesn't handle surrogates in UCS2 strings.
+    int py_len = qstr.length();
+
+    if ((obj = PyUnicode_New(py_len, 0x007f)) == NULL)
+        return NULL;
+
+    int kind = PyUnicode_KIND(obj);
+    void *data = PyUnicode_DATA(obj);
+    const QChar *qch = qstr.data();
+
+    for (int i = 0; i < py_len; ++i)
+    {
+        ushort uch = qch->unicode();
+
+        if (uch > 0x007f)
+        {
+            // This is useless.
+            Py_DECREF(obj);
+
+            // Work out what kind we really need and what the Python length
+            // should be.
+            Py_UCS4 maxchar = 0x00ff;
+
+            do
+            {
+                if (uch > 0x00ff)
+                {
+                    if (maxchar == 0x00ff)
+                        maxchar = 0x00ffff;
+
+                    // See if this is a surrogate pair.  We don't need to
+                    // bounds check because Qt puts a null QChar on the end.
+                    if (qch->isHighSurrogate() && (qch + 1)->isLowSurrogate())
+                    {
+                        maxchar = 0x10ffff;
+                        --py_len;
+                        ++qch;
+                    }
+                }
+
+                uch = (++qch)->unicode();
+            }
+            while (!qch->isNull());
+
+            // Create the correctly sized object.
+            if ((obj = PyUnicode_New(py_len, maxchar)) == NULL)
+                return NULL;
+
+            kind = PyUnicode_KIND(obj);
+            data = PyUnicode_DATA(obj);
+            qch = qstr.data();
+
+            for (int py_i = 0; py_i < py_len; ++py_i)
+            {
+                Py_UCS4 py_ch;
+
+                if (qch->isHighSurrogate() && (qch + 1)->isLowSurrogate())
+                {
+                    py_ch = QChar::surrogateToUcs4(*qch, *(qch + 1));
+                    ++qch;
+                }
+                else
+                {
+                    py_ch = qch->unicode();
+                }
+
+                ++qch;
+
+                PyUnicode_WRITE(kind, data, py_i, py_ch);
+            }
+
+            break;
+        }
+
+        ++qch;
+
+        PyUnicode_WRITE(kind, data, i, uch);
+    }
 #elif defined(Py_UNICODE_WIDE)
 #if QT_VERSION >= 0x040200
     QVector<uint> ucs4 = qstr.toUcs4();
@@ -66,8 +145,8 @@ PyObject *qpycore_PyObject_FromQString(const QString &qstr)
     memcpy(PyUnicode_AS_UNICODE(obj), ucs4.constData(),
             ucs4.size() * sizeof (Py_UNICODE));
 #else
-    // Note that this code doesn't handle code points greater than 0xffff very
-    // well.
+    // Note that this doesn't handle code points greater than 0xffff.  It could
+    // but it's only an issue for old versions of Qt.
 
     if ((obj = PyUnicode_FromUnicode(NULL, qstr.length())) == NULL)
         return NULL;
@@ -108,8 +187,8 @@ QString qpycore_PyObject_AsQString(PyObject *obj)
 #if QT_VERSION >= 0x040200
         return QString::fromUcs4(PyUnicode_4BYTE_DATA(obj), len);
 #else
-        // Note that this code doesn't handle code points greater than 0xffff
-        // very well.
+        // Note that this doesn't handle code points greater than 0xffff.  It
+        // could but it's only an issue for old versions of Qt.
 
         QString qstr;
 
@@ -128,8 +207,8 @@ QString qpycore_PyObject_AsQString(PyObject *obj)
     return QString::fromUcs4((const uint *)PyUnicode_AS_UNICODE(obj),
             PyUnicode_GET_SIZE(obj));
 #else
-    // Note that this code doesn't handle code points greater than 0xffff very
-    // well.
+    // Note that this doesn't handle code points greater than 0xffff.  It could
+    // but it's only an issue for old versions of Qt.
 
     QString qstr;
 
@@ -148,6 +227,10 @@ QString qpycore_PyObject_AsQString(PyObject *obj)
 }
 
 
+#if !defined(QT_DEPRECATED_SINCE)
+#define QT_DEPRECATED_SINCE(m, n)   1
+#endif
+#if QT_DEPRECATED_SINCE(5, 0)
 // Convert a Python unicode/string/bytes object to a character string encoded
 // according to the given encoding.  Update the object with a new reference to
 // the object that owns the data.
@@ -226,3 +309,4 @@ const char *qpycore_encode(PyObject **s, QCoreApplication::Encoding encoding)
 
     return es;
 }
+#endif

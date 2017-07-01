@@ -1,6 +1,6 @@
 // This is the implementation of the Chimera class.
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -52,10 +52,15 @@ Chimera::ToQVariantConvertors Chimera::_registered_QVariant_convertors;
 // The registered PyObject to QVariant data convertors.
 Chimera::ToQVariantDataConvertors Chimera::_registered_QVariant_data_convertors;
 
+#if QT_VERSION >= 0x050000
+const int UnknownType = QMetaType::UnknownType;
+#else
+const int UnknownType = QMetaType::Void;
+#endif
 
 // Construct an invalid type.
 Chimera::Chimera()
-    : _type(0), _py_type(0), _metatype(QMetaType::Void), _inexact(false),
+    : _type(0), _py_type(0), _metatype(UnknownType), _inexact(false),
       _is_flag(false)
 {
 }
@@ -412,6 +417,14 @@ bool Chimera::parse_py_type(PyTypeObject *type_obj)
             // various itemChange() implementations.
             if (_metatype == 0 && is_a_QObject)
             {
+#if QT_VERSION >= 0x050000
+                static int QWidget_metatype = -1;
+
+                // Qt5 seems to register QWidget.
+                if (QWidget_metatype < 0)
+                    QWidget_metatype = QMetaType::type("QWidget*");
+#endif
+
                 PyObject *mro = type_obj->tp_mro;
 
                 Q_ASSERT(PyTuple_Check(mro));
@@ -429,10 +442,15 @@ bool Chimera::parse_py_type(PyTypeObject *type_obj)
                     // QObjects are always pointers.
                     sc_name.append('*');
 
-                    _metatype = QMetaType::type(sc_name.constData());
+                    int sc_metatype = QMetaType::type(sc_name.constData());
 
-                    if (_metatype >= QMetaType::User)
+#if QT_VERSION >= 0x050000
+                    if (sc_metatype >= QMetaType::User && sc_metatype != QWidget_metatype)
+#else
+                    if (sc_metatype >= QMetaType::User)
+#endif
                     {
+                        _metatype = sc_metatype;
                         _type = sipTypeFromPyTypeObject(sc);
                         _name = sc_name;
 
@@ -518,7 +536,7 @@ bool Chimera::parse_py_type(PyTypeObject *type_obj)
     }
 
     // Fallback to using a PyQt_PyObject.
-    if (_metatype == QMetaType::Void)
+    if (_metatype == UnknownType)
         _metatype = PyQt_PyObject::metatype;
 
     // If there is no name so far then use the meta-type name.
@@ -536,7 +554,7 @@ bool Chimera::parse_py_type(PyTypeObject *type_obj)
 void Chimera::set_flag()
 {
     if (qpycore_is_pyqt4_class(_type))
-        _is_flag = ((pyqt4ClassTypeDef *)_type)->qt4_flags & 0x01;
+        _is_flag = ((pyqt4ClassTypeDef *)_type)->flags & 0x01;
 }
 
 
@@ -675,7 +693,7 @@ bool Chimera::parse_cpp_type(const QByteArray &type)
     _metatype = QMetaType::type(resolved.constData());
 
     // If not then use the PyQt_PyObject wrapper.
-    if (_metatype == QMetaType::Void)
+    if (_metatype == UnknownType)
         _metatype = PyQt_PyObject::metatype;
 
     // See if the type (without a pointer) is known to SIP.
@@ -1075,7 +1093,7 @@ bool Chimera::fromPyObject(PyObject *py, QVariant *var, bool strict) const
                     PyErr_Clear();
 
                     *var = keep_as_pyobject(py);
-                    metatype_used = QMetaType::Void;
+                    metatype_used = UnknownType;
                 }
                 else
                 {
@@ -1185,7 +1203,7 @@ bool Chimera::fromPyObject(PyObject *py, QVariant *var, bool strict) const
             if (to_QVariantList(py, ql))
             {
                 *var = QVariant(ql);
-                metatype_used = QMetaType::Void;
+                metatype_used = UnknownType;
             }
             else
             {
@@ -1202,7 +1220,7 @@ bool Chimera::fromPyObject(PyObject *py, QVariant *var, bool strict) const
             if (to_QVariantMap(py, qm))
             {
                 *var = QVariant(qm);
-                metatype_used = QMetaType::Void;
+                metatype_used = UnknownType;
             }
             else if (strict)
             {
@@ -1214,7 +1232,7 @@ bool Chimera::fromPyObject(PyObject *py, QVariant *var, bool strict) const
                 PyErr_Clear();
 
                 *var = keep_as_pyobject(py);
-                metatype_used = QMetaType::Void;
+                metatype_used = UnknownType;
             }
 
             break;
@@ -1228,7 +1246,7 @@ bool Chimera::fromPyObject(PyObject *py, QVariant *var, bool strict) const
             if (to_QVariantHash(py, qh))
             {
                 *var = QVariant(qh);
-                metatype_used = QMetaType::Void;
+                metatype_used = UnknownType;
             }
             else
             {
@@ -1288,7 +1306,7 @@ bool Chimera::fromPyObject(PyObject *py, QVariant *var, bool strict) const
     {
         *var = QVariant(*reinterpret_cast<QVariant *>(variant_data));
     }
-    else if (metatype_used != QMetaType::Void)
+    else if (metatype_used != UnknownType)
     {
         *var = QVariant(metatype_used, variant_data);
     }
@@ -1356,7 +1374,11 @@ PyObject *Chimera::toPyObject(const QVariant &var) const
         // converting it.
         if (_type != sipType_QVariant && _metatype == PyQt_PyObject::metatype)
         {
+#if QT_VERSION >= 0x050000
+            PyQt_PyObject pyobj_wrapper = var.value<PyQt_PyObject>();
+#else
             PyQt_PyObject pyobj_wrapper = qVariantValue<PyQt_PyObject>(var);
+#endif
 
             if (!pyobj_wrapper.pyobject)
             {
@@ -1608,7 +1630,11 @@ PyObject *Chimera::toPyObject(void *cpp) const
             else
             {
                 // Make a copy as it is a value type.
+#if QT_VERSION >= 0x050000
+                void *copy = QMetaType::create(_metatype, cpp);
+#else
                 void *copy = QMetaType::construct(_metatype, cpp);
+#endif
 
                 py = sipConvertFromNewType(copy, _type, 0);
 

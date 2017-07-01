@@ -74,7 +74,27 @@ class UICompiler(UIParser):
         indenter.dedent()
         indenter.write("except AttributeError:")
         indenter.indent()
-        indenter.write("_fromUtf8 = lambda s: s")
+        indenter.write("def _fromUtf8(s):")
+        indenter.indent()
+        indenter.write("return s")
+        indenter.dedent()
+        indenter.dedent()
+        indenter.write("")
+
+        indenter.write("try:")
+        indenter.indent()
+        indenter.write("_encoding = QtGui.QApplication.UnicodeUTF8")
+        indenter.write("def _translate(context, text, disambig):")
+        indenter.indent()
+        indenter.write("return QtGui.QApplication.translate(context, text, disambig, _encoding)")
+        indenter.dedent()
+        indenter.dedent()
+        indenter.write("except AttributeError:")
+        indenter.indent()
+        indenter.write("def _translate(context, text, disambig):")
+        indenter.indent()
+        indenter.write("return QtGui.QApplication.translate(context, text, disambig)")
+        indenter.dedent()
         indenter.dedent()
         indenter.write("")
 
@@ -114,9 +134,9 @@ class UICompiler(UIParser):
         # reset() before returning.
         self._resources = self.resources
 
-    def compileUi(self, input_stream, output_stream, from_imports):
+    def compileUi(self, input_stream, output_stream, from_imports, resource_suffix):
         createCodeIndenter(output_stream)
-        w = self.parse(input_stream)
+        w = self.parse(input_stream, resource_suffix)
 
         indenter = getIndenter()
         indenter.write("")

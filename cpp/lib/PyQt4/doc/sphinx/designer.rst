@@ -13,12 +13,12 @@ creates the user interface.  Qt also includes the ``QUiLoader`` class that
 allows an application to load a ``.ui`` file and to create the corresponding
 user interface dynamically.
 
-PyQt does not wrap the ``QUiLoader`` class but instead includes the
+PyQt4 does not wrap the ``QUiLoader`` class but instead includes the
 :mod:`~PyQt4.uic` Python module.  Like ``QUiLoader`` this module can load
 ``.ui`` files to create a user interface dynamically.  Like the :program:`uic`
 utility it can also generate the Python code that will create the user
-interface.  PyQt's :program:`pyuic4` utility is a command line interface to the
-:mod:`~PyQt4.uic` module.  Both are described in detail in the following
+interface.  PyQt4's :program:`pyuic4` utility is a command line interface to
+the :mod:`~PyQt4.uic` module.  Both are described in detail in the following
 sections.
 
 
@@ -96,8 +96,8 @@ The third example shows the multiple inheritance approach::
             self.colorDepthCombo.addItem("2 colors (1 bit per pixel)")
 
             # Connect up the buttons.
-            self.ui.okButton.clicked.connect(self.accept)
-            self.ui.cancelButton.clicked.connect(self.reject)
+            self.okButton.clicked.connect(self.accept)
+            self.cancelButton.clicked.connect(self.reject)
 
 It is also possible to use the same approach used in PyQt v3.  This is shown in
 the final example::
@@ -112,8 +112,8 @@ the final example::
             self.colorDepthCombo.addItem("2 colors (1 bit per pixel)")
 
             # Connect up the buttons.
-            self.ui.okButton.clicked.connect(self.accept)
-            self.ui.cancelButton.clicked.connect(self.reject)
+            self.okButton.clicked.connect(self.accept)
+            self.cancelButton.clicked.connect(self.reject)
 
 For a full description see the Qt Designer Manual in the Qt Documentation.
 
@@ -129,9 +129,9 @@ The :mod:`~PyQt4.uic` module contains the following functions and objects.
 
     The list of the directories that are searched for widget plugins.
     Initially it contains the name of the directory that contains the widget
-    plugins included with PyQt.
+    plugins included with PyQt4.
 
-.. function:: compileUi(uifile, pyfile[, execute=False[, indent=4[, pyqt3_wrapper=False[, from_imports=False]]]])
+.. function:: compileUi(uifile, pyfile[, execute=False[, indent=4[, pyqt3_wrapper=False[, from_imports=False[, resource_suffix='_rc']]]]])
 
     Generate a Python module that will create a user interface from a Qt
     Designer ``.ui`` file.
@@ -155,6 +155,12 @@ The :mod:`~PyQt4.uic` module contains the following functions and objects.
         is optionally set to generate import statements that are relative to
         ``'.'``.  At the moment this only applies to the import of resource
         modules.
+    :resource_suffix:
+        is the suffix appended to the basename of any resource file specified
+        in the ``.ui`` file to create the name of the Python module generated
+        from the resource file by ``pyrcc4``.  The default is ``'_rc'``, i.e.
+        if the ``.ui`` file specified a resource file called ``foo.qrc`` then
+        the corresponding Python module is ``foo_rc``.
 
 .. function:: compileUiDir(dir[, recurse=False[, map=None[, \*\*compileUi_args]]])
 
@@ -178,7 +184,7 @@ The :mod:`~PyQt4.uic` module contains the following functions and objects.
         :func:`~PyQt4.uic.compileUi` that is called to create each Python
         module.
 
-.. function:: loadUiType(uifile[, from_imports=False])
+.. function:: loadUiType(uifile[, from_imports=False[, resource_suffix='_rc']])
 
     Load a Qt Designer ``.ui`` file and return a tuple of the generated
     *form class* and the *Qt base class*.  These can then be used to
@@ -191,10 +197,16 @@ The :mod:`~PyQt4.uic` module contains the following functions and objects.
         is optionally set to use import statements that are relative to
         ``'.'``.  At the moment this only applies to the import of resource
         modules.
+    :resource_suffix:
+        is the suffix appended to the basename of any resource file specified
+        in the ``.ui`` file to create the name of the Python module generated
+        from the resource file by ``pyrcc4``.  The default is ``'_rc'``, i.e.
+        if the ``.ui`` file specified a resource file called ``foo.qrc`` then
+        the corresponding Python module is ``foo_rc``.
     :rtype:
         the *form class* and the *Qt base class*.
 
-.. function:: loadUi(uifile[, baseinstance=None[, package='']])
+.. function:: loadUi(uifile[, baseinstance=None[, package=''[, resource_suffix='_rc']]])
 
     Load a Qt Designer ``.ui`` file and returns an instance of the user
     interface.
@@ -208,6 +220,12 @@ The :mod:`~PyQt4.uic` module contains the following functions and objects.
     :param package:
         the optional package that is the base package for any relative imports
         of custom widgets.
+    :resource_suffix:
+        is the suffix appended to the basename of any resource file specified
+        in the ``.ui`` file to create the name of the Python module generated
+        from the resource file by ``pyrcc4``.  The default is ``'_rc'``, i.e.
+        if the ``.ui`` file specified a resource file called ``foo.qrc`` then
+        the corresponding Python module is ``foo_rc``.
     :rtype:
         the ``QWidget`` sub-class that implements the user interface.
 
@@ -261,10 +279,18 @@ The full set of command line options is:
     Resource modules are imported using ``from . import`` rather than a simple
     ``import``.
 
+.. cmdoption:: --resource-suffix <SUFFIX>
+
+    The suffix ``<SUFFIX>`` is appended to the basename of any resource file
+    specified in the ``.ui`` file to create the name of the Python module
+    generated from the resource file by :program:`pyrcc4`.  The default is
+    ``_rc``.  For example if the ``.ui`` file specified a resource file called
+    ``foo.qrc`` then the corresponding Python module is ``foo_rc``.
+
 Note that code generated by :program:`pyuic4` is not guaranteed to be
-compatible with earlier versions of PyQt.  However, it is guaranteed to be
+compatible with earlier versions of PyQt4.  However, it is guaranteed to be
 compatible with later versions.  If you have no control over the version of
-PyQt the users of your application are using then you should run
+PyQt4 the users of your application are using then you should run
 :program:`pyuic4`, or call :func:`~PyQt4.uic.compileUi()`, as part of your
 installation process.  Another alternative would be to distribute the ``.ui``
 files (perhaps as part of a resource file) and have your application load them
@@ -277,7 +303,7 @@ Writing Qt Designer Plugins
 ---------------------------
 
 Qt Designer can be extended by writing plugins.  Normally this is done using
-C++ but PyQt also allows you to write plugins in Python.  Most of the time a
+C++ but PyQt4 also allows you to write plugins in Python.  Most of the time a
 plugin is used to expose a custom widget to Designer so that it appears in
 Designer's widget box just like any other widget.  It is possibe to change the
 widget's properties and to connect its signals and slots.
@@ -294,7 +320,7 @@ issues that have to be addressed.
   the ``QDesignerCustomWidgetInterface`` class.  (If the plugin exposes more
   than one custom widget then it must conform to the interface defined by the
   ``QDesignerCustomWidgetCollectionInterface`` class.)  In addition the plugin
-  class must sub-class ``QObject`` as well as the interface class.  PyQt does
+  class must sub-class ``QObject`` as well as the interface class.  PyQt4 does
   not allow Python classes to be sub-classed from more than one Qt class.
 
 - Designer can only connect Qt signals and slots.  It has no understanding of
@@ -303,17 +329,17 @@ issues that have to be addressed.
 - Designer can only edit Qt properties that represent C++ types.  It has no
   understanding of Python attributes or Python types.
 
-PyQt provides the following components and features to resolve these issues as
+PyQt4 provides the following components and features to resolve these issues as
 simply as possible.
 
-- PyQt's QtDesigner module includes additional classes (all of which have a
+- PyQt4's QtDesigner module includes additional classes (all of which have a
   ``QPy`` prefix) that are already sub-classed from the necessary Qt classes.
   This avoids the need to sub-class from more than one Qt class in Python.  For
   example, where a C++ custom widget plugin would sub-class from ``QObject``
   and ``QDesignerCustomWidgetInterface``, a Python custom widget plugin would
   instead sub-class from ``QPyDesignerCustomWidgetPlugin``.
 
-- PyQt installs a C++ plugin in Designer's plugin directory.  It conforms to
+- PyQt4 installs a C++ plugin in Designer's plugin directory.  It conforms to
   the interface defined by the ``QDesignerCustomWidgetCollectionInterface``
   class.  It searches a configurable set of directories looking for Python
   plugins that implement a class sub-classed from
@@ -346,6 +372,6 @@ not just that used by Designer.
 
 For a simple but complete and fully documented example of a custom widget that
 defines new Qt signals, slots and properties, and its plugin, look in the
-:file:`examples/designer/plugins` directory of the PyQt source package.  The
+:file:`examples/designer/plugins` directory of the PyQt4 source package.  The
 :file:`widgets` subdirectory contains the :file:`pydemo.py` custom widget and
 the :file:`python` subdirectory contains its :file:`pydemoplugin.py` plugin.

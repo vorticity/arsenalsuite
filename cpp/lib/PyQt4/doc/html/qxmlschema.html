@@ -21,9 +21,9 @@ the network and test whether it is a valid schema document:</p>
 
      <span class="type">QXmlSchema</span> schema;
      <span class="keyword">if</span> (schema<span class="operator">.</span>load(url) <span class="operator">=</span><span class="operator">=</span> <span class="keyword">true</span>)
-         <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"schema is valid"</span>;
+         <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"schema is valid"</span>;
      <span class="keyword">else</span>
-         <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"schema is invalid"</span>;
+         <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"schema is invalid"</span>;
 </pre>
 <a id="xml-schema-version" name="xml-schema-version" />
 <h3>XML Schema Version</h3>
@@ -53,9 +53,9 @@ loaded from the <i>source</i> URI.</p>
 
      <span class="type"><a href="qxmlschema.html">QXmlSchema</a></span> schema;
      <span class="keyword">if</span> (schema<span class="operator">.</span>load(url) <span class="operator">=</span><span class="operator">=</span> <span class="keyword">true</span>)
-         <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"schema is valid"</span>;
+         <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"schema is valid"</span>;
      <span class="keyword">else</span>
-         <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"schema is invalid"</span>;
+         <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"schema is invalid"</span>;
 </pre>
 <p><b>See also</b> <a href="qxmlschema.html#isValid">isValid</a>().</p>
 
@@ -80,9 +80,9 @@ and for message reporting.</p>
      schema<span class="operator">.</span>load(<span class="operator">&amp;</span>file<span class="operator">,</span> <span class="type"><a href="qurl.html">QUrl</a></span><span class="operator">.</span>fromLocalFile(file<span class="operator">.</span>fileName()));
 
      <span class="keyword">if</span> (schema<span class="operator">.</span>isValid())
-         <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"schema is valid"</span>;
+         <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"schema is valid"</span>;
      <span class="keyword">else</span>
-         <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"schema is invalid"</span>;
+         <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"schema is invalid"</span>;
 </pre>
 <p><b>See also</b> <a href="qxmlschema.html#isValid">isValid</a>().</p>
 
@@ -112,9 +112,9 @@ undefined.</p>
      schema<span class="operator">.</span>load(data);
 
      <span class="keyword">if</span> (schema<span class="operator">.</span>isValid())
-         <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"schema is valid"</span>;
+         <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"schema is valid"</span>;
      <span class="keyword">else</span>
-         <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"schema is invalid"</span>;
+         <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"schema is invalid"</span>;
 </pre>
 <p><b>See also</b> <a href="qxmlschema.html#isValid">isValid</a>()
 and <a href="qxmlschema.html#isValid">isValid</a>().</p>
@@ -199,4 +199,4 @@ valid ones.</p>
 the absolute URI is the URI mandated by the schema specification,
 and the relative URI is the URI specified by the user.</p>
 <p><b>See also</b> <a href="qxmlschema.html#setUriResolver">setUriResolver</a>().</p>
-<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

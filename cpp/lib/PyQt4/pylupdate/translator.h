@@ -196,7 +196,11 @@ static const QLocale::Language japaneseStyleLanguages[] = {
     QLocale::Bislama,
     QLocale::Burmese,
     QLocale::Chinese,
+#if QT_VERSION >= 0x050000
+    QLocale::Fijian,
+#else
     QLocale::FijiLanguage,
+#endif
     QLocale::Guarani,
     QLocale::Hungarian,
     QLocale::Indonesian,
@@ -263,7 +267,11 @@ static const QLocale::Language englishStyleLanguages[] = {
     QLocale::Kirghiz,
     QLocale::Kurdish,
     QLocale::Kurundi,
+#if QT_VERSION >= 0x050000
+    QLocale::Lao,
+#else
     QLocale::Laothian,
+#endif
     QLocale::Latin,
     // Missing: Letzeburgesch,
     QLocale::Lingala,
@@ -275,7 +283,11 @@ static const QLocale::Language englishStyleLanguages[] = {
     QLocale::Nepali,
     // Missing: Northern Sotho,
     QLocale::Norwegian,
+#if QT_VERSION >= 0x050000
+    QLocale::NorwegianNynorsk,
+#else
     QLocale::Nynorsk,
+#endif
     QLocale::Occitan,
     QLocale::Oriya,
     QLocale::Pashto,
@@ -283,12 +295,22 @@ static const QLocale::Language englishStyleLanguages[] = {
     QLocale::Punjabi,
     QLocale::Quechua,
     QLocale::RhaetoRomance,
+#if QT_VERSION >= 0x050000
+    QLocale::SouthernSotho,
+    QLocale::Tswana,
+#else
     QLocale::Sesotho,
     QLocale::Setswana,
+#endif
     QLocale::Shona,
     QLocale::Sindhi,
+#if QT_VERSION >= 0x050000
+    QLocale::Sinhala,
+    QLocale::Swati,
+#else
     QLocale::Singhalese,
     QLocale::Siswati,
+#endif
     QLocale::Somali,
     QLocale::Spanish,
     QLocale::Swahili,
@@ -298,7 +320,11 @@ static const QLocale::Language englishStyleLanguages[] = {
     QLocale::Tamil,
     QLocale::Tatar,
     QLocale::Telugu,
+#if QT_VERSION >= 0x050000
+    QLocale::Tongan,
+#else
     QLocale::TongaLanguage,
+#endif
     QLocale::Tsonga,
     QLocale::Turkish,
     QLocale::Turkmen,

@@ -211,8 +211,5 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="mainwindow.qrc" />
- </resources>
  <connections/>
 </ui>

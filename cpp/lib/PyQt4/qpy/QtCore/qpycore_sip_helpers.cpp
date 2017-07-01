@@ -1,6 +1,6 @@
 // This is the signal/slot helper code for SIP.
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -159,7 +159,7 @@ extern "C" void *sipQtCreateUniversalSlot(sipWrapper *tx, const char *sig,
     {
         qpycore_pyqtBoundSignal *bs = (qpycore_pyqtBoundSignal *)rxObj;
 
-        *member = bs->bound_overload->signature.constData();
+        *member = bs->unbound_signal->signature->signature.constData();
 
         return bs->bound_qobject;
     }
@@ -329,7 +329,9 @@ extern "C" sipSlot *sipQtFindSipslot(void *tx, void **context)
 }
 
 
-// Emit the given signal from the given object.
+// Emit the given signal from the given object.  Note that we do not apply the
+// hacks when building against Qt5 that workaround the problems with signals
+// with optional arguments.  New style signals must be used instead.
 bool qpycore_qobject_emit(QObject *qtx, const char *sig, PyObject *sigargs)
 {
     // We need to explicitly check for anything that uses a proxy, so we might
@@ -369,7 +371,8 @@ bool qpycore_qobject_emit(QObject *qtx, const char *sig, PyObject *sigargs)
     if (!parsed_signature)
         return false;
 
-    bool ok = qpycore_emit(qtx, signal_index, parsed_signature, sigargs);
+    bool ok = qpycore_emit(qtx, signal_index, parsed_signature,
+            parsed_signature->py_signature.constData(), sigargs);
     delete parsed_signature;
 
     return ok;
@@ -378,16 +381,16 @@ bool qpycore_qobject_emit(QObject *qtx, const char *sig, PyObject *sigargs)
 
 // Emit a signal based on a parsed signature.
 bool qpycore_emit(QObject *qtx, int signal_index,
-        const Chimera::Signature *parsed_signature, PyObject *sigargs)
+        const Chimera::Signature *parsed_signature, const char *docstring,
+        PyObject *sigargs)
 {
     const QList<const Chimera *> &args = parsed_signature->parsed_arguments;
 
     if (args.size() != PyTuple_GET_SIZE(sigargs))
     {
         PyErr_Format(PyExc_TypeError,
-                "signal %s has %d argument(s) but %d provided",
-                parsed_signature->py_signature.constData(), args.size(),
-                (int)PyTuple_GET_SIZE(sigargs));
+                "%s signal has %d argument(s) but %d provided", docstring,
+                args.size(), (int)PyTuple_GET_SIZE(sigargs));
 
         return false;
     }
@@ -407,25 +410,10 @@ bool qpycore_emit(QObject *qtx, int signal_index,
 
         if (!val)
         {
-            const char *sig;
-
-            // Use the docstring if there is one and it is auto-generated.
-            sig = parsed_signature->docstring;
-
-            if (!sig || *sig != '\1')
-            {
-                sig = parsed_signature->py_signature.constData();
-            }
-            else
-            {
-                // Skip the auto-generated marker.
-                ++sig;
-            }
-
             // Mimic SIP's exception text.
             PyErr_Format(PyExc_TypeError,
-                    "%s.emit(): argument %d has unexpected type '%s'", sig,
-                    a + 1, Py_TYPE(arg_obj)->tp_name);
+                    "%s.emit(): argument %d has unexpected type '%s'",
+                    docstring, a + 1, Py_TYPE(arg_obj)->tp_name);
 
             delete[] argv;
             qDeleteAll(values.constBegin(), values.constEnd());

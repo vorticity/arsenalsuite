@@ -49,8 +49,12 @@ sip.setapi('QString', 2)
 
 from PyQt4 import QtCore, QtGui
 
+try:
+    import embeddeddialogs_rc3
+except ImportError:
+    import embeddeddialogs_rc2
+
 from embeddeddialog import Ui_embeddedDialog
-from embeddeddialogs_rc import *
 
 
 class CustomProxy(QtGui.QGraphicsProxyWidget):

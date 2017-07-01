@@ -1,6 +1,6 @@
 // This implements the helpers for QObject.
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -57,7 +57,7 @@ const QMetaObject *qpycore_qobject_metaobject(sipSimpleWrapper *pySelf,
         return QPYCORE_QMETAOBJECT(((pyqtWrapperType *)Py_TYPE(pySelf))->metaobject);
 
     // Fall back to the static Qt meta-object.
-    return reinterpret_cast<const QMetaObject *>(((pyqt4ClassTypeDef *)base)->qt4_static_metaobject);
+    return reinterpret_cast<const QMetaObject *>(((pyqt4ClassTypeDef *)base)->static_metaobject);
 }
 
 
@@ -324,7 +324,7 @@ PyObject *qpycore_qobject_staticmetaobject(PyObject *type_obj)
             return 0;
         }
 
-        mo = reinterpret_cast<const QMetaObject *>(p4ctd->qt4_static_metaobject);
+        mo = reinterpret_cast<const QMetaObject *>(p4ctd->static_metaobject);
     }
 
     return sipConvertFromType(const_cast<QMetaObject *>(mo), sipType_QMetaObject, 0);

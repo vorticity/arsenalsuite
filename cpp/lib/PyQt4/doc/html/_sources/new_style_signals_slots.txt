@@ -2,7 +2,7 @@ New-style Signal and Slot Support
 =================================
 
 This section describes the new style of connecting signals and slots
-introduced in PyQt v4.5.
+introduced in PyQt4 v4.5.
 
 One of the key features of Qt is its use of signals and slots to communicate
 between objects.  Their use encourages the development of reusable components.
@@ -35,7 +35,7 @@ Unbound and Bound Signals
 
 A signal (specifically an unbound signal) is an attribute of a class that is a
 sub-class of ``QObject``.  When a signal is referenced as an attribute of an
-instance of the class then PyQt automatically binds the instance to the signal
+instance of the class then PyQt4 automatically binds the instance to the signal
 in order to create a *bound signal*.  This is the same mechanism that Python
 itself uses to create bound methods from class functions.
 
@@ -47,7 +47,9 @@ macro.
 A signal may be overloaded, ie. a signal with a particular name may support
 more than one signature.  A signal may be indexed with a signature in order to
 select the one required.  A signature is a sequence of types.  A type is either
-a Python type object or a string that is the name of a C++ type.
+a Python type object or a string that is the name of a C++ type.  The name of a
+C++ type is automatically normalised so that, for example, ``QString`` can be
+used instead of the non-normalised ``const QString &``.
 
 If a signal is overloaded then it will have a default that will be used if no
 index is given.
@@ -61,7 +63,7 @@ system while ensuring that its reference count is properly maintained.
 Defining New Signals with :func:`~PyQt4.QtCore.pyqtSignal`
 ----------------------------------------------------------
 
-PyQt automatically defines signals for all Qt's built-in signals.  New signals
+PyQt4 automatically defines signals for all Qt's built-in signals.  New signals
 can be defined as class attributes using the :func:`~PyQt4.QtCore.pyqtSignal`
 factory.
 
@@ -107,7 +109,7 @@ New signals defined in this way will be automatically added to the class's
 introspected using the ``QMetaObject`` API.
 
 Overloaded signals should be used with care when an argument has a Python type
-that has no corresponding C++ type.  PyQt uses the same internal C++ class to
+that has no corresponding C++ type.  PyQt4 uses the same internal C++ class to
 represent such objects and so it is possible to have overloaded signals with
 different Python signatures that are implemented with identical C++ signatures
 with unexpected results.  The following is an example of this::
@@ -124,7 +126,7 @@ Connecting, Disconnecting and Emitting Signals
 Signals are connected to slots using the :meth:`connect` method of a bound
 signal.
 
-.. method:: connect(slot[, type=PyQt4.QtCore.Qt.AutoConnection])
+.. method:: connect(slot[, type=PyQt4.QtCore.Qt.AutoConnection[, no_receiver_check=False]])
 
     Connect a signal to a slot.  An exception will be raised if the connection
     failed.
@@ -134,6 +136,9 @@ signal.
         signal.
     :param type:
         the type of the connection to make.
+    :param no_receiver_check:
+        suppress the check that the underlying C++ receiver instance still
+        exists and deliver the signal anyway.
 
 Signals are disconnected from slots using the :meth:`disconnect` method of a
 bound signal.
@@ -187,7 +192,7 @@ The following code demonstrates the connection of overloaded signals::
     class Bar(QComboBox):
 
         def connect_activated(self):
-            # The PyQt documentation will define what the default overload is.
+            # The PyQt4 documentation will define what the default overload is.
             # In this case it is the overload with the single integer argument.
             self.activated.connect(self.handle_int)
 
@@ -224,12 +229,12 @@ fragments are equivalent::
 The :func:`~PyQt4.QtCore.pyqtSlot` Decorator
 --------------------------------------------
 
-Although PyQt allows any Python callable to be used as a slot when connecting
+Although PyQt4 allows any Python callable to be used as a slot when connecting
 signals, it is sometimes necessary to explicitly mark a Python method as being
-a Qt slot and to provide a C++ signature for it.  PyQt provides the
+a Qt slot and to provide a C++ signature for it.  PyQt4 provides the
 :func:`~PyQt4.QtCore.pyqtSlot` function decorator to do this.
 
-.. function:: PyQt4.QtCore.pyqtSlot(types[, name][, result])
+.. function:: PyQt4.QtCore.pyqtSlot(types[, name[, result]])
 
     Decorate a Python method to create a Qt slot.
 
@@ -289,11 +294,11 @@ several times with different signatures.  For example::
 Connecting Slots By Name
 ------------------------
 
-PyQt supports the ``QtCore.QMetaObject.connectSlotsByName()`` function that
+PyQt4 supports the ``QtCore.QMetaObject.connectSlotsByName()`` function that
 is most commonly used by :program:`pyuic4` generated Python code to
 automatically connect signals to slots that conform to a simple naming
 convention.  However, where a class has overloaded Qt signals (ie. with the
-same name but with different arguments) PyQt needs additional information in
+same name but with different arguments) PyQt4 needs additional information in
 order to automatically connect the correct signal.
 
 For example the ``QtGui.QSpinBox`` class has the following signals::

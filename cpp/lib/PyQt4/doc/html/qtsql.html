@@ -42,21 +42,21 @@ PyQt applications.</p>
 <p>Before you can use <a href="qsqlquery.html">QSqlQuery</a> or <a href="qsqlquerymodel.html">QSqlQueryModel</a> to access a database, you must create at least one database connection.</p>
 <p>Database connections are identified by arbitrary strings. <a href="qsqldatabase.html">QSqlDatabase</a> also supports the concept of a <i>default connection</i>, which is used by the Qt SQL class if no other connection is specified. This mechanism is very convenient for applications that use only one database connection.</p>
 <p>The following code establishes a connection to a MySQL database called <tt>flightdb</tt> on host <tt>bigblue</tt>:</p>
-<pre>&#160;       QSqlDatabase db = QSqlDatabase.addDatabase(&quot;QMYSQL&quot;);
-        db.setHostName(&quot;bigblue&quot;);
-        db.setDatabaseName(&quot;flightdb&quot;);
-        db.setUserName(&quot;acarlson&quot;);
-        db.setPassword(&quot;1uTbSbAs&quot;);
+<pre>&#160;       QSqlDatabase db = QSqlDatabase.addDatabase("QMYSQL");
+        db.setHostName("bigblue");
+        db.setDatabaseName("flightdb");
+        db.setUserName("acarlson");
+        db.setPassword("1uTbSbAs");
         bool ok = db.open();</pre>
 <p>The first argument to <a href="qsqldatabase.html#addDatabase">QSqlDatabase.addDatabase</a>() is the name of the driver. See the <a href="qsqldatabase.html#addDatabase">addDatabase()</a> documentation for a list of drivers. We call <a href="qsqldatabase.html#setHostName">setHostName()</a>, <a href="qsqldatabase.html#setDatabaseName">setDatabaseName()</a>, <a href="qsqldatabase.html#setUserName">setUserName()</a>, and <a href="qsqldatabase.html#setPassword">setPassword()</a> to initialize the connection information.</p>
 <p>Since no name was specified for the connection, the connection serves as the default connection. To specify a name, pass it as the second argument to <a href="qsqldatabase.html#addDatabase">QSqlDatabase.addDatabase</a>(). For example:</p>
-<pre>&#160;       QSqlDatabase firstDB = QSqlDatabase.addDatabase(&quot;QMYSQL&quot;, &quot;first&quot;);
-        QSqlDatabase secondDB = QSqlDatabase.addDatabase(&quot;QMYSQL&quot;, &quot;second&quot;);</pre>
+<pre>&#160;       QSqlDatabase firstDB = QSqlDatabase.addDatabase("QMYSQL", "first");
+        QSqlDatabase secondDB = QSqlDatabase.addDatabase("QMYSQL", "second");</pre>
 <p>Once the connection is initialized, we must call <a href="qsqldatabase.html#open">QSqlDatabase.open</a>() to open the database and give us access to the data. If this call fails it will return false; error information can be obtained from <a href="qsqldatabase.html#lastError">QSqlDatabase.lastError</a>().</p>
 <p>Once a connection is established, we can call the static function <a href="qsqldatabase.html#database">QSqlDatabase.database</a>() from anywhere to get a pointer to a database connection. If we call it without a parameter, it will return the default connection. If called with the identifier used for a connection, it will return a reference to the specified connection. For example:</p>
 <pre>&#160;       QSqlDatabase defaultDB = QSqlDatabase.database();
-        QSqlDatabase firstDB = QSqlDatabase.database(&quot;first&quot;);
-        QSqlDatabase secondDB = QSqlDatabase.database(&quot;second&quot;);</pre>
+        QSqlDatabase firstDB = QSqlDatabase.database("first");
+        QSqlDatabase secondDB = QSqlDatabase.database("second");</pre>
 <p>To remove a database connection, first close the database using <a href="qsqldatabase.html#close">QSqlDatabase.close</a>(), then remove it using the static method <a href="qsqldatabase.html#removeDatabase">QSqlDatabase.removeDatabase</a>().</p>
 <a name="executing-sql-statements" />
 <h3>Executing SQL Statements</h3>
@@ -66,7 +66,7 @@ PyQt applications.</p>
 <h4>Executing a Query</h4>
 <p>To execute an SQL statement, simply create a <a href="qsqlquery.html">QSqlQuery</a> object and call <a href="qsqlquery.html#exec">QSqlQuery.exec</a>() like this:</p>
 <pre>&#160;       QSqlQuery query;
-        query.exec(&quot;SELECT name, salary FROM employee WHERE salary &gt; 50000&quot;);</pre>
+        query.exec("SELECT name, salary FROM employee WHERE salary &gt; 50000");</pre>
 <p>The <a href="qsqlquery.html">QSqlQuery</a> constructor accepts an optional <a href="qsqldatabase.html">QSqlDatabase</a> object that specifies which database connection to use. In the example above, we don't specify any connection, so the default connection is used.</p>
 <p>If an error occurs, <a href="qsqlquery.html#exec">exec()</a> returns false. The error is then available as <a href="qsqlquery.html#lastError">QSqlQuery.lastError</a>().</p>
 <a name="navigating-the-result-set" />
@@ -82,7 +82,7 @@ PyQt applications.</p>
 <p>To determine whether a database driver supports a given feature, use <a href="qsqldriver.html#hasFeature">QSqlDriver.hasFeature</a>(). In the following example, we call <a href="qsqlquery.html#size">QSqlQuery.size</a>() to determine the size of a result set of the underlying database supports that feature; otherwise, we navigate to the last record and use the query's position to tell us how many records there are.</p>
 <pre>&#160;       QSqlQuery query;
         int numRows;
-        query.exec(&quot;SELECT name, salary FROM employee WHERE salary &gt; 50000&quot;);
+        query.exec("SELECT name, salary FROM employee WHERE salary &gt; 50000");
 
         QSqlDatabase defaultDB = QSqlDatabase.database();
         if (defaultDB.driver()-&gt;hasFeature(QSqlDriver.QuerySize)) {
@@ -97,22 +97,22 @@ PyQt applications.</p>
 <h4>Inserting, Updating, and Deleting Records</h4>
 <p><a href="qsqlquery.html">QSqlQuery</a> can execute arbitrary SQL statements, not just <tt>SELECT</tt>s. The following example inserts a record into a table using <tt>INSERT</tt>:</p>
 <pre>&#160;       QSqlQuery query;
-        query.exec(&quot;INSERT INTO employee (id, name, salary) &quot;
-                   &quot;VALUES (1001, 'Thad Beaumont', 65000)&quot;);</pre>
+        query.exec("INSERT INTO employee (id, name, salary) "
+                   "VALUES (1001, 'Thad Beaumont', 65000)");</pre>
 <p>If you want to insert many records at the same time, it is often more efficient to separate the query from the actual values being inserted. This can be done using placeholders. Qt supports two placeholder syntaxes: named binding and positional binding. Here's an example of named binding:</p>
 <pre>&#160;       QSqlQuery query;
-        query.prepare(&quot;INSERT INTO employee (id, name, salary) &quot;
-                      &quot;VALUES (:id, :name, :salary)&quot;);
-        query.bindValue(&quot;:id&quot;, 1001);
-        query.bindValue(&quot;:name&quot;, &quot;Thad Beaumont&quot;);
-        query.bindValue(&quot;:salary&quot;, 65000);
+        query.prepare("INSERT INTO employee (id, name, salary) "
+                      "VALUES (:id, :name, :salary)");
+        query.bindValue(":id", 1001);
+        query.bindValue(":name", "Thad Beaumont");
+        query.bindValue(":salary", 65000);
         query.exec();</pre>
 <p>Here's an example of positional binding:</p>
 <pre>&#160;       QSqlQuery query;
-        query.prepare(&quot;INSERT INTO employee (id, name, salary) &quot;
-                      &quot;VALUES (?, ?, ?)&quot;);
+        query.prepare("INSERT INTO employee (id, name, salary) "
+                      "VALUES (?, ?, ?)");
         query.addBindValue(1001);
-        query.addBindValue(&quot;Thad Beaumont&quot;);
+        query.addBindValue("Thad Beaumont");
         query.addBindValue(65000);
         query.exec();</pre>
 <p>Both syntaxes work with all database drivers provided by Qt. If the database supports the syntax natively, Qt simply forwards the query to the DBMS; otherwise, Qt simulates the placeholder syntax by preprocessing the query. The actual query that ends up being executed by the DBMS is available as <a href="qsqlquery.html#executedQuery">QSqlQuery.executedQuery</a>().</p>
@@ -120,23 +120,23 @@ PyQt applications.</p>
 <p>Besides performance, one advantage of placeholders is that you can easily specify arbitrary values without having to worry about escaping special characters.</p>
 <p>Updating a record is similar to inserting it into a table:</p>
 <pre>&#160;       QSqlQuery query;
-        query.exec(&quot;UPDATE employee SET salary = 70000 WHERE id = 1003&quot;);</pre>
+        query.exec("UPDATE employee SET salary = 70000 WHERE id = 1003");</pre>
 <p>You can also use named or positional binding to associate parameters to actual values.</p>
 <p>Finally, here's an example of a <tt>DELETE</tt> statement:</p>
 <pre>&#160;       QSqlQuery query;
-        query.exec(&quot;DELETE FROM employee WHERE id = 1007&quot;);</pre>
+        query.exec("DELETE FROM employee WHERE id = 1007");</pre>
 <a name="transactions" />
 <h4>Transactions</h4>
 <p>If the underlying database engine supports transactions, QSqlDriver.hasFeature(<a href="qsqldriver.html#DriverFeature-enum">QSqlDriver.Transactions</a>) will return true. You can use <a href="qsqldatabase.html#transaction">QSqlDatabase.transaction</a>() to initiate a transaction, followed by the SQL commands you want to execute within the context of the transaction, and then either <a href="qsqldatabase.html#commit">QSqlDatabase.commit</a>() or <a href="qsqldatabase.html#rollback">QSqlDatabase.rollback</a>().</p>
 <p>Example:</p>
 <pre>&#160;       QSqlDatabase.database().transaction();
         QSqlQuery query;
-        query.exec(&quot;SELECT id FROM employee WHERE name = 'Torild Halvorsen'&quot;);
+        query.exec("SELECT id FROM employee WHERE name = 'Torild Halvorsen'");
         if (query.next()) {
             int employeeId = query.value(0).toInt();
-            query.exec(&quot;INSERT INTO project (id, name, ownerid) &quot;
-                       &quot;VALUES (201, 'Manhattan Project', &quot;
-                       + QString.number(employeeId) + &quot;)&quot;);
+            query.exec("INSERT INTO project (id, name, ownerid) "
+                       "VALUES (201, 'Manhattan Project', "
+                       + QString.number(employeeId) + ")");
         }
         QSqlDatabase.database().commit();</pre>
 <p>Transactions can be used to ensure that a complex operation is atomic (for example, looking up a foreign key and creating a record), or to provide a means of canceling a complex change in the middle.</p>
@@ -155,11 +155,11 @@ PyQt applications.</p>
 <p><a href="qsqlquerymodel.html">QSqlQueryModel</a> offers a read-only model based on an SQL query.</p>
 <p>Example:</p>
 <pre>&#160;       QSqlQueryModel model;
-        model.setQuery(&quot;SELECT * FROM employee&quot;);
+        model.setQuery("SELECT * FROM employee");
 
         for (int i = 0; i &lt; model.rowCount(); ++i) {
-            int id = model.record(i).value(&quot;id&quot;).toInt();
-            QString name = model.record(i).value(&quot;name&quot;).toString();
+            int id = model.record(i).value("id").toInt();
+            QString name = model.record(i).value("name").toString();
             qDebug() &lt;&lt; id &lt;&lt; name;
         }</pre>
 <p>After setting the query using <a href="qsqlquerymodel.html#setQuery">QSqlQueryModel.setQuery</a>(), you can use QSqlQueryModel.record(int) to access the individual records. You can also use <a href="qsqlquerymodel.html#data">QSqlQueryModel.data</a>() and any of the other functions inherited from <a href="qabstractitemmodel.html">QAbstractItemModel</a>.</p>
@@ -169,23 +169,23 @@ PyQt applications.</p>
 <p><a href="qsqltablemodel.html">QSqlTableModel</a> offers a read-write model that works on a single SQL table at a time.</p>
 <p>Example:</p>
 <pre>&#160;       QSqlTableModel model;
-        model.setTable(&quot;employee&quot;);
-        model.setFilter(&quot;salary &gt; 50000&quot;);
+        model.setTable("employee");
+        model.setFilter("salary &gt; 50000");
         model.setSort(2, Qt.DescendingOrder);
         model.select();
 
         for (int i = 0; i &lt; model.rowCount(); ++i) {
-            QString name = model.record(i).value(&quot;name&quot;).toString();
-            int salary = model.record(i).value(&quot;salary&quot;).toInt();
+            QString name = model.record(i).value("name").toString();
+            int salary = model.record(i).value("salary").toInt();
             qDebug() &lt;&lt; name &lt;&lt; salary;
         }</pre>
 <p><a href="qsqltablemodel.html">QSqlTableModel</a> is a high-level alternative to <a href="qsqlquery.html">QSqlQuery</a> for navigating and modifying individual SQL tables. It typically results in less code and requires no knowledge of SQL syntax.</p>
 <p>Use <a href="qsqlquerymodel.html#record">QSqlTableModel.record</a>() to retrieve a row in the table, and <a href="qsqltablemodel.html#setRecord">QSqlTableModel.setRecord</a>() to modify the row. For example, the following code will increase every employee's salary by 10 per cent:</p>
 <pre>&#160;       for (int i = 0; i &lt; model.rowCount(); ++i) {
             QSqlRecord record = model.record(i);
-            double salary = record.value(&quot;salary&quot;).toInt();
+            double salary = record.value("salary").toInt();
             salary *= 1.1;
-            record.setValue(&quot;salary&quot;, salary);
+            record.setValue("salary", salary);
             model.setRecord(i, record);
         }
         model.submitAll();</pre>
@@ -195,7 +195,7 @@ PyQt applications.</p>
 <p>Here's how to insert a row and populate it:</p>
 <pre>&#160;       model.insertRows(row, 1);
         model.setData(model.index(row, 0), 1013);
-        model.setData(model.index(row, 1), &quot;Peter Gordon&quot;);
+        model.setData(model.index(row, 1), "Peter Gordon");
         model.setData(model.index(row, 2), 68500);
         model.submitAll();</pre>
 <p>Here's how to delete five consecutive rows:</p>
@@ -217,10 +217,10 @@ PyQt applications.</p>
 </table></p>
 <p>The screenshot on the left shows a plain <a href="qsqltablemodel.html">QSqlTableModel</a> in a <a href="qtableview.html">QTableView</a>. Foreign keys (<tt>city</tt> and <tt>country</tt>) aren't resolved to human-readable values. The screenshot on the right shows a <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a>, with foreign keys resolved into human-readable text strings.</p>
 <p>The following code snippet shows how the <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a> was set up:</p>
-<pre>&#160;       model-&gt;setTable(&quot;employee&quot;);
+<pre>&#160;       model-&gt;setTable("employee");
 
-        model-&gt;setRelation(2, QSqlRelation(&quot;city&quot;, &quot;id&quot;, &quot;name&quot;));
-        model-&gt;setRelation(3, QSqlRelation(&quot;country&quot;, &quot;id&quot;, &quot;name&quot;));</pre>
+        model-&gt;setRelation(2, QSqlRelation("city", "id", "name"));
+        model-&gt;setRelation(3, QSqlRelation("country", "id", "name"));</pre>
 <p>See the <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a> documentation for details.</p>
 <a name="presenting-data-in-a-table-view" />
 <h3>Presenting Data in a Table View</h3>
@@ -233,10 +233,10 @@ PyQt applications.</p>
 <pre>&#160;       view-&gt;setEditTriggers(QAbstractItemView.NoEditTriggers);</pre>
 <p>You can use the same model as a data source for multiple views. If the user edits the model through one of the views, the other views will reflect the changes immediately. The <a href="sql-tablemodel.html">Table Model</a> example shows how it works.</p>
 <p>View classes display a header at the top to label the columns. To change the header texts, call <a href="qabstractitemmodel.html#setHeaderData">setHeaderData()</a> on the model. The header's labels default to the table's field names. For example:</p>
-<pre>&#160;       model-&gt;setHeaderData(0, Qt.Horizontal, QObject.tr(&quot;ID&quot;));
-        model-&gt;setHeaderData(1, Qt.Horizontal, QObject.tr(&quot;Name&quot;));
-        model-&gt;setHeaderData(2, Qt.Horizontal, QObject.tr(&quot;City&quot;));
-        model-&gt;setHeaderData(3, Qt.Horizontal, QObject.tr(&quot;Country&quot;));</pre>
+<pre>&#160;       model-&gt;setHeaderData(0, Qt.Horizontal, QObject.tr("ID"));
+        model-&gt;setHeaderData(1, Qt.Horizontal, QObject.tr("Name"));
+        model-&gt;setHeaderData(2, Qt.Horizontal, QObject.tr("City"));
+        model-&gt;setHeaderData(3, Qt.Horizontal, QObject.tr("Country"));</pre>
 <p><a href="qtableview.html">QTableView</a> also has a vertical header on the left with numbers identifying the rows. If you insert rows programmatically using <a href="qsqltablemodel.html#insertRows">QSqlTableModel.insertRows</a>(), the new rows will be marked with an asterisk (*) until they are submitted using <a href="qsqltablemodel.html#submitAll">submitAll()</a> or automatically when the user moves to another record (assuming the <a href="qsqltablemodel.html#EditStrategy-enum">edit strategy</a> is <a href="qsqltablemodel.html#EditStrategy-enum">QSqlTableModel.OnRowChange</a>).</p>
 <p align="center"><img alt="Inserting a row in a model" src="images/insertrowinmodelview.png" /></p><p>Likewise, if you remove rows using <a href="qsqltablemodel.html#removeRows">removeRows()</a>, the rows will be marked with an exclamation mark (!) until the change is submitted.</p>
 <p>The items in the view are rendered using a delegate. The default delegate, <a href="qitemdelegate.html">QItemDelegate</a>, handles the most common data types (<tt>int</tt>, <a href="qstring.html">QString</a>, <a href="qimage.html">QImage</a>, etc.). The delegate is also responsible for providing editor widgets (e.g., a combobox) when the user starts editing an item in the view. You can create your own delegates by subclassing <a href="qabstractitemdelegate.html">QAbstractItemDelegate</a> or <a href="qitemdelegate.html">QItemDelegate</a>. See <a href="model-view-programming.html">Model/View Programming</a> for more information.</p>
@@ -273,7 +273,7 @@ PyQt applications.</p>
 <pre>&#160;   bool EditableSqlModel.setFirstName(int personId, const QString &amp;firstName)
     {
         QSqlQuery query;
-        query.prepare(&quot;update person set firstname = ? where id = ?&quot;);
+        query.prepare("update person set firstname = ? where id = ?");
         query.addBindValue(firstName);
         query.addBindValue(personId);
         return query.exec();
@@ -282,4 +282,4 @@ PyQt applications.</p>
 <p>Subclassing a model makes it possible to customize it in many ways: You can provide tooltips for the items, change the background color, provide calculated values, provide different values for viewing and editing, handle null values specially, and more. See <a href="model-view-programming.html">Model/View Programming</a> as well as the <a href="qabstractitemview.html">QAbstractItemView</a> reference documentation for details.</p>
 <p>If all you need is to resolve a foreign key to a more human-friendly string, you can use <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a>. For best results, you should also use <a href="qsqlrelationaldelegate.html">QSqlRelationalDelegate</a>, a delegate that provides combobox editors for editing foreign keys.</p>
 <p align="center"><img alt="Editing a foreign key in a relational table" src="images/relationaltable.png" /></p><p>The <a href="sql-relationaltablemodel.html">Relational Table Model</a> example illustrates how to use <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a> in conjunction with <a href="qsqlrelationaldelegate.html">QSqlRelationalDelegate</a> to provide tables with foreign key support.</p>
-<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

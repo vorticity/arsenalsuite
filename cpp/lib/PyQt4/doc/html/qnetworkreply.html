@@ -267,8 +267,13 @@ returns an invalid <a href="qvariant.html">QVariant</a>.</p>
 <h3 class="fn"><a name="ignoreSslErrors" />QNetworkReply.ignoreSslErrors (<i>self</i>)</h3><p>This method is also a Qt slot with the C++ signature <tt>void ignoreSslErrors()</tt>.</p><p>If this function is called, SSL errors related to network
 connection will be ignored, including certificate validation
 errors.</p>
-<p>Note that calling this function without restraint may pose a
-security risk for your application. Use it with care.</p>
+<p><b>Warning:</b> Be sure to always let the user inspect the
+errors reported by the <a href="qnetworkreply.html#sslErrors">sslErrors</a>() signal, and only
+call this method upon confirmation from the user that proceeding is
+ok. If there are unexpected errors, the reply should be aborted.
+Calling this method without inspecting the actual errors will most
+likely pose a security risk for your application. Use it with great
+care!</p>
 <p>This function can be called from the slot connected to the
 <a href="qnetworkreply.html#sslErrors">sslErrors</a>() signal,
 which indicates which errors were found.</p>
@@ -538,4 +543,4 @@ not be determined, <i>bytesTotal</i> will be -1.</p>
 <p><b>See also</b> <a href="qnetworkreply.html#downloadProgress">downloadProgress</a>().</p>
 
 
-<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

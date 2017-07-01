@@ -48,7 +48,10 @@ sip.setapi('QVariant', 2)
 
 from PyQt4 import QtCore, QtGui
 
-import systray_rc
+try:
+    import systray_rc3
+except ImportError:
+    import systray_rc2
 
 
 class Window(QtGui.QDialog):

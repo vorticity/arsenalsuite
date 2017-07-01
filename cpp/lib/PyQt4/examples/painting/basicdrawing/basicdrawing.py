@@ -48,7 +48,10 @@ sip.setapi('QVariant', 2)
 
 from PyQt4 import QtCore, QtGui
 
-import basicdrawing_rc
+try:
+    import basicdrawing_rc3
+except ImportError:
+    import basicdrawing_rc2
 
 
 class RenderArea(QtGui.QWidget):

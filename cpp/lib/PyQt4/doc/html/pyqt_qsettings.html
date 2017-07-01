@@ -1,26 +1,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Support for QSettings &mdash; PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide</title>
+    <title>Support for QSettings &mdash; PyQt 4.11.1 Reference Guide</title>
+    
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '#',
-        VERSION:     'snapshot-4.9.5-9eb6aac99275',
-        COLLAPSE_MODINDEX: false,
+        URL_ROOT:    './',
+        VERSION:     '4.11.1',
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/logo_tn.ico"/>
-    <link rel="top" title="PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide" href="index.html" />
+    <link rel="top" title="PyQt 4.11.1 Reference Guide" href="index.html" />
     <link rel="next" title="Integrating Python and QML" href="qml.html" />
     <link rel="prev" title="Python Objects and QVariant" href="pyqt_qvariant.html" /> 
   </head>
@@ -32,15 +36,15 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="qml.html" title="Integrating Python and QML"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="pyqt_qvariant.html" title="Python Objects and QVariant"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide</a> &raquo;</li> 
+        <li><a href="index.html">PyQt 4.11.1 Reference Guide</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -51,14 +55,15 @@
             
   <div class="section" id="support-for-qsettings">
 <h1>Support for QSettings<a class="headerlink" href="#support-for-qsettings" title="Permalink to this headline">¶</a></h1>
-<p>
-<span class="versionmodified">New in version v4.8.3.</span></p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version v4.8.3.</span></p>
+</div>
 <p>Qt provies the <tt class="docutils literal"><span class="pre">QSettings</span></tt> class as a platform independent API for the
 persistent storage and retrieval of application settings.  Settings are
-retrieved using the <tt class="docutils literal"><span class="pre">QSettings.value()</span></tt> method which, when using v1 of PyQt&#8217;s
-<tt class="docutils literal"><span class="pre">QVariant</span></tt> API returns a <tt class="docutils literal"><span class="pre">QVariant</span></tt> object.  An application will then
-typically convert the <tt class="docutils literal"><span class="pre">QVariant</span></tt> to the appropriate fundamental type using
-<tt class="docutils literal"><span class="pre">QVariant.toBool()</span></tt>, <tt class="docutils literal"><span class="pre">QVariant.toInt()</span></tt>.</p>
+retrieved using the <tt class="docutils literal"><span class="pre">QSettings.value()</span></tt> method which, when using v1 of
+PyQt4&#8217;s <tt class="docutils literal"><span class="pre">QVariant</span></tt> API returns a <tt class="docutils literal"><span class="pre">QVariant</span></tt> object.  An application will
+then typically convert the <tt class="docutils literal"><span class="pre">QVariant</span></tt> to the appropriate fundamental type
+using <tt class="docutils literal"><span class="pre">QVariant.toBool()</span></tt>, <tt class="docutils literal"><span class="pre">QVariant.toInt()</span></tt>.</p>
 <p>The explicit use of these conversion methods works around a problem with the
 way different platforms implement the storage of settings.  Some platforms only
 ever store string values which means that the type of the original value is
@@ -69,7 +74,7 @@ for Python v3) because those explicit conversion methods are not available.
 Therefore a setting with an integer value of <tt class="docutils literal"><span class="pre">42</span></tt> may be retrieved as a
 string value of <tt class="docutils literal"><span class="pre">'42'</span></tt>.  This inconsistency is made worse by being platform
 specific.</p>
-<p>As a solution to the problem PyQt&#8217;s implementation of <tt class="docutils literal"><span class="pre">QSettings.value()</span></tt>
+<p>As a solution to the problem PyQt4&#8217;s implementation of <tt class="docutils literal"><span class="pre">QSettings.value()</span></tt>
 takes an optional third argument called <tt class="docutils literal"><span class="pre">type</span></tt>.  This is either a Python type
 object, e.g. <tt class="docutils literal"><span class="pre">int</span></tt>, or a string that is the name of a C++ type, e.g.
 <tt class="docutils literal"><span class="pre">'QStringList'</span></tt>.  The value returned will be an object of the requested type.</p>
@@ -94,8 +99,9 @@ object, e.g. <tt class="docutils literal"><span class="pre">int</span></tt>, or 
 </pre></div>
 </div>
 <p>When this is executed then the following will be displayed for all platforms:</p>
-<div class="highlight-python"><pre>int_value: 42
-point_value: PyQt4.QtCore.QPoint(10, 20)</pre>
+<div class="highlight-python"><div class="highlight"><pre>int_value: 42
+point_value: PyQt4.QtCore.QPoint(10, 20)
+</pre></div>
 </div>
 <p>If the value of the setting is a container (corresponding to either
 <tt class="docutils literal"><span class="pre">QVariantList</span></tt>, <tt class="docutils literal"><span class="pre">QVariantMap</span></tt> or <tt class="docutils literal"><span class="pre">QVariantHash</span></tt>) then the type is applied
@@ -121,8 +127,9 @@ to the contents of the container.</p>
 </pre></div>
 </div>
 <p>When this is executed then the following will be displayed for all platforms:</p>
-<div class="highlight-python"><pre>list_value: [1, 2, 3]
-dict_value: {'one': 1, 'two': 2}</pre>
+<div class="highlight-python"><div class="highlight"><pre>list_value: [1, 2, 3]
+dict_value: {&#39;one&#39;: 1, &#39;two&#39;: 2}
+</pre></div>
 </div>
 </div>
 
@@ -135,25 +142,25 @@ dict_value: {'one': 1, 'two': 2}</pre>
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/logo.png" alt="Logo"/>
             </a></p>
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="pyqt_qvariant.html"
-                                  title="previous chapter">Python Objects and QVariant</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="qml.html"
-                                  title="next chapter">Integrating Python and QML</a></p>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyqt_qvariant.html"
+                        title="previous chapter">Python Objects and QVariant</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="qml.html"
+                        title="next chapter">Integrating Python and QML</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -165,7 +172,7 @@ dict_value: {'one': 1, 'two': 2}</pre>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
+          <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
           <a href="qml.html" title="Integrating Python and QML"
@@ -173,12 +180,12 @@ dict_value: {'one': 1, 'two': 2}</pre>
         <li class="right" >
           <a href="pyqt_qvariant.html" title="Python Objects and QVariant"
              >previous</a> |</li>
-        <li><a href="index.html">PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide</a> &raquo;</li> 
+        <li><a href="index.html">PyQt 4.11.1 Reference Guide</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2011 Riverbank Computing Limited.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.4.
+        &copy; Copyright 2014 Riverbank Computing Limited.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

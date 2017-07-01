@@ -46,7 +46,7 @@ network, the following can be applied:</p>
 <pre class="cpp">
  <span class="type">void</span> replyFinished(<span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span> <span class="operator">*</span>reply) {
      <span class="type"><a href="qvariant.html">QVariant</a></span> fromCache <span class="operator">=</span> reply<span class="operator">-</span><span class="operator">&gt;</span>attribute(<span class="type"><a href="qnetworkrequest.html">QNetworkRequest</a></span><span class="operator">.</span>SourceIsFromCacheAttribute);
-     <a href="qtcore.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"page from cache?"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> fromCache<span class="operator">.</span>toBool();
+     <a href="qtcore.html#qDebugx">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">"page from cache?"</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> fromCache<span class="operator">.</span>toBool();
  }
 </pre><hr /><h2>Method Documentation</h2><h3 class="fn"><a name="QNetworkDiskCache" />QNetworkDiskCache.__init__ (<i>self</i>, <a href="qobject.html">QObject</a>&#160;<i>parent</i>&#160;=&#160;None)</h3><p>The <i>parent</i> argument, if not None, causes <i>self</i> to be owned by Qt instead of PyQt.</p><p>Creates a new disk cache. The <i>parent</i> argument is passed
 to <a href="qabstractnetworkcache.html">QAbstractNetworkCache</a>'s
@@ -124,4 +124,4 @@ cache will call <a href="qnetworkdiskcache.html#expire">expire</a>().</p>
 
 
 <h3 class="fn"><a name="updateMetaData" />QNetworkDiskCache.updateMetaData (<i>self</i>, <a href="qnetworkcachemetadata.html">QNetworkCacheMetaData</a>&#160;<i>metaData</i>)</h3><p>Reimplemented from <a href="qabstractnetworkcache.html#updateMetaData">QAbstractNetworkCache.updateMetaData</a>().</p>
-<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

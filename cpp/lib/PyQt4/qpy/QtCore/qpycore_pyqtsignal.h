@@ -1,6 +1,6 @@
 // This defines the interfaces for the pyqtSignal type.
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -29,8 +29,6 @@
 
 #include <Python.h>
 
-#include <QList>
-
 #include "qpycore_chimera.h"
 
 
@@ -40,37 +38,41 @@ extern "C" {
 typedef struct _qpycore_pyqtSignal {
     PyObject_HEAD
 
-    // The signal master.
-    struct _qpycore_pyqtSignal *master;
+    // The default signal.  This is the head of the linked list of overloads
+    // and holds references to rest of the list elements.
+    struct _qpycore_pyqtSignal *default_signal;
 
-    // The index in the signal master.
-    int master_index;
+    // The next overload in the list.
+    struct _qpycore_pyqtSignal *next;
 
-    // The non-signal overloads (if any).
+    // The docstring.
+    const char *docstring;
+
+    // The parsed signature.
+    Chimera::Signature *signature;
+
+    // The non-signal overloads (if any).  This is only set for the default.
     PyMethodDef *non_signals;
 
-    // The list of overloaded signals.  (A pointer because C is creating the
-    // instance.)  These are owned by the signal master.
-    QList<Chimera::Signature *> *overloads;
+    // The signal hack to apply when built against Qt5.
+    int hack;
 } qpycore_pyqtSignal;
 
 
 extern PyTypeObject qpycore_pyqtSignal_Type;
 
-PyObject *qpycore_get_signal_doc(PyObject *self);
 int qpycore_get_lazy_attr(const sipTypeDef *td, PyObject *dict);
 
 }
 
 
-qpycore_pyqtSignal *qpycore_pyqtSignal_New();
-void qpycore_add_native_Qt_signal(qpycore_pyqtSignal *ps, const char *sig,
-        const char *docstring);
-int qpycore_signal_index(qpycore_pyqtSignal *ps, PyObject *subscript,
-        const char *context);
+qpycore_pyqtSignal *qpycore_pyqtSignal_New(const char *signature_str,
+        bool *fatal = 0);
+qpycore_pyqtSignal *qpycore_find_signal(qpycore_pyqtSignal *ps,
+        PyObject *subscript, const char *context);
 void qpycore_set_signal_name(qpycore_pyqtSignal *ps, const char *type_name,
         const char *name);
-PyObject *qpycore_call_signal_overload(PyObject *ps_obj, PyObject *bound,
+PyObject *qpycore_call_signal_overload(qpycore_pyqtSignal *ps, PyObject *bound,
         PyObject *args, PyObject *kw);
 
 

@@ -32,12 +32,9 @@ throughout the Qt SQL library.</p>
 <p><b>See also</b> <a href="qsqlquery.html#at">QSqlQuery.at</a>().</p>
 
 
-<h3 class="fn"><a name="NumericalPrecisionPolicy-enum" />QSql.NumericalPrecisionPolicy</h3><p>This enum type describes at which precision levels numercial
-values are read from a database.</p>
-<p>Some databases support numerical values with a precision that is
-not storable in a C++ basic data type. The default behavior is to
-bind these values as a <a href="qstring.html">QString</a>. This
-enum can be used to override this behavior.</p>
+<h3 class="fn"><a name="NumericalPrecisionPolicy-enum" />QSql.NumericalPrecisionPolicy</h3><p>Numerical values in a database can have precisions greater than
+their corresponding C++ types. This enum lists the policies for
+representing such values in the application.</p>
 <table class="valuelist">
 <tr class="odd" valign="top">
 <th class="tblConst">Constant</th>
@@ -61,12 +58,13 @@ discarded.</td>
 <tr>
 <td class="topAlign"><tt>QSql.LowPrecisionDouble</tt></td>
 <td class="topAlign"><tt>0x04</tt></td>
-<td class="topAlign">Force <tt>double</tt> values.</td>
+<td class="topAlign">Force <tt>double</tt> values. This is the
+default policy.</td>
 </tr>
 <tr>
 <td class="topAlign"><tt>QSql.HighPrecision</tt></td>
 <td class="topAlign"><tt>0</tt></td>
-<td class="topAlign">The default behavior - try to preserve maximum
+<td class="topAlign">Strings will be used to preserve
 precision.</td>
 </tr>
 </table>
@@ -141,4 +139,4 @@ combination of ParamTypeFlag values.</p>
 <td class="topAlign">All of the above.</td>
 </tr>
 </table>
-<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;snapshot-4.9.5-9eb6aac99275 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://www.qtsoftware.com">Nokia</a> 2012</td><td align="right" width="25%">Qt&#160;4.8.3</td></tr></table></div></address></body></html>
+<address><hr /><div align="center"><table border="0" cellspacing="0" width="100%"><tr class="address"><td align="left" width="25%">PyQt&#160;4.11.1 for X11</td><td align="center" width="50%">Copyright &#169; <a href="http://www.riverbankcomputing.com">Riverbank&#160;Computing&#160;Ltd</a> and <a href="http://qt.digia.com">Digia</a> 2014</td><td align="right" width="25%">Qt&#160;4.8.6</td></tr></table></div></address></body></html>

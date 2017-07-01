@@ -46,7 +46,10 @@ import math
 
 from PyQt4 import QtCore, QtGui
 
-import mice_rc
+try:
+    import mice_rc3
+except ImportError:
+    import mice_rc2
 
 
 class Mouse(QtGui.QGraphicsItem):

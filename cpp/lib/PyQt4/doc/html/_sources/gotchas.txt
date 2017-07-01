@@ -4,55 +4,55 @@ Things to be Aware Of
 Python Strings, Qt Strings and Unicode
 --------------------------------------
 
-PyQt uses the ``QString`` class to represent Unicode strings, and the
+PyQt4 uses the ``QString`` class to represent Unicode strings, and the
 ``QByteArray`` to represent byte arrays or strings.  In Python v3 the
 corresponding native object types are ``str`` and ``bytes``.  In Python v2 the
 corresponding native object types are ``unicode`` and ``str``.
 
-PyQt does its best to automatically convert between objects of the various
+PyQt4 does its best to automatically convert between objects of the various
 types.  Explicit conversions can be easily made where necessary.
 
-In some cases PyQt will not perform automatic conversions where it is
+In some cases PyQt4 will not perform automatic conversions where it is
 necessary to distinguish between different overloaded methods.
 
 For Python v3 the following conversions are done by default.
 
-- If Qt expects a ``char *`` (or a ``const`` version) then PyQt will accept a
+- If Qt expects a ``char *`` (or a ``const`` version) then PyQt4 will accept a
   ``str`` or ``QString`` that contains only ASCII characters, a ``bytes``, a
   ``QByteArray``, or a Python object that implements the buffer protocol.
 
-- If Qt expects a ``char`` (or a ``const`` version) then PyQt will accept the
+- If Qt expects a ``char`` (or a ``const`` version) then PyQt4 will accept the
   same types as for ``char *`` and also require that a single character is
   provided.
 
 - If Qt expects a ``signed char *`` or an ``unsigned char *`` (or a ``const``
-  version) then PyQt will accept a ``bytes``.
+  version) then PyQt4 will accept a ``bytes``.
 
 - If Qt expects a ``signed char`` or an ``unsigned char`` (or a ``const``
-  version) then PyQt will accept a ``bytes`` of length 1.
+  version) then PyQt4 will accept a ``bytes`` of length 1.
 
-- If Qt expects a ``QString`` then PyQt will accept a ``str``, a ``bytes`` that
-  contains only ASCII characters, a ``QChar`` or a ``QByteArray``.
+- If Qt expects a ``QString`` then PyQt4 will accept a ``str``, a ``bytes``
+  that contains only ASCII characters, a ``QChar`` or a ``QByteArray``.
 
-- If Qt expects a ``QByteArray`` then PyQt will also accept a ``str`` that
+- If Qt expects a ``QByteArray`` then PyQt4 will also accept a ``str`` that
   contains only Latin-1 characters, or a ``bytes``.
 
 For Python v2 the following conversions are done by default.
 
 - If Qt expects a ``char *``, ``signed char *`` or an ``unsigned char *`` (or a
-  ``const`` version) then PyQt will accept a ``unicode`` or ``QString`` that
+  ``const`` version) then PyQt4 will accept a ``unicode`` or ``QString`` that
   contains only ASCII characters, a ``str``, a ``QByteArray``, or a Python
   object that implements the buffer protocol.
 
 - If Qt expects a ``char``, ``signed char`` or an ``unsigned char`` (or a
-  ``const`` version) then PyQt will accept the same types as for ``char *``,
+  ``const`` version) then PyQt4 will accept the same types as for ``char *``,
   ``signed char *`` and ``unsigned char *`` and also require that a single
   character is provided.
 
-- If Qt expects a ``QString`` then PyQt will accept a ``unicode``, a ``str``
+- If Qt expects a ``QString`` then PyQt4 will accept a ``unicode``, a ``str``
   that contains only ASCII characters, a ``QChar`` or a ``QByteArray``.
 
-- If Qt expects a ``QByteArray`` then PyQt will accept a ``unicode`` that
+- If Qt expects a ``QByteArray`` then PyQt4 will accept a ``unicode`` that
   contains only Latin-1 characters, or a ``str``.
 
 Note that the different behaviour between Python v2 and v3 is due to v3's
@@ -117,7 +117,7 @@ called.
 ``None`` and ``NULL``
 ---------------------
 
-Throughout PyQt, the ``None`` value can be specified wherever ``NULL`` is
+Throughout PyQt4, the ``None`` value can be specified wherever ``NULL`` is
 acceptable to the underlying C++ code.
 
 Equally, ``NULL`` is converted to ``None`` whenever it is returned by the
@@ -127,7 +127,7 @@ underlying C++ code.
 Support for ``void *``
 ----------------------
 
-PyQt (actually SIP) represents ``void *`` values as objects of type
+PyQt4 (actually SIP) represents ``void *`` values as objects of type
 ``sip.voidptr``.  Such values are often used to pass the addresses of external
 objects between different Python modules.  To make this easier, a Python
 integer (or anything that Python can convert to an integer) can be used
@@ -142,16 +142,16 @@ argument which is the length of the data in bytes.
 
 A ``sip.voidptr`` may also be given a size (ie. the size of the block of
 memory that is pointed to) by calling its ``setsize()`` method.  If it has a
-size then it is also able to support Python's buffer protocol and behaves just
-like a Python ``memoryview`` object so that the block of memory can be treated
-as a mutable list of bytes.  It also means that the Python :mod:`struct` module
-can be used to unpack and pack binary data structures in memory, memory mapped
+size then it is also able to support Python's buffer protocol and behaves like
+a Python ``memoryview`` object so that the block of memory can be treated as a
+mutable list of bytes.  It also means that the Python :mod:`struct` module can
+be used to unpack and pack binary data structures in memory, memory mapped
 files or shared memory.
 
 
-``super`` and PyQt Classes
---------------------------
+``super`` and PyQt4 Classes
+---------------------------
 
-In versions of PyQt earlier than v4.5 there were restrictions on the use of
-``super`` with PyQt classes.  These restrictions no longer apply with v4.5 and
+In versions of PyQt4 earlier than v4.5 there were restrictions on the use of
+``super`` with PyQt4 classes.  These restrictions no longer apply with v4.5 and
 later.

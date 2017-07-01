@@ -1,7 +1,7 @@
 # This is the qmake project file for the QPy support code for the QtCore
-# module.
+# module.  Note that it is not required by configure-ng.py.
 #
-# Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+# Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 # 
 # This file is part of PyQt.
 # 
@@ -24,14 +24,10 @@
 # WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
 
-CONFIG      += static
+CONFIG      += static warn_on
 TARGET      = qpycore
 TEMPLATE    = lib
-
-CONFIG(debug, debug|release) {
-    mac: TARGET = $$join(TARGET,,,_debug)
-    win32: TARGET = $$join(TARGET,,d)
-}
+DEFINES     += QT_DISABLE_DEPRECATED_BEFORE=0x04ffff
 
 # Python's type system relies on type punning.
 !win32: QMAKE_CXXFLAGS += -fno-strict-aliasing

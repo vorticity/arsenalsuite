@@ -48,7 +48,10 @@ sip.setapi('QVariant', 2)
 
 from PyQt4 import QtCore, QtGui
 
-import mdi_rc
+try:
+    import mdi_rc3
+except ImportError:
+    import mdi_rc2
 
 
 class MdiChild(QtGui.QTextEdit):

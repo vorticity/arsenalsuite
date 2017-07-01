@@ -121,8 +121,5 @@
    </property>
   </action>
  </widget>
- <resources>
-  <include location="editabletreemodel.qrc" />
- </resources>
  <connections/>
 </ui>

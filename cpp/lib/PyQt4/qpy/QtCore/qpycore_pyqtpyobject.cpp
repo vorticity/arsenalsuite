@@ -1,6 +1,6 @@
 // This contains the support for Python objects and Qt's metatype system.
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -31,6 +31,9 @@
 
 // The Qt metatype id.
 int PyQt_PyObject::metatype;
+
+// The current pickle protocol.
+PyObject *qpycore_pickle_protocol;
 
 
 // Wrap a Python object.
@@ -119,7 +122,14 @@ QDataStream &operator<<(QDataStream &out, const PyQt_PyObject &obj)
 
         if (dumps)
         {
-            ser_obj = PyObject_CallFunctionObjArgs(dumps, obj.pyobject, 0);
+            if (!qpycore_pickle_protocol)
+            {
+                Py_INCREF(Py_None);
+                qpycore_pickle_protocol = Py_None;
+            }
+
+            ser_obj = PyObject_CallFunctionObjArgs(dumps, obj.pyobject,
+                    qpycore_pickle_protocol, 0);
 
             if (ser_obj)
             {

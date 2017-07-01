@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2011 Riverbank Computing Limited.
+## Copyright (C) 2014 Riverbank Computing Limited.
 ## Copyright (C) 2006 Thorsten Marek.
 ## All right reserved.
 ##
@@ -75,16 +75,34 @@ QtGui = None
 def gridPosition(elem):
     """gridPosition(elem) -> tuple
 
-    Return the 4-tuple of (row, column, rowspan, colspan)
+    Return the 4 or 5-tuple of (row, column, rowspan, colspan, alignment)
     for a widget element, or an empty tuple.
     """
     try:
-        return (int(elem.attrib["row"]),
-                int(elem.attrib["column"]),
-                int(elem.attrib.get("rowspan", 1)),
-                int(elem.attrib.get("colspan", 1)))
+        row = int(elem.attrib['row'])
+        column = int(elem.attrib['column'])
     except KeyError:
         return ()
+
+    rowspan = int(elem.attrib.get('rowspan', 1))
+    colspan = int(elem.attrib.get('colspan', 1))
+    alignment = elem.attrib.get('alignment')
+
+    if alignment is None:
+        return (row, column, rowspan, colspan)
+
+    # This should be Qt::Align...|Qt::Align...
+    align_flags = None
+    for qt_align in alignment.split('|'):
+        _, qt_align = qt_align.split('::')
+        align = getattr(QtCore.Qt, qt_align)
+
+        if align_flags is None:
+            align_flags = align
+        else:
+            align_flags |= align
+
+    return (row, column, rowspan, colspan, align_flags)
 
 
 class WidgetStack(list):
@@ -120,6 +138,17 @@ class WidgetStack(list):
 
     def topIsLayout(self):
         return isinstance(self[-1], QtGui.QLayout)
+
+
+class ButtonGroup(object):
+    """ Encapsulate the configuration of a button group and its implementation.
+    """
+
+    def __init__(self):
+        """ Initialise the button group. """
+
+        self.exclusive = True
+        self.object = None
 
 
 class UIParser(object):    
@@ -164,7 +193,7 @@ class UIParser(object):
         self.actions = []
         self.currentActionGroup = None
         self.resources = []
-        self.button_groups = []
+        self.button_groups = {}
         self.layout_widget = False
 
     def setupObject(self, clsname, parent, branch, is_attribute = True):
@@ -180,12 +209,12 @@ class UIParser(object):
             setattr(self.toplevelWidget, name, obj)
         return obj
 
-    def hasProperty(self, elem, name):
+    def getProperty(self, elem, name):
         for prop in elem.findall('property'):
             if prop.attrib['name'] == name:
-                return True
+                return prop
 
-        return False
+        return None
 
     def createWidget(self, elem):
         self.column_counter = 0
@@ -215,10 +244,10 @@ class UIParser(object):
         self.stack.push(self.setupObject(widget_class, parent, elem))
 
         if isinstance(self.stack.topwidget, QtGui.QTableWidget):
-            if not self.hasProperty(elem, 'columnCount'):
+            if self.getProperty(elem, 'columnCount') is None:
                 self.stack.topwidget.setColumnCount(len(elem.findall("column")))
 
-            if not self.hasProperty(elem, 'rowCount'):
+            if self.getProperty(elem, 'rowCount') is None:
                 self.stack.topwidget.setRowCount(len(elem.findall("row")))
 
         self.traverseWidgetTree(elem)
@@ -247,16 +276,19 @@ class UIParser(object):
                     # We are loading the .ui file.
                     bg_name = bg_i18n
 
-                for bg in self.button_groups:
-                    if bg.objectName() == bg_name:
-                        break
-                else:
-                    bg = self.factory.createQObject("QButtonGroup", bg_name,
-                            (self.toplevelWidget, ))
-                    bg.setObjectName(bg_name)
-                    self.button_groups.append(bg)
+                bg = self.button_groups[bg_name]
 
-                bg.addButton(widget)
+                if bg.object is None:
+                    bg.object = self.factory.createQObject("QButtonGroup",
+                            bg_name, (self.toplevelWidget, ))
+                    setattr(self.toplevelWidget, bg_name, bg.object)
+
+                    bg.object.setObjectName(bg_name)
+
+                    if not bg.exclusive:
+                        bg.object.setExclusive(False)
+
+                bg.object.addButton(widget)
 
         if self.sorting_enabled is not None:
             widget.setSortingEnabled(self.sorting_enabled)
@@ -431,9 +463,11 @@ class UIParser(object):
                 SubElement(cme, 'number').text = str(right)
                 SubElement(cme, 'number').text = str(bottom)
         elif self.layout_widget:
-            # The layout's of layout widgets have no margin.
-            me = SubElement(elem, 'property', name='margin')
-            SubElement(me, 'number').text = '0'
+            margin = self.wprops.getProperty(elem, 'margin', -1)
+            if margin < 0:
+                # The layout's of layout widgets have no margin.
+                me = SubElement(elem, 'property', name='margin')
+                SubElement(me, 'number').text = '0'
 
             # In case there are any nested layouts.
             self.layout_widget = False
@@ -842,10 +876,10 @@ class UIParser(object):
         for include in elem.getiterator("include"):
             loc = include.attrib.get("location")
 
-            # Assume our convention for naming the Python files generated by
+            # Apply the convention for naming the Python files generated by
             # pyrcc4.
             if loc and loc.endswith('.qrc'):
-                mname = os.path.basename(loc[:-4] + '_rc')
+                mname = os.path.basename(loc[:-4] + self._resource_suffix)
                 if mname not in self.resources:
                     self.resources.append(mname)
 
@@ -896,14 +930,28 @@ class UIParser(object):
 
     def createToplevelWidget(self, classname, widgetname):
         raise NotImplementedError
+
+    def buttonGroups(self, elem):
+        for button_group in iter(elem):
+            if button_group.tag == 'buttongroup':
+                bg_name = button_group.attrib['name']
+                bg = ButtonGroup()
+                self.button_groups[bg_name] = bg
+
+                prop = self.getProperty(button_group, 'exclusive')
+                if prop is not None:
+                    if prop.findtext('bool') == 'false':
+                        bg.exclusive = False
     
     # finalize will be called after the whole tree has been parsed and can be
     # overridden.
     def finalize(self):
         pass
 
-    def parse(self, filename, base_dir=''):
+    def parse(self, filename, resource_suffix, base_dir=''):
         self.wprops.set_base_dir(base_dir)
+
+        self._resource_suffix = resource_suffix
 
         # The order in which the different branches are handled is important.
         # The widget tree handler relies on all custom widgets being known, and
@@ -911,6 +959,7 @@ class UIParser(object):
         branchHandlers = (
             ("layoutdefault", self.readDefaults),
             ("class",         self.classname),
+            ("buttongroups",  self.buttonGroups),
             ("customwidgets", self.customWidgets),
             ("widget",        self.createUserInterface),
             ("connections",   self.createConnections),

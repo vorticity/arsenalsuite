@@ -63,9 +63,10 @@ QtGui.QMessageBox.information(None, "PyQt Designer Plugins",
 
 # Tell Qt Designer where it can find the directory containing the plugins and
 # Python where it can find the widgets.
+base = os.path.dirname(__file__)
 env = os.environ.copy()
-env['PYQTDESIGNERPATH'] = 'python'
-env['PYTHONPATH'] = 'widgets'
+env['PYQTDESIGNERPATH'] = os.path.join(base, 'python')
+env['PYTHONPATH'] = os.path.join(base, 'widgets')
 qenv = ['%s=%s' % (name, value) for name, value in env.items()]
 
 # Start Designer.

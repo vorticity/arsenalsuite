@@ -3,7 +3,7 @@
 Selecting Incompatible APIs
 ===========================
 
-PyQt provides limited support for multiple incompatible APIs and the ability
+PyQt4 provides limited support for multiple incompatible APIs and the ability
 for an application to select between them at run-time.  For example, an
 application can choose whether ``QString`` is implemented as a Python type, or
 is automatically converted to and from a Python v2 unicode object or a Python

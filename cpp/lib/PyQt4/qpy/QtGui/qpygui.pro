@@ -1,6 +1,7 @@
 # This is the qmake project file for the QPy support code for the QtGui module.
+# Note that it is not required by configure-ng.py.
 #
-# Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+# Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 # 
 # This file is part of PyQt.
 # 
@@ -23,14 +24,9 @@
 # WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
 
-CONFIG      += static
+CONFIG      += static warn_on
 TARGET      = qpygui
 TEMPLATE    = lib
-
-CONFIG(debug, debug|release) {
-    mac: TARGET = $$join(TARGET,,,_debug)
-    win32: TARGET = $$join(TARGET,,d)
-}
 
 HEADERS   = \
             qpytextobject.h

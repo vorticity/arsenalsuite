@@ -2,7 +2,7 @@
  * This is the Qt Designer plugin that collects all the Python plugins it can
  * find as a widget collection to Designer.
  *
- * Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+ * Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
  * 
  * This file is part of PyQt.
  * 
@@ -35,8 +35,6 @@
 #include <QCoreApplication>
 #include <QDesignerCustomWidgetInterface>
 #include <QDir>
-#include <QLibrary>
-#include <QLibraryInfo>
 #include <QStringList>
 #include <QVector>
 
@@ -131,17 +129,7 @@ PyCustomWidgets::PyCustomWidgets(QObject *parent) : QObject(parent)
 
         // Make sure the interpreter is loaded and initialised.  Leave this as
         // late as possible.
-        if (!Py_IsInitialized())
-        {
-            QLibrary library(PYTHON_LIB);
-
-            library.setLoadHints(QLibrary::ExportExternalSymbolsHint);
-
-            if (!library.load())
-                return;
-
-            Py_Initialize();
-        }
+        Py_Initialize();
 
         // Make sure we have sys.path.
         if (!sys_path)
@@ -218,7 +206,7 @@ PyCustomWidgets::PyCustomWidgets(QObject *parent) : QObject(parent)
                 dir.length() * sizeof (Py_UNICODE));
 #endif
 #else
-        PyObject *dobj = PyString_FromString(dir.toAscii().constData());
+        PyObject *dobj = PyString_FromString(dir.toLatin1().constData());
 
         if (!dobj)
         {
@@ -240,7 +228,7 @@ PyCustomWidgets::PyCustomWidgets(QObject *parent) : QObject(parent)
         // Import each plugin.
         for (int plug = 0; plug < plugins.size(); ++plug)
         {
-            PyObject *plug_mod = PyImport_ImportModule(plugins.at(plug).toAscii().data());
+            PyObject *plug_mod = PyImport_ImportModule(plugins.at(plug).toLatin1().data());
 
             if (!plug_mod)
             {
@@ -355,5 +343,7 @@ PyObject *PyCustomWidgets::getModuleAttr(const char *module, const char *attr)
 }
 
 
+#if QT_VERSION < 0x050000
 // Register the plugin.
 Q_EXPORT_PLUGIN2(MODULE_NAME, PyCustomWidgets)
+#endif

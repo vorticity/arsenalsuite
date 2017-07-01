@@ -1,7 +1,7 @@
-Internationalisation of PyQt Applications
-=========================================
+Internationalisation of PyQt4 Applications
+==========================================
 
-PyQt and Qt include a comprehensive set of tools for translating applications
+PyQt4 and Qt include a comprehensive set of tools for translating applications
 into local languages.  For a full description, see the Qt Linguist Manual in
 the Qt documentation.
 
@@ -34,7 +34,7 @@ steps.
 
 .. program:: pylupdate4
 
-:program:`pylupdate4` is PyQt's equivalent to Qt's :program:`lupdate` utility
+:program:`pylupdate4` is PyQt4's equivalent to Qt's :program:`lupdate` utility
 and is used in exactly the same way.  A Qt ``.pro`` project file is read that
 specifies the Python source files and Qt Designer interface files from which
 the text that needs to be translated is extracted.  The ``.pro`` file also
@@ -45,8 +45,8 @@ creates if necessary) and are subsequently used by Qt Linguist.
 module.
 
 
-Differences Between PyQt and Qt
--------------------------------
+Differences Between PyQt4 and Qt
+--------------------------------
 
 Qt implements internationalisation support through the ``QTranslator`` class,
 and the ``QCoreApplication::translate()``, ``QObject::tr()`` and
@@ -58,10 +58,10 @@ On the other hand, ``QApplication::translate()`` allows the context to be
 explicitly stated.
 
 Unfortunately, because of the way Qt implements ``tr()`` (and ``trUtf8()``) it
-is not possible for PyQt to exactly reproduce its behaviour.  The PyQt
+is not possible for PyQt4 to exactly reproduce its behaviour.  The PyQt4
 implementation of ``tr()`` (and ``trUtf8()``) uses the class name of the
 instance as the context.  The key difference, and the source of potential
-problems, is that the context is determined dynamically in PyQt, but is
+problems, is that the context is determined dynamically in PyQt4, but is
 hardcoded in Qt.  In other words, the context of a translation may change
 depending on an instance's class hierarchy.  For example::
 
@@ -82,10 +82,10 @@ In the above the message is translated by ``a.hello()`` using a context of
 ``A``, and by ``b.hello()`` using a context of ``B``.  In the equivalent C++
 version the context would be ``A`` in both cases.
 
-The PyQt behaviour is unsatisfactory and may be changed in the future.  It is
+The PyQt4 behaviour is unsatisfactory and may be changed in the future.  It is
 recommended that ``QCoreApplication.translate()`` be used in preference to
 ``tr()`` (and ``trUtf8()``).  This is guaranteed to work with current and
-future versions of PyQt and makes it much easier to share message files
+future versions of PyQt4 and makes it much easier to share message files
 between Python and C++ code.  Below is the alternative implementation of ``A``
 that uses ``QCoreApplication.translate()``::
 

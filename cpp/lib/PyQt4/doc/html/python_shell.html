@@ -1,27 +1,31 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Using PyQt from the Python Shell &mdash; PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide</title>
+    <title>Using PyQt4 from the Python Shell &mdash; PyQt 4.11.1 Reference Guide</title>
+    
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '#',
-        VERSION:     'snapshot-4.9.5-9eb6aac99275',
-        COLLAPSE_MODINDEX: false,
+        URL_ROOT:    './',
+        VERSION:     '4.11.1',
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/logo_tn.ico"/>
-    <link rel="top" title="PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide" href="index.html" />
-    <link rel="next" title="Internationalisation of PyQt Applications" href="i18n.html" />
+    <link rel="top" title="PyQt 4.11.1 Reference Guide" href="index.html" />
+    <link rel="next" title="Internationalisation of PyQt4 Applications" href="i18n.html" />
     <link rel="prev" title="Support for Python’s Buffer Interface" href="buffer_interface.html" /> 
   </head>
   <body>
@@ -32,15 +36,15 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
-          <a href="i18n.html" title="Internationalisation of PyQt Applications"
+          <a href="i18n.html" title="Internationalisation of PyQt4 Applications"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="buffer_interface.html" title="Support for Python’s Buffer Interface"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide</a> &raquo;</li> 
+        <li><a href="index.html">PyQt 4.11.1 Reference Guide</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -49,9 +53,9 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="using-pyqt-from-the-python-shell">
-<h1>Using PyQt from the Python Shell<a class="headerlink" href="#using-pyqt-from-the-python-shell" title="Permalink to this headline">¶</a></h1>
-<p>PyQt installs an input hook (using <tt class="docutils literal"><span class="pre">PyOS_InputHook</span></tt>) that processes events
+  <div class="section" id="using-pyqt4-from-the-python-shell">
+<h1>Using PyQt4 from the Python Shell<a class="headerlink" href="#using-pyqt4-from-the-python-shell" title="Permalink to this headline">¶</a></h1>
+<p>PyQt4 installs an input hook (using <tt class="docutils literal"><span class="pre">PyOS_InputHook</span></tt>) that processes events
 when an interactive interpreter is waiting for user input.  This means that
 you can, for example, create widgets from the Python shell prompt, interact
 with them, and still being able to enter other Python commands.</p>
@@ -68,9 +72,9 @@ with them, and still being able to enter other Python commands.</p>
 as <tt class="docutils literal"><span class="pre">w.hide()</span></tt> was entered.</p>
 <p>The installation of an input hook can cause problems for certain applications
 (particularly those that implement a similar feature using different means).
-The <tt class="xref docutils literal"><span class="pre">QtCore</span></tt> module contains the
-<tt class="xref docutils literal"><span class="pre">pyqtRemoveInputHook()</span></tt> and
-<tt class="xref docutils literal"><span class="pre">pyqtRestoreInputHook()</span></tt> functions that remove and restore
+The <tt class="xref py py-mod docutils literal"><span class="pre">QtCore</span></tt> module contains the
+<tt class="xref py py-func docutils literal"><span class="pre">pyqtRemoveInputHook()</span></tt> and
+<tt class="xref py py-func docutils literal"><span class="pre">pyqtRestoreInputHook()</span></tt> functions that remove and restore
 the input hook respectively.</p>
 </div>
 
@@ -83,25 +87,25 @@ the input hook respectively.</p>
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/logo.png" alt="Logo"/>
             </a></p>
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="buffer_interface.html"
-                                  title="previous chapter">Support for Python&#8217;s Buffer Interface</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="i18n.html"
-                                  title="next chapter">Internationalisation of PyQt Applications</a></p>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="buffer_interface.html"
+                        title="previous chapter">Support for Python&#8217;s Buffer Interface</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="i18n.html"
+                        title="next chapter">Internationalisation of PyQt4 Applications</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -113,20 +117,20 @@ the input hook respectively.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
+          <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="i18n.html" title="Internationalisation of PyQt Applications"
+          <a href="i18n.html" title="Internationalisation of PyQt4 Applications"
              >next</a> |</li>
         <li class="right" >
           <a href="buffer_interface.html" title="Support for Python’s Buffer Interface"
              >previous</a> |</li>
-        <li><a href="index.html">PyQt snapshot-4.9.5-9eb6aac99275 Reference Guide</a> &raquo;</li> 
+        <li><a href="index.html">PyQt 4.11.1 Reference Guide</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2011 Riverbank Computing Limited.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.4.
+        &copy; Copyright 2014 Riverbank Computing Limited.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

@@ -55,6 +55,9 @@ except ImportError:
             "PyOpenGL must be installed to run this example.")
     sys.exit(1)
 
+from sip import setdestroyonexit
+setdestroyonexit(False)
+
 
 class Helper(object):
     def __init__(self):

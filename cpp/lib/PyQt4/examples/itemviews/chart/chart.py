@@ -51,7 +51,10 @@ import math
 
 from PyQt4 import QtCore, QtGui
 
-import chart_rc
+try:
+    import chart_rc3
+except ImportError:
+    import chart_rc2
 
 
 class PieView(QtGui.QAbstractItemView):
@@ -259,11 +262,11 @@ class PieView(QtGui.QAbstractItemView):
         elif cursorAction == QtGui.QAbstractItemView.MoveRight or \
              cursorAction == QtGui.QAbstractItemView.MoveDown:
 
-            if current.row() < rows(current) - 1:
+            if current.row() < self.rows(current) - 1:
                 current = self.model().index(current.row() + 1,
                         current.column(), self.rootIndex())
             else:
-                current = self.model().index(rows(current) - 1,
+                current = self.model().index(self.rows(current) - 1,
                         current.column(), self.rootIndex())
 
         self.viewport().update()

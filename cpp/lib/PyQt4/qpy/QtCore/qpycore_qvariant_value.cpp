@@ -1,6 +1,6 @@
 // This implements the helper for QSettings.value().
 //
-// Copyright (c) 2012 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -54,11 +54,11 @@ PyObject *qpycore_qvariant_value(QVariant &value, PyObject *type)
         if (!ct)
             return 0;
 
-        // Get QVariant to do a conversion if there is one to do.
-        if (ct->metatype() < static_cast<int>(QVariant::UserType))
-        {
-            QVariant::Type wanted = static_cast<QVariant::Type>(ct->metatype());
+        QVariant::Type wanted = static_cast<QVariant::Type>(ct->metatype());
 
+        // Get QVariant to do a conversion if there is one to do.
+        if (value.isValid() && ct->metatype() < static_cast<int>(QVariant::UserType))
+        {
             // If we have a QStringList but are not wanting one then convert it
             // to a QVariantList.
             if (wanted != QVariant::StringList && value.type() == QVariant::StringList)
@@ -67,22 +67,37 @@ PyObject *qpycore_qvariant_value(QVariant &value, PyObject *type)
             // If we have a container but are not wanting one then assume we
             // want a container with elements of the wanted type.
             if (wanted != QVariant::List && value.type() == QVariant::List)
-                value_obj = convert_list(ct, value.toList());
+            {
+                // If we have a QVariantList but we wanted a QStringList then
+                // assume each variant is a string.
+                if (wanted == QVariant::StringList)
+                    value_obj = convert(ct, value);
+                else
+                    value_obj = convert_list(ct, value.toList());
+            }
             else if (wanted != QVariant::Map && value.type() == QVariant::Map)
+            {
                 value_obj = convert_map(ct, value.toMap());
+            }
 #if QT_VERSION >= 0x040500
             else if (wanted != QVariant::Hash && value.type() == QVariant::Hash)
+            {
                 value_obj = convert_hash(ct, value.toHash());
+            }
 #endif
             else
+            {
                 value_obj = convert(ct, value);
+            }
         }
-        else if (!value.isValid() && ct->py_type())
+        else if (!value.isValid())
         {
             // Convert an invalid value to the default value of the requested
-            // type.  This is most useful when the requested type is a list or
-            // dict.
-            value_obj = PyObject_CallObject(ct->py_type(), NULL);
+            // type.
+            if (ct->py_type())
+                value_obj = PyObject_CallObject(ct->py_type(), NULL);
+            else
+                value_obj = ct->toPyObject(QVariant(wanted));
         }
         else
         {

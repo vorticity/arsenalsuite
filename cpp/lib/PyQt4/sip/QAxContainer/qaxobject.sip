@@ -1,6 +1,6 @@
 // This is the SIP interface definition for QAxObject.
 //
-// Copyright (c) 2009 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2014 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of PyQt.
 // 
@@ -16,13 +16,8 @@
 // GPL Exception version 1.1, which can be found in the file
 // GPL_EXCEPTION.txt in this package.
 // 
-// Please review the following information to ensure GNU General
-// Public Licensing requirements will be met:
-// http://trolltech.com/products/qt/licenses/licensing/opensource/. If
-// you are unsure which license is appropriate for your use, please
-// review the following information:
-// http://trolltech.com/products/qt/licenses/licensing/licensingoverview
-// or contact the sales department at sales@riverbankcomputing.com.
+// If you are unsure which license is appropriate for your use, please
+// contact the sales department at sales@riverbankcomputing.com.
 // 
 // This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
 // WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
@@ -30,7 +25,7 @@
 
 %If (WS_WIN)
 
-class QAxObject : QObject, QAxBase /PyQt4NoQMetaObject/
+class QAxObject : QObject, QAxBase /PyQtNoQMetaObject/
 {
 %TypeHeaderCode
 #include <qaxobject.h>
@@ -38,8 +33,8 @@ class QAxObject : QObject, QAxBase /PyQt4NoQMetaObject/
 
 public:
     QAxObject(QObject *parent /TransferThis/ = 0);
-    QAxObject(const QString &c, QObject *parent /TransferThis/ = 0);
-    //QAxObject(IUnknown *iface, QObject *parent /TransferThis/ = 0);
+    QAxObject(const QString &, QObject *parent /TransferThis/ = 0);
+    //QAxObject(IUnknown *, QObject *parent /TransferThis/ = 0);
     ~QAxObject();
 
 %ConvertToSubClassCode
@@ -71,10 +66,15 @@ public:
     while (i >= 0);
 %End
 
-    bool doVerb(const QString &verb);
+    bool doVerb(const QString &);
 
 protected:
-    void connectNotify(const char *signal);
+%If (Qt_5_0_0 -)
+    void connectNotify(const QMetaMethod &);
+%End
+%If (- Qt_5_0_0)
+    void connectNotify(const char *);
+%End
 };
 
 %End
